@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Forest in Machine Learning Report</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Random Forest in Machine Learning</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Introduction to Random Forest</h2>
+            <p>Random Forest is an ensemble learning method widely used for classification and regression tasks. It operates by constructing a multitude of decision trees at training time and outputting the class that is the mode of the classes (classification) or mean prediction (regression) of the individual trees.</p>
+            <p>The core idea behind Random Forest's effectiveness is that a large number of relatively uncorrelated models (decision trees) operating as a committee will outperform any of the individual constituent models.</p>
+        </section>
+
+        <section>
+            <h2>How Random Forest Uses Binary Trees</h2>
+            <p>Each "tree" in the random forest is a decision tree, which is inherently a binary tree structure. A decision tree recursively splits the data into subsets based on feature values, forming branches until a stopping criterion is met. In a Random Forest, many such decision trees are trained independently. For classification, each tree "votes" for a class, and the class with the most votes becomes the model's prediction. For regression, the predictions of all trees are averaged.</p>
+            <p>This ensemble approach helps to mitigate the common problem of overfitting that can occur with single decision trees, leading to a more robust and accurate model.</p>
+        </section>
+
+        <section>
+            <h2>Optimizing Random Forest with Grid Search</h2>
+            <p>To achieve the best performance from a Random Forest model, it's crucial to tune its hyperparameters. Two important hyperparameters are:</p>
+            <ul>
+                <li><code>n_estimators (Nt)</code>: The number of trees in the forest. More trees generally lead to better performance but also increase computational cost.</li>
+                <li><code>max_features (Np)</code>: The number of features to consider when looking for the best split. Limiting the features for each split helps decorrelate the trees.</li>
+            </ul>
+            <p>A common technique to find the optimal combination of these hyperparameters is called Grid Search. This involves defining a grid of possible values for each hyperparameter and training the model for every combination in the grid. The performance (e.g., accuracy) for each combination is then evaluated, often using cross-validation.</p>
+            <p>The image below illustrates a 5-fold CV accuracy grid for a Random Forest model, showing how different combinations of <code>n_estimators (Nt)</code> and <code>max_features (Np)</code> impact the model's accuracy. The color intensity represents the accuracy, with warmer colors indicating higher accuracy.</p>
+            <div class="image-container">
+                <img src="image.png" alt="5-fold CV accuracy (RandomForest grid)">
+                <p class="image-caption">Figure 1: 5-fold CV accuracy (RandomForest grid) showing accuracy for various combinations of n_estimators (Nt) and max_features (Np).</p>
+            </div>
+            <p>From the grid, we can observe that higher accuracies (yellow regions) are achieved with `max_features` around 4 to 8, and `n_estimators` between 225 and 375. Specifically, the highest accuracy of 0.9375 is achieved with `n_estimators = 325` and `max_features = 4`.</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Digital Research Report Agent</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
