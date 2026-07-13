@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<!--
+  ====================================================================================================
+  IT RESEARCH REPORT TEMPLATE – "TERMINAL PAPER" STYLE
+  ====================================================================================================
+  WHAT THIS IS
+  A university-standard research report (abstract, sections, figures, tables,
+  references) rendered with a technical/systems aesthetic: a dark "console"
+  background, a boot-sequence hero, a scrollspy sidebar styled like a process
+  monitor, and paper-toned content cards for the actual academic writing.
+
+  HOW TO REUSE THIS TEMPLATE (for a human OR for an LLM like Gemini)
+  1. Every editable piece of text sits inside a tag carrying a
+     data-field="..." attribute. That attribute name tells you WHAT the
+     content is (e.g. data-field="report-title"), not how it looks.
+  2. Placeholder copy is written in [BRACKETS] with a short instruction and
+     an example. Replace the whole bracketed placeholder – keep the
+     surrounding tag and classes untouched.
+  3. Sections follow the numbering convention 01, 02, 03... To add a new
+     section: duplicate a <section class="paper-section"> block, its sidebar
+     <li> entry, and continue the numbering. The JS (script.js) auto-detects
+     any element with class="paper-section" – no JS edits needed.
+  4. Repeating pieces (figures, tables, callouts, references, code blocks)
+     are built as small reusable partials – search for "PARTIAL:" comments
+     below to find and duplicate them.
+  5. Do not rename class names (they are the CSS/JS contract). You may freely
+     rename data-field attributes' VALUES' surrounding text content.
+  6. Color/type/spacing tokens all live in styles.css :root – change the
+     report's whole look by editing values there, not by adding inline styles.
+  ====================================================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-field="browser-title">[BROWSER TAB TITLE – e.g. "Optimizing Query Performance in Distributed Odoo Deployments"]</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ======================== TOP PROGRESS BAR (reading/scroll progress) ======================== -->
+  <div class="progress-rail" aria-hidden="true">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- ======================== MOBILE NAV TOGGLE ======================== -->
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle table of contents" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="layout">
+
+    <!-- =============================================================================================
+         SIDEBAR – "SYSTEM STATUS" (this is the signature element).
+         Acts as the table of contents AND a live scrollspy. Each <li> maps
+         to a section by data-target="<section id>". Do not remove
+         data-target – script.js uses it to sync highlight + status light.
+         To add a section: copy one <li>, change data-target + label + code.
+         ============================================================================================= -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-head">
+        <span class="status-dot status-dot--live" aria-hidden="true"></span>
+        <span class="mono small">SYSTEM STATUS</span>
+      </div>
+
+      <nav class="toc" aria-label="Report sections">
+        <ul id="tocList">
+          <li data-target="abstract"><span class="toc-code mono">00</span><span class="toc-label">Abstract</span><span class="toc-light"></span></li>
+          <li data-target="introduction"><span class="toc-code mono">01</span><span class="toc-label">Introduction</span><span class="toc-light"></span></li>
+          <li data-target="background"><span class="toc-code mono">02</span><span class="toc-label">Background &amp; Related Work</span><span class="toc-light"></span></li>
+          <li data-target="methodology"><span class="toc-code mono">03</span><span class="toc-label">Methodology</span><span class="toc-light"></span></li>
+          <li data-target="results"><span class="toc-code mono">04</span><span class="toc-label">Results</span><span class="toc-light"></span></li>
+          <li data-target="discussion"><span class="toc-code mono">05</span><span class="toc-label">Discussion</span><span class="toc-light"></span></li>
+          <li data-target="conclusion"><span class="toc-code mono">06</span><span class="toc-label">Conclusion</span><span class="toc-light"></span></li>
+          <li data-target="references"><span class="toc-code mono">07</span><span class="toc-label">References</span><span class="toc-light"></span></li>
+          <li data-target="appendix"><span class="toc-code mono">08</span><span class="toc-label">Appendix</span><span class="toc-light"></span></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-foot mono small">
+        <div class="foot-row"><span>BUILD</span><span id="buildTime"> –</span></div>
+        <div class="foot-row"><span>PROGRESS</span><span id="progressPct">0%</span></div>
+      </div>
+    </aside>
+
+    <!-- =============================================================================================
+         MAIN – hero (terminal boot sequence) + paper sections
+         ============================================================================================= -->
+    <main class="main">
+
+      <!-- ======================== HERO / COVER ======================== -->
+      <header class="hero" id="top">
+        <div class="hero-console mono">
+          <div class="console-line" data-typed data-text="booting report_engine v1.0 ..."></div>
+          <div class="console-line" data-typed data-text="loading dataset: [DATASET NAME]"></div>
+          <div class="console-line" data-typed data-text="status: ready_for_review"></div>
+        </div>
+
+        <p class="eyebrow mono" data-field="course-code">[COURSE / MODULE CODE – e.g. "IT4102 – Distributed Systems Research"]</p>
+
+        <h1 class="hero-title" data-field="report-title">
+          [REPORT TITLE – e.g. "Optimizing Query Performance in Distributed Odoo Deployments"]
+        </h1>
+
+        <p class="hero-subtitle" data-field="report-subtitle">
+          [ONE-LINE SUBTITLE describing the angle of the research – e.g. "A caching-layer case study on high-volume donor-management workloads"]
+        </p>
+
+        <div class="hero-meta">
+          <div class="meta-block">
+            <span class="mono small label">AUTHOR(S)</span>
+            <span data-field="authors">[Author Name(s), Student/Staff ID]</span>
+          </div>
+          <div class="meta-block">
+            <span class="mono small label">INSTITUTION</span>
+            <span data-field="institution">[University / School Name, Department]</span>
+          </div>
+          <div class="meta-block">
+            <span class="mono small label">SUPERVISOR</span>
+            <span data-field="supervisor">[Supervisor / Reviewer Name]</span>
+          </div>
+          <div class="meta-block">
+            <span class="mono small label">DATE</span>
+            <span data-field="report-date">[Submission Date – e.g. 13 July 2026]</span>
+          </div>
+        </div>
+
+        <div class="hero-tags mono small" data-field="keywords">
+          <span class="tag">[keyword-one]</span>
+          <span class="tag">[keyword-two]</span>
+          <span class="tag">[keyword-three]</span>
+          <span class="tag">[keyword-four]</span>
+        </div>
+
+        <div class="scroll-cue mono small" aria-hidden="true">
+          <span>scroll</span>
+          <span class="scroll-cue-bar"></span>
+        </div>
+      </header>
+
+      <!-- =============================================================================================
+           PARTIAL: PAPER SECTION
+           Every academic section is a <section class="paper-section">.
+           - id must match a sidebar data-target
+           - .section-index / .section-title form the numbered heading
+           - Body content is free-form: paragraphs, figures, tables, callouts
+           - class="reveal" elements fade/slide in on scroll (IntersectionObserver)
+           ============================================================================================= -->
+
+      <!-- -------- 00 ABSTRACT -------- -->
+      <section class="paper-section" id="abstract">
+        <div class="section-heading reveal">
+          <span class="section-index mono">00</span>
+          <h2 class="section-title">Abstract</h2>
+        </div>
+        <div class="paper-card reveal">
+          <p data-field="abstract-body">
+            [ABSTRACT – 150–250 words summarizing the problem, method, and key
+            finding. Write it last, once the rest of the report is done.
+            Example opener: "This report investigates whether read-replica
+            caching reduces query latency in a multi-tenant Odoo deployment
+            used for nonprofit donor management..."]
+          </p>
+        </div>
+      </section>
+
+      <!-- -------- 01 INTRODUCTION -------- -->
+      <section class="paper-section" id="introduction">
+        <div class="section-heading reveal">
+          <span class="section-index mono">01</span>
+          <h2 class="section-title">Introduction</h2>
+        </div>
+        <div class="paper-card reveal">
+          <h3 data-field="intro-h1">1.1 Problem Statement</h3>
+          <p data-field="intro-problem">
+            [Describe the real-world or technical problem motivating this
+            research. What breaks, what's slow, what's unknown? Ground it in
+            a concrete system or dataset.]
+          </p>
+
+          <h3 data-field="intro-h2">1.2 Research Questions / Objectives</h3>
+          <ul class="paper-list" data-field="intro-objectives">
+            <li>[Research question or objective 1]</li>
+            <li>[Research question or objective 2]</li>
+            <li>[Research question or objective 3]</li>
+          </ul>
+
+          <!-- PARTIAL: CALLOUT – use for a scope note, assumption, or warning -->
+          <div class="callout callout--info">
+            <span class="callout-tag mono small">SCOPE</span>
+            <p data-field="intro-scope">[State what is explicitly in and out of scope for this study.]</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- -------- 02 BACKGROUND / RELATED WORK -------- -->
+      <section class="paper-section" id="background">
+        <div class="section-heading reveal">
+          <span class="section-index mono">02</span>
+          <h2 class="section-title">Background &amp; Related Work</h2>
+        </div>
+        <div class="paper-card reveal">
+          <p data-field="background-body">
+            [Summarize the existing literature, tools, or prior systems
+            relevant to the problem. Cite sources using the numbered style
+            below, e.g. reference the query optimization patterns described
+            in [1] and the caching taxonomy in [2].]
+          </p>
+
+          <!-- PARTIAL: FIGURE – image + numbered caption -->
+          <figure class="figure reveal">
+            <div class="figure-frame">
+              <img data-field="figure-1-src" src="https://placehold.co/900x480/0f172a/5eead4?text=FIGURE+1" alt="[Describe figure 1 content for accessibility]">
+            </div>
+            <figcaption class="mono small" data-field="figure-1-caption">Figure 1. [Caption describing what the figure shows and why it matters.]</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- -------- 03 METHODOLOGY -------- -->
+      <section class="paper-section" id="methodology">
+        <div class="section-heading reveal">
+          <span class="section-index mono">03</span>
+          <h2 class="section-title">Methodology</h2>
+        </div>
+        <div class="paper-card reveal">
+          <h3 data-field="method-h1">3.1 Experimental Setup</h3>
+          <p data-field="method-setup">
+            [Describe environment, tools, hardware/software versions, and
+            dataset used.]
+          </p>
+
+          <!-- PARTIAL: CODE BLOCK – for scripts, configs, queries -->
+          <div class="code-block reveal">
+            <div class="code-block-head mono small">
+              <span data-field="code-1-label">setup.sh</span>
+              <span class="code-dots"><span></span><span></span><span></span></span>
+            </div>
+            <pre><code data-field="code-1-body">$ [example command, e.g. docker compose up -d postgres redis]
+$ [second command]
+> > > [expected output]</code></pre>
+          </div>
+
+          <h3 data-field="method-h2">3.2 Procedure</h3>
+          <ol class="paper-list paper-list--numbered" data-field="method-steps">
+            <li>[Step one of the procedure]</li>
+            <li>[Step two of the procedure]</li>
+            <li>[Step three of the procedure]</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- -------- 04 RESULTS -------- -->
+      <section class="paper-section" id="results">
+        <div class="section-heading reveal">
+          <span class="section-index mono">04</span>
+          <h2 class="section-title">Results</h2>
+        </div>
+        <div class="paper-card reveal">
+          <p data-field="results-intro">
+            [Introduce what the data shows before presenting the table/chart.]
+          </p>
+
+          <!-- PARTIAL: DATA TABLE -->
+          <div class="table-wrap reveal">
+            <table class="data-table">
+              <caption class="mono small">Table 1. [Caption describing the table's contents.]</caption>
+              <thead>
+                <tr>
+                  <th data-field="table-1-col-1">[Metric]</th>
+                  <th data-field="table-1-col-2">[Baseline]</th>
+                  <th data-field="table-1-col-3">[Treatment]</th>
+                  <th data-field="table-1-col-4">&Delta; Change</th>
+                </tr>
+              </thead>
+              <tbody data-field="table-1-rows">
+                <tr><td>[row label]</td><td>[value]</td><td>[value]</td><td>[value]</td></tr>
+                <tr><td>[row label]</td><td>[value]</td><td>[value]</td><td>[value]</td></tr>
+                <tr><td>[row label]</td><td>[value]</td><td>[value]</td><td>[value]</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- PARTIAL: CALLOUT – highlight a key finding -->
+          <div class="callout callout--highlight">
+            <span class="callout-tag mono small">KEY FINDING</span>
+            <p data-field="results-key-finding">[State the single most important result in one or two sentences.]</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- -------- 05 DISCUSSION -------- -->
+      <section class="paper-section" id="discussion">
+        <div class="section-heading reveal">
+          <span class="section-index mono">05</span>
+          <h2 class="section-title">Discussion</h2>
+        </div>
+        <div class="paper-card reveal">
+          <h3 data-field="discuss-h1">5.1 Interpretation</h3>
+          <p data-field="discuss-interpretation">
+            [Explain what the results mean in context – do they support or
+            refute the hypothesis from the Introduction?]
+          </p>
+
+          <h3 data-field="discuss-h2">5.2 Limitations</h3>
+          <p data-field="discuss-limitations">
+            [Be explicit about constraints: sample size, environment
+            differences, threats to validity.]
+          </p>
+        </div>
+      </section>
+
+      <!-- -------- 06 CONCLUSION -------- -->
+      <section class="paper-section" id="conclusion">
+        <div class="section-heading reveal">
+          <span class="section-index mono">06</span>
+          <h2 class="section-title">Conclusion</h2>
+        </div>
+        <div class="paper-card reveal">
+          <p data-field="conclusion-body">
+            [Summarize the contribution in 3–5 sentences and state concrete
+            next steps or future work.]
+          </p>
+        </div>
+      </section>
+
+      <!-- -------- 07 REFERENCES -------- -->
+      <section class="paper-section" id="references">
+        <div class="section-heading reveal">
+          <span class="section-index mono">07</span>
+          <h2 class="section-title">References</h2>
+        </div>
+        <div class="paper-card reveal">
+          <ol class="reference-list" data-field="reference-list">
+            <li>[1] [Author, A. (Year). <em>Title of work</em>. Publisher/Journal.]</li>
+            <li>[2] [Author, B. (Year). <em>Title of work</em>. Publisher/Journal.]</li>
+            <li>[3] [Author, C. (Year). <em>Title of work</em>. Publisher/Journal.]</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- -------- 08 APPENDIX -------- -->
+      <section class="paper-section" id="appendix">
+        <div class="section-heading reveal">
+          <span class="section-index mono">08</span>
+          <h2 class="section-title">Appendix</h2>
+        </div>
+        <div class="paper-card reveal">
+          <p data-field="appendix-body">
+            [Optional: raw data, extended tables, additional code, survey
+            instruments, or anything supplementary that supports the main
+            text without interrupting its flow.]
+          </p>
+        </div>
+      </section>
+
+      <footer class="report-footer mono small">
+        <span data-field="footer-text">[Institution Name] &copy; [Report Title, shortened] &ndash; Generated [Date]</span>
+      </footer>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
