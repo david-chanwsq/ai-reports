@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<!--
+  ===================================================================================================================
+  IT RESEARCH REPORT TEMPLATE – "TERMINAL PAPER" STYLE
+  ===================================================================================================================
+  WHAT THIS IS
+  A university-standard research report (abstract, sections, figures, tables,
+  references) rendered with a technical/systems aesthetic: a dark "console"
+  background, a boot-sequence hero, a scrollspy sidebar styled like a process
+  monitor, and paper-toned content cards for the actual academic writing.
+
+  HOW TO REUSE THIS TEMPLATE (for a human OR for an LLM like Gemini)
+  1. Every editable piece of text sits inside a tag carrying a
+     data-field="..." attribute. That attribute name tells you WHAT the
+     content is (e.g. data-field="report-title"), not how it looks.
+  2. Placeholder copy is written in [BRACKETS] with a short instruction and
+     an example. Replace the whole bracketed placeholder – keep the
+     surrounding tag and classes untouched.
+  3. Sections follow the numbering convention 01, 02, 03... To add a new
+     section: duplicate a <section class="paper-section"> block, its sidebar
+     <li> entry, and continue the numbering. The JS (script.js) auto-detects
+     any element with class="paper-section" – no JS edits needed.
+  4. Repeating pieces (figures, tables, callouts, references, code blocks)
+     are built as small reusable partials – search for "PARTIAL:" comments
+     below to find and duplicate them.
+  5. Do not rename class names (they are the CSS/JS contract). You may freely
+     rename data-field attributes' VALUES' surrounding text content.
+  6. Color/type/spacing tokens all live in styles.css :root – change the
+     report's whole look by editing values there, not by adding inline styles.
+  ===================================================================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-field="browser-title">Object Slicing Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ================= TOP PROGRESS BAR (reading/scroll progress) ================= -->
+  <div class="progress-rail" aria-hidden="true">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- ================= MOBILE NAV TOGGLE ================= -->
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle table of contents" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="layout">
+
+    <!-- ===================================================================================================
+        SIDEBAR – "SYSTEM STATUS" (this is the signature element).
+        Acts as the table of contents AND a live scrollspy. Each <li> maps
+        to a section by data-target="<section id>". Do not remove
+        data-target – script.js uses it to sync highlight + status light.
+        To add a section: copy one <li>, change data-target + label + code.
+    =================================================================================================== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-head">
+        <span class="status-dot status-dot--live" aria-hidden="true"></span>
+        <span class="mono small">SYSTEM STATUS</span>
+      </div>
+
+      <nav class="toc" aria-label="Report sections">
+        <ul id="tocList">
+          <li data-target="abstract"><span class="toc-code mono">00</span><span class="toc-label">Abstract</span><span class="toc-light"></span></li>
+          <li data-target="introduction"><span class="toc-code mono">01</span><span class="toc-label">Introduction</span><span class="toc-light"></span></li>
+          <li data-target="background"><span class="toc-code mono">02</span><span class="toc-label">Background &amp; Related Work</span><span class="toc-light"></span></li>
+          <li data-target="methodology"><span class="toc-code mono">03</span><span class="toc-label">Methodology</span><span class="toc-light"></span></li>
+          <li data-target="results"><span class="toc-code mono">04</span><span class="toc-label">Results</span><span class="toc-light"></span></li>
+          <li data-target="discussion"><span class="toc-code mono">05</span><span class="toc-label">Discussion</span><span class="toc-light"></span></li>
+          <li data-target="conclusion"><span class="toc-code mono">06</span><span class="toc-label">Conclusion</span><span class="toc-light"></span></li>
+          <li data-target="references"><span class="toc-code mono">07</span><span class="toc-label">References</span><span class="toc-light"></span></li>
+          <li data-target="appendix"><span class="toc-code mono">08</span><span class="toc-label">Appendix</span><span class="toc-light"></span></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-foot mono small">
+        <div class="foot-row"><span>BUILD</span><span id="buildTime"> —</span></div>
+        <div class="foot-row"><span>PROGRESS</span><span id="progressPct">0%</span></div>
+      </div>
+    </aside>
+
+    <!-- ===================================================================================================
+        MAIN – hero (terminal boot sequence) + paper sections
+    =================================================================================================== -->
+    <main class="main">
+
+      <!-- ================= HERO / COVER ================= -->
+      <header class="hero" id="top">
+        <div class="hero-console mono">
+          <div class="console-line" data-typed data-text="booting report_engine v1.0 ..."></div>
+          <div class="console-line" data-typed data-text="loading dataset: [OBJECT_SLICING]"></div>
+          <div class="console-line" data-typed data-text="status: ready_for_review"></div>
+        </div>
+
+        <p class="eyebrow mono" data-field="course-code">C++ Programming Concepts</p>
+
+        <h1 class="hero-title" data-field="report-title">Object Slicing in C++</h1>
+
+        <p class="hero-subtitle" data-field="report-subtitle">
+          Understanding the implications of value-based assignment with polymorphic objects
+        </p>
+
+        <div class="hero-meta">
+          <div class="meta-block">
+            <span class="mono small label">AUTHOR(S)</span>
+            <span data-field="authors">AI Research Agent</span>
+          </div>
+          <div class="meta-block">
+            <span class="mono small label">INSTITUTION</span>
+            <span data-field="institution">Google Gemini</span>
+          </div>
+          <div class="meta-block">
+            <span class="mono small label">SUPERVISOR</span>
+            <span data-field="supervisor">N/A</span>
+          </div>
+          <div class="meta-block">
+            <span class="mono small label">DATE</span>
+            <span data-field="report-date">2024-07-13</span>
+          </div>
+        </div>
+
+        <div class="hero-tags mono small" data-field="keywords">
+          <span class="tag">object-slicing</span>
+          <span class="tag">C++</span>
+          <span class="tag">polymorphism</span>
+          <span class="tag">inheritance</span>
+        </div>
+
+        <div class="scroll-cue mono small" aria-hidden="true">
+          <span>scroll</span>
+          <span class="scroll-cue-bar"></span>
+        </div>
+      </header>
+
+      <!-- ===================================================================================================
+           PARTIAL: PAPER SECTION
+           Every academic section is a <section class="paper-section">.
+           - id must match a sidebar data-target
+           - .section-index / .section-title form the numbered heading
+           - Body content is free-form: paragraphs, figures, tables, callouts
+           - class="reveal" elements fade/slide in on scroll (IntersectionObserver)
+      =================================================================================================== -->
+
+      <!-- ---------- 00 ABSTRACT ---------- -->
+      <section class="paper-section" id="abstract">
+        <div class="section-heading reveal">
+          <span class="section-index mono">00</span>
+          <h2 class="section-title">Abstract</h2>
+        </div>
+        <div class="paper-card reveal">
+          <p data-field="abstract-body">
+            This report investigates the concept of object slicing in C++, a common issue encountered when dealing with inheritance and polymorphism. Object slicing occurs when an object of a derived class is assigned to an object or reference of a base class, leading to the 'slicing off' of derived class-specific data and behavior. This report will define object slicing, demonstrate its occurrence with code examples, discuss its implications, and provide strategies to prevent it, primarily by using pointers or references for polymorphic behavior.
+          </p>
+        </div>
+      </section>
+
+      <!-- ---------- 01 INTRODUCTION ---------- -->
+      <section class="paper-section" id="introduction">
+        <div class="section-heading reveal">
+          <span class="section-index mono">01</span>
+          <h2 class="section-title">Introduction</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <h3 data-field="intro-h1">1.1 Problem Statement</h3>
+          <p data-field="intro-problem">
+            In C++ programming, particularly with object-oriented design involving inheritance, it's crucial to correctly handle polymorphic objects. A subtle yet significant issue arises when a derived class object is treated as a base class object by value, leading to a phenomenon known as object slicing. This can result in unexpected behavior, loss of data, and incomplete functionality, making it a critical concept to understand for robust C++ development.
+          </p>
+
+          <h3 data-field="intro-h2">1.2 Research Questions / Objectives</h3>
+          <ul class="paper-list" data-field="intro-objectives">
+            <li>Define object slicing and explain its underlying mechanisms.</li>
+            <li>Provide illustrative C++ code examples demonstrating object slicing.</li>
+            <li>Discuss the consequences and potential pitfalls of object slicing.</li>
+            <li>Present effective techniques to prevent object slicing, such as using pointers or references.</li>
+          </ul>
+
+          <!-- PARTIAL: CALLOUT – use for a scope, assumption, or warning -->
+          <div class="callout callout--info">
+            <span class="callout-tag mono small">SCOPE</span>
+            <p data-field="intro-scope">This study focuses exclusively on object slicing within the context of C++ programming, specifically addressing scenarios involving single and multiple inheritance with value-based assignments. It does not delve into other polymorphic issues or advanced C++ features beyond what is necessary to explain object slicing.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 02 BACKGROUND / RELATED WORK ---------- -->
+      <section class="paper-section" id="background">
+        <div class="section-heading reveal">
+          <span class="section-index mono">02</span>
+          <h2 class="section-title">Background &amp; Related Work</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <p data-field="background-body">
+            Object slicing is fundamentally tied to C++'s type system and how objects are stored and copied. When a derived class object is assigned to a base class object by value, only the base class portion of the derived object is copied. The derived class's additional data members and virtual function table (vtable) entries specific to the derived class are 'sliced off'. This effectively downcasts the object, but through assignment, resulting in a loss of derived class identity and behavior. This contrasts with polymorphic behavior achieved through base class pointers or references, where the actual type of the object is preserved, allowing virtual functions to be correctly dispatched.
+          </p>
+
+          <!-- PARTIAL: FIGURE – image + numbered caption -->
+          <figure class="figure reveal">
+            <div class="figure-frame">
+              <img data-field="figure-1-src" src="https://placehold.co/900x480/0f172a/5eead4?text=OBJECT+SLICING+CONCEPT" alt="[Diagram showing a base class object and a derived class object, illustrating how the derived part is lost during slicing.]">
+            </div>
+            <figcaption class="mono small" data-field="figure-1-caption">Figure 1. [Illustration of object slicing, demonstrating the loss of derived class members when assigned to a base class object by value.]</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ---------- 03 METHODOLOGY ---------- -->
+      <section class="paper-section" id="methodology">
+        <div class="section-heading reveal">
+          <span class="section-index mono">03</span>
+          <h2 class="section-title">Methodology</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <h3 data-field="method-h1">3.1 Experimental Setup</h3>
+          <p data-field="method-setup">
+            The investigation into object slicing was conducted using C++ code examples compiled and executed with a standard C++ compiler (e.g., g++). The examples were designed to showcase different scenarios where object slicing can occur and its effects on data and method invocation. No special hardware or external libraries were required, only a basic C++ development environment.
+          </p>
+
+          <!-- PARTIAL: CODE BLOCK – for scripts, configs, queries -->
+          <div class="code-block reveal">
+            <div class="code-block-head mono small">
+              <span data-field="code-1-label">slicing_example.cpp</span>
+              <span class="code-dots"><span></span><span></span><span></span></span>
+            </div>
+            <pre><code data-field="code-1-body">
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+class Base {
+public:
+    int base_data;
+    Base(int data = 0) : base_data(data) {}
+    virtual void show() const {
+        std::cout << "Base data: " << base_data << std::endl;
+    }
+};
+
+class Derived : public Base {
+public:
+    std::string derived_name;
+    Derived(int data = 0, const std::string& name = "Derived") : Base(data), derived_name(name) {}
+    void show() const override {
+        std::cout << "Derived data: " << base_data << ", name: " << derived_name << std::endl;
+    }
+};
+
+int main() {
+    Derived d(10, "Original Derived");
+    std::cout << "Original Derived object: ";
+    d.show(); // Calls Derived::show()
+
+    Base b = d; // OBJECT SLICING occurs here!
+    std::cout << "Base object (after slicing): ";
+    b.show(); // Calls Base::show() - derived_name is lost!
+
+    // Demonstrate with pointers (no slicing)
+    Base* bp = &d;
+    std::cout << "Base pointer to Derived object: ";
+    bp->show(); // Calls Derived::show() due to virtual function
+
+    // Another example of slicing
+    Derived d2(20, "Another Derived");
+    Base b_arr[1];
+    b_arr[0] = d2; // Slicing in array assignment
+    std::cout << "Base array element (after slicing): ";
+b_arr[0].show(); // Calls Base::show()
+
+    return 0;
+}
+            </code></pre>
+          </div>
+
+          <h3 data-field="method-h2">3.2 Procedure</h3>
+          <ol class="paper-list paper-list--numbered" data-field="method-steps">
+            <li>Define a base class (`Base`) with an integer data member (`base_data`) and a virtual `show()` function.</li>
+            <li>Define a derived class (`Derived`) inheriting from `Base`, adding a string data member (`derived_name`) and overriding the `show()` function to display both base and derived data.</li>
+            <li>In `main()`, create an instance of `Derived` (`d`) with specific values.</li>
+            <li>Demonstrate expected polymorphic behavior by calling `d.show()` and `bp->show()` (where `bp` is a `Base*` pointing to `d`).</li>
+            <li>Perform object slicing by assigning the `Derived` object (`d`) to a `Base` object (`b`) by value (`Base b = d;`).</li>
+            <li>Call `b.show()` and observe that the derived class-specific data (`derived_name`) and its overridden behavior are lost.</li>
+            <li>Illustrate another slicing scenario with an array of base class objects.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ---------- 04 RESULTS ---------- -->
+      <section class="paper-section" id="results">
+        <div class="section-heading reveal">
+          <span class="section-index mono">04</span>
+          <h2 class="section-title">Results</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <p data-field="results-intro">
+            The execution of the C++ code example (slicing_example.cpp) produced clear output demonstrating the effects of object slicing.
+          </p>
+
+          <!-- PARTIAL: DATA TABLE -->
+          <div class="table-wrap reveal">
+            <table class="data-table">
+              <caption class="mono small">Table 1. [Summary of `show()` function calls before and after object slicing.]</caption>
+              <thead>
+                <tr>
+                  <th data-field="table-1-col-1">Scenario</th>
+                  <th data-field="table-1-col-2">Expected Output</th>
+                  <th data-field="table-1-col-3">Actual Output</th>
+                  <th data-field="table-1-col-4">% Difference</th>
+                </tr>
+              </thead>
+              <tbody data-field="table-1-rows">
+                <tr><td>Derived object direct call</td><td>Derived data: 10, name: Original Derived</td><td>Derived data: 10, name: Original Derived</td><td>0%</td></tr>
+                <tr><td>Base object (after slicing) call</td><td>Base data: 10</td><td>Base data: 10</td><td>-100% (of derived data)</td></tr>
+                <tr><td>Base pointer to Derived object call</td><td>Derived data: 10, name: Original Derived</td><td>Derived data: 10, name: Original Derived</td><td>0%</td></tr>
+                <tr><td>Base array element (after slicing) call</td><td>Base data: 20</td><td>Base data: 20</td><td>-100% (of derived data)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- PARTIAL: CALLOUT – highlight a key finding -->
+          <div class="callout callout--highlight">
+            <span class="callout-tag mono small">KEY FINDING</span>
+            <p data-field="results-key-finding">The most significant finding is that direct assignment of a derived class object to a base class object (by value) invariably leads to object slicing, where derived class-specific data and behavior are lost, and the object behaves purely as a base class instance.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 05 DISCUSSION ---------- -->
+      <section class="paper-section" id="discussion">
+        <div class="section-heading reveal">
+          <span class="section-index mono">05</span>
+          <h2 class="section-title">Discussion</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <h3 data-field="discuss-h1">5.1 Interpretation</h3>
+          <p data-field="discuss-interpretation">
+            The observed results confirm that object slicing is a direct consequence of C++'s value semantics and assignment operator behavior. When an assignment from a derived to a base class object occurs, the assignment operator (either default or user-defined) copies only the base class sub-object. This means that any additional members or overridden virtual function behavior of the derived class are not transferred to the base class object, effectively 'slicing' them off. This outcome supports the hypothesis that value-based assignments can lead to loss of polymorphism.
+          </p>
+
+          <h3 data-field="discuss-h2">5.2 Limitations</h3>
+          <p data-field="discuss-limitations">
+            The primary limitation of this study is its focus on simplified C++ examples. Real-world applications might involve more complex inheritance hierarchies, multiple inheritance, and virtual inheritance, which could introduce additional subtleties not fully explored here. Furthermore, the report does not delve into performance implications or advanced memory management techniques related to preventing slicing.
+          </p>
+        </div>
+      </section>
+
+      <!-- ---------- 06 CONCLUSION ---------- -->
+      <section class="paper-section" id="conclusion">
+        <div class="section-heading reveal">
+          <span class="section-index mono">06</span>
+          <h2 class="section-title">Conclusion</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <p data-field="conclusion-body">
+            Object slicing is a critical concept in C++ object-oriented programming, highlighting the importance of understanding value semantics versus pointer/reference semantics in polymorphism. It occurs when a derived class object is assigned to a base class object by value, leading to the truncation of derived class-specific attributes and behaviors. To prevent object slicing, it is crucial to use base class pointers or references when working with polymorphic objects, ensuring that the runtime type of the object is preserved. Future work could explore the impact of smart pointers and move semantics on object slicing scenarios.
+          </p>
+        </div>
+      </section>
+
+      <!-- ---------- 07 REFERENCES ---------- -->
+      <section class="paper-section" id="references">
+        <div class="section-heading reveal">
+          <span class="section-index mono">07</span>
+          <h2 class="section-title">References</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <ol class="reference-list" data-field="reference-list">
+            <li>[1] Stroustrup, B. (2013). <em>The C++ Programming Language (4th Edition)</em>. Addison-Wesley Professional.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ---------- 08 APPENDIX ---------- -->
+      <section class="paper-section" id="appendix">
+        <div class="section-heading reveal">
+          <span class="section-index mono">08</span>
+          <h2 class="section-title">Appendix</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <p data-field="appendix-body">
+            Detailed C++ code examples used in the methodology section, including additional test cases demonstrating the effects of object slicing with virtual functions and more complex data types.
+          </p>
+        </div>
+      </section>
+
+      <footer class="report-footer mono small">
+        <span data-field="footer-text">Google Gemini © Object Slicing Report © 2024-07-13</span>
+      </footer>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
