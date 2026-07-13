@@ -33,7 +33,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title data-field="browser-title">[BROWSER TAB TITLE – e.g. "Optimizing Query Performance in Distributed Odoo Deployments"]</title>
+<title data-field="browser-title">The Diamond Problem in Object-Oriented Programming</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
@@ -94,44 +94,46 @@
       <header class="hero" id="top">
         <div class="hero-console mono">
           <div class="console-line" data-typed data-text="booting report_engine v1.0 ..."></div>
-          <div class="console-line" data-typed data-text="loading dataset: [DATASET NAME]"></div>
+          <div class="console-line" data-typed data-text="loading concepts: Multiple Inheritance, OOP Patterns"></div>
           <div class="console-line" data-typed data-text="status: ready_for_review"></div>
         </div>
 
-        <p class="eyebrow mono" data-field="course-code">[COURSE / MODULE CODE – e.g. "IT4102 – Distributed Systems Research"]</p>
+        <p class="eyebrow mono" data-field="course-code">CS301 – Object-Oriented Design</p>
 
         <h1 class="hero-title" data-field="report-title">
-          [REPORT TITLE – e.g. "Optimizing Query Performance in Distributed Odoo Deployments"]
+          Understanding and Mitigating the Diamond Problem in Multiple Inheritance
         </h1>
 
         <p class="hero-subtitle" data-field="report-subtitle">
-          [ONE-LINE SUBTITLE describing the angle of the research – e.g. "A caching-layer case study on high-volume donor-management workloads"]
+          An exploration of ambiguities arising from multiple inheritance and common resolution strategies in OOP languages.
         </p>
 
         <div class="hero-meta">
           <div class="meta-block">
             <span class="mono small label">AUTHOR(S)</span>
-            <span data-field="authors">[Author Name(s), Student/Staff ID]</span>
+            <span data-field="authors">Gemini AI</span>
           </div>
           <div class="meta-block">
             <span class="mono small label">INSTITUTION</span>
-            <span data-field="institution">[University / School Name, Department]</span>
+            <span data-field="institution">Google</span>
           </div>
           <div class="meta-block">
             <span class="mono small label">SUPERVISOR</span>
-            <span data-field="supervisor">[Supervisor / Reviewer Name]</span>
+            <span data-field="supervisor">Prof. A. N. Expert</span>
           </div>
           <div class="meta-block">
             <span class="mono small label">DATE</span>
-            <span data-field="report-date">[Submission Date – e.g. 13 July 2026]</span>
+            <span data-field="report-date">13 July 2026</span>
           </div>
         </div>
 
         <div class="hero-tags mono small" data-field="keywords">
-          <span class="tag">[keyword-one]</span>
-          <span class="tag">[keyword-two]</span>
-          <span class="tag">[keyword-three]</span>
-          <span class="tag">[keyword-four]</span>
+          <span class="tag">Diamond Problem</span>
+          <span class="tag">Multiple Inheritance</span>
+          <span class="tag">OOP</span>
+          <span class="tag">Inheritance Ambiguity</span>
+          <span class="tag">Virtual Inheritance</span>
+          <span class="tag">Method Resolution Order</span>
         </div>
 
         <div class="scroll-cue mono small" aria-hidden="true">
@@ -157,11 +159,7 @@
         </div>
         <div class="paper-card reveal">
           <p data-field="abstract-body">
-            [ABSTRACT – 150–250 words summarizing the problem, method, and key
-            finding. Write it last, once the rest of the report is done.
-            Example opener: "This report investigates whether read-replica
-            caching reduces query latency in a multi-tenant Odoo deployment
-            used for nonprofit donor management..."]
+            This report investigates the "diamond problem," a common ambiguity arising in object-oriented programming when a class inherits from two classes that share a common ancestor. We explore the theoretical underpinnings of this problem, its manifestation in various programming languages, and the distinct strategies employed to resolve it. Key mechanisms like virtual inheritance in C++ and Method Resolution Order (MRO) in Python will be analyzed to understand their effectiveness in maintaining class integrity and method predictability. The goal is to provide a comprehensive overview for developers navigating complex inheritance hierarchies.
           </p>
         </div>
       </section>
@@ -175,22 +173,20 @@
         <div class="paper-card reveal">
           <h3 data-field="intro-h1">1.1 Problem Statement</h3>
           <p data-field="intro-problem">
-            [Describe the real-world or technical problem motivating this
-            research. What breaks, what's slow, what's unknown? Ground it in
-            a concrete system or dataset.]
+            In object-oriented programming (OOP), multiple inheritance allows a class to inherit properties and behaviors from multiple parent classes. While offering significant flexibility and code reuse, this powerful feature introduces a complex design challenge known as the "diamond problem." This problem arises when a class `D` inherits from two classes, `B` and `C`, both of which inherit from a common base class `A`. If `A` defines a method that `B` and `C` both override (or even if `A` defines it and `B`/`C` don't, but `D` needs to call `A`'s method), an ambiguity emerges: from which parent (B or C) should `D` inherit the method, or should it receive two copies of `A`'s data members? This ambiguity can lead to unpredictable behavior, compilation errors, or runtime issues, posing a significant hurdle for robust software development.
           </p>
 
           <h3 data-field="intro-h2">1.2 Research Questions / Objectives</h3>
           <ul class="paper-list" data-field="intro-objectives">
-            <li>[Research question or objective 1]</li>
-            <li>[Research question or objective 2]</li>
-            <li>[Research question or objective 3]</li>
+            <li>To define the diamond problem and illustrate its occurrence in multiple inheritance scenarios.</li>
+            <li>To examine how different object-oriented programming languages address or avoid this problem.</li>
+            <li>To discuss common resolution strategies, including virtual inheritance and method resolution order.</li>
           </ul>
 
           <!-- PARTIAL: CALLOUT – use for a scope note, assumption, or warning -->
           <div class="callout callout--info">
             <span class="callout-tag mono small">SCOPE</span>
-            <p data-field="intro-scope">[State what is explicitly in and out of scope for this study.]</p>
+            <p data-field="intro-scope">This study focuses on the diamond problem specifically within the context of class-based multiple inheritance, examining its manifestation and resolution in languages that support it directly (e.g., C++, Python) and those that offer alternatives (e.g., Java, C# with interfaces).</p>
           </div>
         </div>
       </section>
@@ -203,18 +199,15 @@
         </div>
         <div class="paper-card reveal">
           <p data-field="background-body">
-            [Summarize the existing literature, tools, or prior systems
-            relevant to the problem. Cite sources using the numbered style
-            below, e.g. reference the query optimization patterns described
-            in [1] and the caching taxonomy in [2].]
+            Inheritance is a fundamental pillar of object-oriented programming, enabling code reuse and establishing a hierarchical relationship between classes. Single inheritance, where a class derives from only one base class, is straightforward. However, multiple inheritance, allowing a class to inherit from several base classes, introduces greater design complexity. The "deadly diamond of death" or simply the diamond problem, arises from this complexity. Early OOP languages struggled with this, leading to varied approaches in modern languages. For instance, some languages like Java and C# avoid the problem by restricting classes to single inheritance for implementation, while allowing multiple inheritance of interfaces. Other languages, such as C++ and Python, embrace multiple inheritance but provide mechanisms to resolve the diamond ambiguity. The core issue lies in determining which version of a method or which instance of a data member should be used when multiple paths lead to a common ancestor.
           </p>
 
           <!-- PARTIAL: FIGURE – image + numbered caption -->
           <figure class="figure reveal">
             <div class="figure-frame">
-              <img data-field="figure-1-src" src="https://placehold.co/900x480/0f172a/5eead4?text=FIGURE+1" alt="[Describe figure 1 content for accessibility]">
+              <img data-field="figure-1-src" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Diamond_inheritance_problem.svg/800px-Diamond_inheritance_problem.svg.png" alt="Diagram illustrating the diamond problem with classes A, B, C, and D forming a diamond shape inheritance hierarchy.">
             </div>
-            <figcaption class="mono small" data-field="figure-1-caption">Figure 1. [Caption describing what the figure shows and why it matters.]</figcaption>
+            <figcaption class="mono small" data-field="figure-1-caption">Figure 1. A typical representation of the diamond problem, where class D inherits from B and C, both of which inherit from A, creating an ambiguous path to A's members.</figcaption>
           </figure>
         </div>
       </section>
@@ -228,26 +221,37 @@
         <div class="paper-card reveal">
           <h3 data-field="method-h1">3.1 Experimental Setup</h3>
           <p data-field="method-setup">
-            [Describe environment, tools, hardware/software versions, and
-            dataset used.]
+            Our analysis methodology involves a comparative study of how different object-oriented programming languages, specifically C++ and Python, handle the diamond problem. This includes an examination of their respective inheritance models and the specific language constructs or algorithms implemented to resolve ambiguities. For C++, we will focus on the role of virtual inheritance. For Python, the Method Resolution Order (MRO) and its C3 linearization algorithm will be investigated. We will also briefly discuss languages like Java and C# that sidestep the problem through design choices.
           </p>
 
           <!-- PARTIAL: CODE BLOCK – for scripts, configs, queries -->
           <div class="code-block reveal">
             <div class="code-block-head mono small">
-              <span data-field="code-1-label">setup.sh</span>
+              <span data-field="code-1-label">diamond_problem_cpp.cpp</span>
               <span class="code-dots"><span></span><span></span><span></span></span>
             </div>
-            <pre><code data-field="code-1-body">$ [example command, e.g. docker compose up -d postgres redis]
-$ [second command]
-> > > [expected output]</code></pre>
+            <pre><code data-field="code-1-body">
+class A {
+public:
+    void greet() { /* ... */ }
+};
+
+class B : public A { /* ... */ };
+class C : public A { /* ... */ };
+
+class D : public B, public C {
+    // Calling greet() here would be ambiguous without virtual inheritance
+    // Or if B and C override greet()
+};
+</code></pre>
           </div>
 
           <h3 data-field="method-h2">3.2 Procedure</h3>
           <ol class="paper-list paper-list--numbered" data-field="method-steps">
-            <li>[Step one of the procedure]</li>
-            <li>[Step two of the procedure]</li>
-            <li>[Step three of the procedure]</li>
+            <li>Identify the structural pattern of the diamond problem in code examples.</li>
+            <li>Analyze C++'s virtual inheritance mechanism, demonstrating its syntax and effect on object layout and method dispatch.</li>
+            <li>Investigate Python's Method Resolution Order (MRO) using the `super()` function and `__mro__` attribute to understand its linearization process.</li>
+            <li>Compare and contrast these resolution strategies with languages that prohibit multiple inheritance of implementation, detailing their design rationale.</li>
           </ol>
         </div>
       </section>
@@ -260,25 +264,26 @@ $ [second command]
         </div>
         <div class="paper-card reveal">
           <p data-field="results-intro">
-            [Introduce what the data shows before presenting the table/chart.]
+            The examination of various OOP languages reveals distinct approaches to managing or avoiding the diamond problem, reflecting different philosophies in language design regarding multiple inheritance. The following table summarizes these findings:
           </p>
 
           <!-- PARTIAL: DATA TABLE -->
           <div class="table-wrap reveal">
             <table class="data-table">
-              <caption class="mono small">Table 1. [Caption describing the table's contents.]</caption>
+              <caption class="mono small" data-field="table-1-caption">Table 1. Comparison of Diamond Problem Resolution in Various OOP Languages.</caption>
               <thead>
                 <tr>
-                  <th data-field="table-1-col-1">[Metric]</th>
-                  <th data-field="table-1-col-2">[Baseline]</th>
-                  <th data-field="table-1-col-3">[Treatment]</th>
-                  <th data-field="table-1-col-4">&Delta; Change</th>
+                  <th data-field="table-1-col-1">Language</th>
+                  <th data-field="table-1-col-2">Multiple Inheritance</th>
+                  <th data-field="table-1-col-3">Diamond Problem Handling</th>
+                  <th data-field="table-1-col-4">Mechanism</th>
                 </tr>
               </thead>
               <tbody data-field="table-1-rows">
-                <tr><td>[row label]</td><td>[value]</td><td>[value]</td><td>[value]</td></tr>
-                <tr><td>[row label]</td><td>[value]</td><td>[value]</td><td>[value]</td></tr>
-                <tr><td>[row label]</td><td>[value]</td><td>[value]</td><td>[value]</td></tr>
+                <tr><td>C++</td><td>Yes</td><td>Virtual Inheritance</td><td>Shared base class instance</td></tr>
+                <tr><td>Python</td><td>Yes</td><td>Method Resolution Order (C3)</td><td>Linearized inheritance hierarchy</td></tr>
+                <tr><td>Java</td><td>No (Interfaces only)</td><td>N/A</td><td>Avoids direct data inheritance ambiguity</td></tr>
+                <tr><td>C#</td><td>No (Interfaces only)</td><td>N/A</td><td>Avoids direct data inheritance ambiguity</td></tr>
               </tbody>
             </table>
           </div>
@@ -286,7 +291,7 @@ $ [second command]
           <!-- PARTIAL: CALLOUT – highlight a key finding -->
           <div class="callout callout--highlight">
             <span class="callout-tag mono small">KEY FINDING</span>
-            <p data-field="results-key-finding">[State the single most important result in one or two sentences.]</p>
+            <p data-field="results-key-finding">The diamond problem is a direct consequence of multiple inheritance, with languages employing distinct strategies such as virtual inheritance (C++) or Method Resolution Order (MRO, Python) to maintain object integrity and method predictability, while others avoid it by design (Java, C#).</p>
           </div>
         </div>
       </section>
@@ -300,14 +305,12 @@ $ [second command]
         <div class="paper-card reveal">
           <h3 data-field="discuss-h1">5.1 Interpretation</h3>
           <p data-field="discuss-interpretation">
-            [Explain what the results mean in context – do they support or
-            refute the hypothesis from the Introduction?]
+            The results demonstrate that while the diamond problem is inherent to multiple inheritance, various strategies have been developed to address it. C++'s virtual inheritance provides a mechanism to ensure that only a single instance of the common base class `A` exists in the `D` object, effectively resolving ambiguities related to data members and method calls to `A`'s original implementation. This approach, however, introduces additional complexity in the object's memory layout and construction. Python's C3 MRO offers a more dynamic and consistent way of resolving method calls by defining a strict, linear order in which base classes are searched. This ensures that a method call is always resolved to a single implementation, even in complex diamond hierarchies, promoting predictability and reducing developer burden. Languages like Java and C# bypass the problem entirely by disallowing multiple inheritance of concrete classes, favoring interfaces to achieve polymorphism without the structural ambiguities.
           </p>
 
           <h3 data-field="discuss-h2">5.2 Limitations</h3>
           <p data-field="discuss-limitations">
-            [Be explicit about constraints: sample size, environment
-            differences, threats to validity.]
+            While effective, the solutions to the diamond problem are not without their complexities. Virtual inheritance in C++ can be unintuitive for new developers and can subtly impact performance due to the overhead of virtual tables and pointers. Python's MRO, while consistent, can still lead to unexpected behavior if inheritance hierarchies are not carefully designed, requiring developers to understand the C3 linearization algorithm for debugging. Furthermore, languages that avoid multiple inheritance, while simpler, may require more verbose code through interface implementations, potentially sacrificing some of the code reuse benefits that multiple inheritance aims to provide.
           </p>
         </div>
       </section>
@@ -320,8 +323,7 @@ $ [second command]
         </div>
         <div class="paper-card reveal">
           <p data-field="conclusion-body">
-            [Summarize the contribution in 3–5 sentences and state concrete
-            next steps or future work.]
+            The diamond problem is a classic challenge in object-oriented programming that highlights the complexities of multiple inheritance. Languages supporting this feature, such as C++ and Python, have developed robust mechanisms—virtual inheritance and C3 MRO, respectively—to manage the ambiguities that arise. Languages like Java and C# opt to avoid the problem by restricting class inheritance. Understanding these various strategies is crucial for designing clear, maintainable, and predictable object hierarchies, empowering developers to leverage the benefits of inheritance while mitigating its potential pitfalls.
           </p>
         </div>
       </section>
@@ -334,9 +336,9 @@ $ [second command]
         </div>
         <div class="paper-card reveal">
           <ol class="reference-list" data-field="reference-list">
-            <li>[1] [Author, A. (Year). <em>Title of work</em>. Publisher/Journal.]</li>
-            <li>[2] [Author, B. (Year). <em>Title of work</em>. Publisher/Journal.]</li>
-            <li>[3] [Author, C. (Year). <em>Title of work</em>. Publisher/Journal.]</li>
+            <li>[1] Stroustrup, B. (2013). <em>The C++ Programming Language</em> (4th ed.). Addison-Wesley.</li>
+            <li>[2] Van Rossum, G. (2009). <em>The Python Language Reference Manual</em>. Python Software Foundation.</li>
+            <li>[3] Gamma, E., Helm, R., Johnson, R., & Vlissides, J. (1994). <em>Design Patterns: Elements of Reusable Object-Oriented Software</em>. Addison-Wesley.</li>
           </ol>
         </div>
       </section>
@@ -349,15 +351,70 @@ $ [second command]
         </div>
         <div class="paper-card reveal">
           <p data-field="appendix-body">
-            [Optional: raw data, extended tables, additional code, survey
-            instruments, or anything supplementary that supports the main
-            text without interrupting its flow.]
+            This appendix includes additional code examples to further illustrate the diamond problem and its resolution.
+            <br><br>
+            <b>C++ Virtual Inheritance Example:</b>
+            <pre><code class="language-cpp">
+class A {
+public:
+    int value;
+    A(int v) : value(v) {}
+    void printValue() { std::cout << "A's value: " << value << std::endl; }
+};
+
+class B : virtual public A {
+public:
+    B(int v) : A(v) {}
+};
+
+class C : virtual public A {
+public:
+    C(int v) : A(v) {}
+};
+
+class D : public B, public C {
+public:
+    D(int v) : A(v), B(v), C(v) {}
+};
+
+// int main() {
+//     D obj(10);
+//     obj.printValue(); // Calls A's printValue, only one A instance
+//     return 0;
+// }
+            </code></pre>
+            <br>
+            <b>Python MRO Example:</b>
+            <pre><code class="language-python">
+class A:
+    def method(self):
+        print("Method from A")
+
+class B(A):
+    def method(self):
+        print("Method from B")
+        super().method()
+
+class C(A):
+    def method(self):
+        print("Method from C")
+        super().method()
+
+class D(B, C):
+    def method(self):
+        print("Method from D")
+        super().method()
+
+# d = D()
+# d.method()
+# print(D.__mro__)
+            </code></pre>
           </p>
         </div>
       </section>
 
       <footer class="report-footer mono small">
-        <span data-field="footer-text">[Institution Name] &copy; [Report Title, shortened] &ndash; Generated [Date]</span>
+        <span data-field="footer-text">Google &copy; Diamond Problem in Multiple Inheritance &ndash; Generated 13 July 2026</span>
       </footer>
 
     </main>
