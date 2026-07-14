@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Leak Report in C++</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #0056b3;
+        }
+        pre {
+            background: #eee;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: "Courier New", Courier, monospace;
+            background-color: #e0e0e0;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        a {
+            color: #0056b3;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Memory Leak Report in C++</h1>
+        <p>This report details what memory leaks are in C++, their causes, effects, and common methods for detection and prevention.</p>
+
+        <h2>1. What is a Memory Leak?</h2>
+        <p>A memory leak in C++ occurs when a program allocates memory dynamically using operators like <code>new</code> or functions like <code>malloc()</code>, but fails to deallocate that memory using <code>delete</code> or <code>free()</code> respectively, once the memory is no longer needed. This causes the program to hold onto memory that it no longer requires, leading to a gradual reduction in available memory resources over time.</p>
+
+        <h2>2. Causes of Memory Leaks</h2>
+        <ul>
+            <li><strong>Forgetting to <code>delete</code>:</strong> The most common cause is simply forgetting to call <code>delete</code> on memory allocated with <code>new</code>, or <code>delete[]</code> for arrays allocated with <code>new[]</code>.</li>
+            <li><strong>Exceptions:</strong> If an exception occurs after memory is allocated but before it's deallocated, and there's no proper exception handling to clean up the memory, a leak can occur.</li>
+            <li><strong>Lost Pointers:</strong> If a pointer to dynamically allocated memory is reassigned or goes out of scope before the memory is deallocated, the original memory block becomes unreachable and cannot be freed.</li>
+            <li><strong>Incorrect use of Smart Pointers:</strong> While smart pointers like <code>std::unique_ptr</code> and <code>std::shared_ptr</code> are designed to prevent memory leaks, incorrect usage (e.g., creating circular references with <code>std::shared_ptr</code> without using <code>std::weak_ptr</code>) can still lead to leaks.</li>
+            <li><strong>C-style string manipulation:</strong> Using functions like <code>strdup()</code> without a corresponding <code>free()</code>.</li>
+        </ul>
+
+        <h2>3. Effects of Memory Leaks</h2>
+        <ul>
+            <li><strong>Reduced System Performance:</strong> As a program consumes more and more memory, the operating system may start swapping memory to disk, leading to slower performance.</li>
+            <li><strong>Program Crashes:</strong> Eventually, the program or even the entire system might run out of available memory, leading to crashes (e.g., <code>std::bad_alloc</code> exception).</li>
+            <li><strong>Instability:</strong> Other applications running on the same system might also experience performance degradation or crashes due to resource starvation.</li>
+            <li><strong>Security Vulnerabilities:</strong> In some rare cases, memory leaks can be exploited as part of a denial-of-service attack.</li>
+        </ul>
+
+        <h2>4. Example of a Memory Leak</h2>
+        <p>Consider the following C++ code snippet:</p>
+        <pre><code class="language-cpp">
+void memoryLeakFunction() {
+    int* data = new int[100]; // Memory allocated
+    // ... use data ...
+    // Forgot to delete data; // This line is missing, causing a leak
+}
+
+int main() {
+    for (int i = 0; i < 1000; ++i) {
+        memoryLeakFunction();
+    }
+    return 0;
+}
+        </code></pre>
+        <p>In the <code>memoryLeakFunction</code>, an array of 100 integers is allocated on the heap. However, there's no corresponding <code>delete[] data;</code> call. If this function is called repeatedly, as in the <code>main</code> function's loop, each call will leak <code>100 * sizeof(int)</code> bytes of memory.</p>
+
+        <h2>5. Detection and Prevention</h2>
+        <h3>5.1. Detection Tools:</h3>
+        <ul>
+            <li><strong>Valgrind (Linux):</strong> A powerful memory debugging tool that can detect various memory errors, including leaks.</li>
+            <li><strong>AddressSanitizer (ASan):</strong> A fast memory error detector integrated into GCC and Clang.</li>
+            <li><strong>Dr. Memory (Windows/Linux/macOS):</strong> A memory debugging tool similar to Valgrind.</li>
+            <li><strong>Visual Leak Detector (Windows, Visual Studio):</strong> An open-source leak detector for Visual C++.</li>
+        </ul>
+
+        <h3>5.2. Prevention Strategies:</h3>
+        <ul>
+            <li><strong>RAII (Resource Acquisition Is Initialization):</strong> This is a core C++ idiom. Resources (like memory) are acquired in the constructor of an object and released in its destructor. When the object goes out of scope, its destructor is automatically called, ensuring cleanup.</li>
+            <li><strong>Smart Pointers:</strong> Use <code>std::unique_ptr</code> for exclusive ownership and <code>std::shared_ptr</code> for shared ownership of dynamically allocated objects. These automatically deallocate memory when the last pointer to the object is destroyed. Use <code>std::weak_ptr</code> to break circular references with <code>std::shared_ptr</code>.</li>
+            <li><strong>Containers:</strong> Utilize standard library containers (e.g., <code>std::vector</code>, <code>std::string</code>) which manage their memory automatically.</li>
+            <li><strong>Custom Allocators:</strong> For highly specialized scenarios, carefully designed custom allocators can help manage memory more effectively and prevent leaks.</li>
+            <li><strong>Code Reviews:</strong> Regular code reviews can help identify potential memory management issues.</li>
+        </ul>
+
+        <h2>6. Conclusion</h2>
+        <p>Memory leaks are a significant problem in C++ development, leading to unstable and underperforming applications. Understanding their causes and employing robust prevention strategies, especially RAII and smart pointers, alongside effective detection tools, is crucial for writing reliable and efficient C++ code.</p>
+    </div>
+</body>
+</html>
