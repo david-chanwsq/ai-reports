@@ -11,3 +11,5 @@ examples: [
     "Create a report on ... "
   ],
 --------------------------------------------------
+
+Choose the skill that best fits the user input based on the name, description, and examples. 
