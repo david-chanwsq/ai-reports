@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Leak Report</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Memory Leak Report in C++</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Introduction</h2>
+            <p>Memory leaks are a common type of resource leak that occur when a computer program incorrectly manages memory allocations. In C++, where manual memory management is often employed using `new` and `delete`, memory leaks can be particularly prevalent if `delete` is not called for every `new`.</p>
+        </section>
+        <section>
+            <h2>What are Memory Leaks?</h2>
+            <p>A memory leak occurs when a program allocates memory from the heap but fails to deallocate that memory when it is no longer needed. This causes the program's memory usage to grow over time, potentially leading to performance degradation or even application crashes if all available memory is consumed.</p>
+            <h3>Common Causes:</h3>
+            <ul>
+                <li>Forgetting to `delete` memory allocated with `new`.</li>
+                <li>Losing pointers to allocated memory (e.g., reassigning a pointer before deleting the original memory).</li>
+                <li>Circular references in smart pointers (though less common with modern C++ smart pointers like `std::shared_ptr` if `std::weak_ptr` is used for back references).</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Impact of Memory Leaks</h2>
+            <ul>
+                <li><b>Performance Degradation:</b> As more memory is leaked, the system might start using swap space, leading to slower execution.</li>
+                <li><b>Application Crashes:</b> Eventually, the application might exhaust available memory, leading to an out-of-memory error and a crash.</li>
+                <li><b>System Instability:</b> In severe cases, a large number of memory leaks from one application can affect the stability of the entire system.</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Preventing Memory Leaks in C++</h2>
+            <h3>Best Practices:</h3>
+            <ul>
+                <li><b>RAII (Resource Acquisition Is Initialization):</b> Use RAII to manage resources. Smart pointers (`std::unique_ptr`, `std::shared_ptr`) are prime examples, as they automatically deallocate memory when they go out of scope.</li>
+                <li><b>Be Mindful of `new` and `delete`:</b> If manual memory management is unavoidable, ensure every `new` has a corresponding `delete`.</li>
+                <li><b>Use Containers:</b> Standard Library containers like `std::vector`, `std::string`, `std::map`, etc., manage their memory automatically.</li>
+                <li><b>Code Reviews:</b> Regular code reviews can help identify potential memory management issues.</li>
+                <li><b>Memory Profilers:</b> Tools like Valgrind (Linux), Dr. Memory (Windows/Linux), or built-in profilers in IDEs can detect memory leaks during development and testing.</li>
+            </ul>
+            <h3>Example of a Memory Leak:</h3>
+            <pre><code class="language-cpp">
+void memoryLeakFunction() {
+    int* data = new int[100];
+    // Forgot to delete data
+}
+
+int main() {
+    for (int i = 0; i < 1000; ++i) {
+        memoryLeakFunction();
+    }
+    return 0;
+}
+            </code></pre>
+            <h3>Example of Preventing a Memory Leak with `std::unique_ptr`:</h3>
+            <pre><code class="language-cpp">
+#include <memory>
+
+void noMemoryLeakFunction() {
+    std::unique_ptr<int[]> data = std::make_unique<int[]>(100);
+    // No need to manually delete, std::unique_ptr handles it
+}
+
+int main() {
+    for (int i = 0; i < 1000; ++i) {
+        noMemoryLeakFunction();
+    }
+    return 0;
+}
+            </code></pre>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2026 Memory Leak Report</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
