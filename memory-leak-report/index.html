@@ -43,7 +43,7 @@
         <h2>Common Causes of Memory Leaks</h2>
         <ul>
             <li><strong>Forgetting to <code>delete</code>:</strong> The most straightforward cause is simply forgetting to pair a <code>new</code> with a <code>delete</code>.</li>
-            <li><strong>Exceptions:</strong> If an exception occurs after memory is allocated but before it's deallocated, and there's no proper exception handling to catch and deallocate, a leak can occur.</li>
+            <li><strong>Exceptions:</b> If an exception occurs after memory is allocated but before it's deallocated, and there's no proper exception handling to catch and deallocate, a leak can occur.</li>
             <li><strong>Reassigning Pointers:</strong> If a pointer to dynamically allocated memory is reassigned to point to another memory location without first deleting the original memory, the original memory becomes leaked.</li>
             <li><strong>Circular References:</strong> In more complex data structures, circular references between objects managed by smart pointers (like <code>std::shared_ptr</code>) can prevent their memory from being freed, though this is less common with raw pointers.</li>
         </ul>
@@ -68,7 +68,7 @@ int main() {
         <p>The best way to prevent memory leaks in C++ is to adopt good memory management practices and leverage modern C++ features:</p>
         <ul>
             <li><strong>Smart Pointers:</strong> Use smart pointers (<code>std::unique_ptr</code>, <code>std::shared_ptr</code>, <code>std::weak_ptr</code>) to manage dynamically allocated memory. They automatically deallocate memory when the object goes out of scope or is no longer referenced.</li>
-            <li><strong>RAII (Resource Acquisition Is Initialization):</strong> This programming idiom ties the lifetime of a resource (like memory) to the lifetime of an object. The resource is acquired in the constructor and released in the destructor. Smart pointers are an excellent example of RAII.</li>
+            <li><strong>RAII (Resource Acquisition Is Initialization):</b> This programming idiom ties the lifetime of a resource (like memory) to the lifetime of an object. The resource is acquired in the constructor and released in the destructor. Smart pointers are an excellent example of RAII.</li>
             <li><strong>Careful Manual Management:</strong> If manual memory management is unavoidable, always ensure that every <code>new</code> has a corresponding <code>delete</code> and every <code>malloc</code> has a <code>free</code>. Use tools like Valgrind to detect leaks during development.</li>
             <li><strong>Container Classes:</strong> Use standard library containers (e.g., <code>std::vector</code>, <code>std::string</code>) which handle their own memory management.</li>
         </ul>
