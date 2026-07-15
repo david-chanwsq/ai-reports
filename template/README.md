@@ -11,7 +11,12 @@ examples: [
 ]
 --------------------------------------------------
 
+ONLY pick from the templates above do not come up with your own templates. 
+
 Framework: 
 - Analyze the Templates shown above 
 - Choose the best template based on the user input
 - Output the name of the template and its full path name
+
+If there are no fitting templates just say that there aren't any fitting templates. 
+
