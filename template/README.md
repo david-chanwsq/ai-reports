@@ -17,3 +17,13 @@ Framework:
 - use the "Get template" tool (e.g path = "template/c-plus-plus") to get the contents of the template 
 - use the "Get template file" tool to get the contents of all the files in the template (e.g template/c-plus-plus/index.html)
 - output the template's contents in string 
+
+output in this JSON structure
+{
+	"template": "c-plus-plus", 
+    "contents": {
+      "index.html": "<!DOCTYPE html>\n<!--\n  ...",
+      "script.js": "/* ============================================================================\n   IT RESEARCH REPORT TEMPLATE — BEHAVIOR\n   ...",
+      "styles.css": "/* ============================================================================\n   IT RESEARCH REPORT TEMPLATE — STYLE SYSTEM\n   ..."
+    }
+}
