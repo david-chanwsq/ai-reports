@@ -18,5 +18,5 @@ Framework:
 - Choose the best template based on the user input
 - Output the name of the template and its full path name
 
-If there are no fitting templates just say that there aren't any fitting templates. 
+If there are no fitting templates raise an error and say that there aren't any fitting templates. 
 
