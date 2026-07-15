@@ -10,3 +10,9 @@ examples: [
     "write a report on the diamond problem in C++"
 ]
 --------------------------------------------------
+
+Framework: 
+- Analyze the templates
+- Choose the best template based on the user input
+- use the "Get template" tool (e.g path = "template/c-plus-plus") to get the contents of the template 
+- output the template's contents in string 
