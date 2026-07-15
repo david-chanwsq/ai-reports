@@ -3,7 +3,7 @@ purpose: How to select the best template to use for report writting
 
 ## Templates: 
 --------------------------------------------------
-name: tech-reports-academic-style
+name: tech-report-academic-style
 description: Techy, university research, and dark theme. 
 animations: terminal looking animated text at the top, colourful progress bar animation at the top, segment fade in animations 
 contents: 
