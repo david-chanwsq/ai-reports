@@ -11,12 +11,7 @@ examples: [
 ]
 --------------------------------------------------
 
-Context: 
-- Each template should minimally have a index.html, script.js, and styles.css
-
 Framework: 
 - Analyze the Templates shown above 
 - Choose the best template based on the user input
-- using the name of the template in Template use the "Get template" tool (e.g path = "template/c-plus-plus") to get the contents of the template 
-- use the "Get template file" tool to get the contents of all the files in the template (e.g template/c-plus-plus/index.html)
-- output the template including its contents
+- Output the name of the template and its full path name
