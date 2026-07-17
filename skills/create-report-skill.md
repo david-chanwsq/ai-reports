@@ -23,8 +23,6 @@ Framework:
 2. Research 
 - Use the research agent
 - Pass in only the index.html (as the template), report name, and user input
-- The agent will return the index.html but with the placeholders filled in with the research
-- Suggest deeper research areas the user could go into
 
 3. Create the page (Pass these instructions to the Make report agent)
 - Check if there is already a similar report or a report with the same name using the list files in GitHub tool. You do not need to provide a path for this step. Search for names that are similar like "diamond problem" and the user asks you to make "diamond-problem-report". When this happens tell the user that the report already exists and do not create a new report. 
