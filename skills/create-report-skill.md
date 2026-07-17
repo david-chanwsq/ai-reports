@@ -22,7 +22,7 @@ Framework:
 
 2. Research 
 - Use the research agent
-- Pass in only the index.html from the template
+- Pass in only the index.html (as the template), report name, and user input
 - The agent will return the index.html but with the placeholders filled in with the research
 - Suggest deeper research areas the user could go into
 
