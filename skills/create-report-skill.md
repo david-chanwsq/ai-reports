@@ -20,11 +20,7 @@ Framework:
 - Analyse the user's intention from the message
 - Name all the folders the name given by the user but replace the spaces with dashes and lower caps any capitalized letters. Example: "Dangling POINTER report" -> "danging-pointer-report"
 
-2. Research 
-- Use the research agent
-- input: the index.html from the template (as the template), report name, and user input
-
-3. Create the page (Pass these instructions to the Make report agent)
+2. Create the page (Pass these instructions to the Make report agent)
 - Check if there is already a similar report or a report with the same name using the list files in GitHub tool. You do not need to provide a path for this step. Search for names that are similar like "diamond problem" and the user asks you to make "diamond-problem-report". When this happens tell the user that the report already exists and do not create a new report. 
 - Use the Create a folder with the name of the report, and all files included in the template inside that folder
 - Follow the template for each file, and adjust according to the report that the user wants by editting the files
