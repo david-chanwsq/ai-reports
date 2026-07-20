@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-field="browser-title">Retrieval-Augmented Generation (RAG) Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ============ TOP PROGRESS BAR (reading/scroll progress) ============ -->
+  <div class="progress-rail" aria-hidden="true">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- ============ MOBILE NAV TOGGLE ============ -->
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle table of contents" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="layout">
+
+    <!-- ==================================================================
+         SIDEBAR — "SYSTEM STATUS" (this is the signature element).
+         Acts as the table of contents AND a live scrollspy. Each <li> maps
+         to a section by data-target="<section id>". Do not remove
+         data-target — script.js uses it to sync highlight + status light.
+         To add a section: copy one <li>, change data-target + label + code.
+    =================================================================== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-head">
+        <span class="status-dot status-dot--live" aria-hidden="true"></span>
+        <span class="mono small">SYSTEM STATUS</span>
+      </div>
+
+      <nav class="toc" aria-label="Report sections">
+        <ul id="tocList">
+          <li data-target="abstract"><span class="toc-code mono">00</span><span class="toc-label">Abstract</span><span class="toc-light"></span></li>
+          <li data-target="introduction"><span class="toc-code mono">01</span><span class="toc-label">Introduction</span><span class="toc-light"></span></li>
+          <li data-target="background"><span class="toc-code mono">02</span><span class="toc-label">Background &amp; Related Work</span><span class="toc-light"></span></li>
+          <li data-target="methodology"><span class="toc-code mono">03</span><span class="toc-label">Methodology</span><span class="toc-light"></span></li>
+          <li data-target="results"><span class="toc-code mono">04</span><span class="toc-label">Results</span><span class="toc-light"></span></li>
+          <li data-target="discussion"><span class="toc-code mono">05</span><span class="toc-label">Discussion</span><span class="toc-light"></span></li>
+          <li data-target="conclusion"><span class="toc-code mono">06</span><span class="toc-label">Conclusion</span><span class="toc-light"></span></li>
+          <li data-target="references"><span class="toc-code mono">07</span><span class="toc-label">References</span><span class="toc-light"></span></li>
+          <li data-target="appendix"><span class="toc-code mono">08</span><span class="toc-label">Appendix</span><span class="toc-light"></span></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-foot mono small">
+        <div class="foot-row"><span>BUILD</span><span id="buildTime">—</span></div>
+        <div class="foot-row"><span>PROGRESS</span><span id="progressPct">0%</span></div>
+      </div>
+    </aside>
+
+    <!-- ==================================================================
+         MAIN — hero (terminal boot sequence) + paper sections
+    =================================================================== -->
+    <main class="main">
+
+      <!-- ============ HERO / COVER ============ -->
+      <header class="hero" id="top">
+        <div class="hero-console mono">
+          <div class="console-line" data-typed data-text="booting report_engine v1.0 ..."></div>
+          <div class="console-line" data-typed data-text="loading dataset: RAG_framework_data"></div>
+          <div class="console-line" data-typed data-text="status: ready_for_review"></div>
+        </div>
+
+        <p class="eyebrow mono" data-field="course-code">AI6010 · Advanced AI Systems Research</p>
+
+        <h1 class="hero-title" data-field="report-title">
+          Retrieval-Augmented Generation (RAG): Enhancing Large Language Models with External Knowledge
+        </h1>
+
+        <p class="hero-subtitle" data-field="report-subtitle">
+          An analysis of its architecture, applications, and impact on reducing hallucinations and improving factual accuracy.
+        </p>
+
+        <div class="hero-meta">
+          <div class="meta-block">
+            <span class="mono small label">AUTHOR(S)</span>
+            <span data-field="authors">AI Research Group</span>
+          </div>
+          <div class="meta-block">
+            <span class="mono small label">INSTITUTION</span>
+            <span data-field="institution">Global AI Institute, Department of Computer Science</span>
+          </div>
+          <div class="meta-block">
+            <span class="mono small label">SUPERVISOR</span>
+            <span data-field="supervisor">Dr. A. Turing</span>
+          </div>
+          <div class="meta-block">
+            <span class="mono small label">DATE</span>
+            <span data-field="report-date">15 October 2023</span>
+          </div>
+        </div>
+
+        <div class="hero-tags mono small" data-field="keywords">
+          <span class="tag">RAG</span>
+          <span class="tag">LLM</span>
+          <span class="tag">Generative AI</span>
+          <span class="tag">Information Retrieval</span>
+          <span class="tag">Knowledge Augmentation</span>
+          <span class="tag">NLP</span>
+        </div>
+
+        <div class="scroll-cue mono small" aria-hidden="true">
+          <span>scroll</span>
+          <span class="scroll-cue-bar"></span>
+        </div>
+      </header>
+
+      <!-- ==================================================================
+           PARTIAL: PAPER SECTION
+           Every academic section is a <section class="paper-section">.
+           - id must match a sidebar data-target
+           - .section-index / .section-title form the numbered heading
+           - Body content is free-form: paragraphs, figures, tables, callouts
+           - class="reveal" elements fade/slide in on scroll (IntersectionObserver)
+      =================================================================== -->
+
+      <!-- ---------- 00 ABSTRACT ---------- -->
+      <section class="paper-section" id="abstract">
+        <div class="section-heading reveal">
+          <span class="section-index mono">00</span>
+          <h2 class="section-title">Abstract</h2>
+        </div>
+        <div class="paper-card reveal">
+          <p data-field="abstract-body">
+            This report explores Retrieval-Augmented Generation (RAG), a cutting-edge technique designed to enhance the capabilities of Large Language Models (LLMs). LLMs, while powerful, often suffer from issues such as factual inaccuracies, "hallucinations," and a lack of access to up-to-date or domain-specific information beyond their training data. RAG addresses these limitations by integrating a retrieval system that fetches relevant external information before the LLM generates a response. This allows LLMs to ground their answers in authoritative, real-time data, significantly improving factual accuracy, reducing erroneous outputs, and enabling knowledge-intensive applications. We detail the fundamental architecture of RAG, discuss its operational mechanics, and highlight its transformative potential across various applications.
+          </p>
+        </div>
+      </section>
+
+      <!-- ---------- 01 INTRODUCTION ---------- -->
+      <section class="paper-section" id="introduction">
+        <div class="section-heading reveal">
+          <span class="section-index mono">01</span>
+          <h2 class="section-title">Introduction</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <h3 data-field="intro-h1">1.1 Problem Statement</h3>
+          <p data-field="intro-problem">
+            Large Language Models (LLMs) have demonstrated unprecedented abilities in natural language understanding and generation, leading to their widespread adoption in diverse applications. However, a significant challenge persists: LLMs are prone to generating factually incorrect information (known as "hallucinations"), cannot access real-time data, and lack specific domain knowledge unless explicitly present in their vast, but static, training datasets. This limits their reliability and utility in applications requiring high factual accuracy, up-to-date information, or specialized expertise, such as legal research, medical diagnostics, or technical support.
+          </p>
+
+          <h3 data-field="intro-h2">1.2 Research Questions / Objectives</h3>
+          <ul class="paper-list" data-field="intro-objectives">
+            <li>To explain the core architecture and working principles of Retrieval-Augmented Generation (RAG).</li>
+            <li>To analyze how RAG mitigates the inherent limitations of standalone LLMs, particularly regarding factual accuracy and hallucination.</li>
+            <li>To discuss the key components involved in building and optimizing RAG systems.</li>
+            <li>To explore the broader implications and potential applications of RAG in various knowledge-intensive domains.</li>
+          </ul>
+
+          <!-- PARTIAL: CALLOUT — use for a scope note, assumption, or warning -->
+          <div class="callout callout--info">
+            <span class="callout-tag mono small">SCOPE</span>
+            <p data-field="intro-scope">This report focuses on the conceptual framework, operational mechanics, and general benefits of RAG, rather than delving into specific implementations or detailed comparative performance metrics of various RAG architectures. Technical depth is provided to illustrate core principles.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 02 BACKGROUND / RELATED WORK ---------- -->
+      <section class="paper-section" id="background">
+        <div class="section-heading reveal">
+          <span class="section-index mono">02</span>
+          <h2 class="section-title">Background &amp; Related Work</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <p data-field="background-body">
+            The foundation of Retrieval-Augmented Generation lies in two established fields: Large Language Models (LLMs) and Information Retrieval (IR). LLMs, such as GPT-3/4 [1] and BERT [2], are deep neural networks trained on massive text corpora to predict the next token in a sequence. While exceptionally good at generating coherent and contextually relevant text, their knowledge is frozen at their last training cut-off, making them susceptible to outdated information and fabrication.
+
+            Traditional IR systems, on the other hand, are designed to find relevant documents or passages from a large corpus in response to a query. Techniques like TF-IDF [3], BM25 [4], and more recently, vector embeddings and neural search [5], have significantly advanced the precision and recall of retrieval. RAG combines the generative power of LLMs with the dynamic, factual grounding of IR systems. This hybrid approach allows an LLM to "look up" information from an external knowledge base before generating its response, effectively addressing the limitations of purely generative models by providing up-to-date and factual context. Initial work by Lewis et al. (2020) formally introduced RAG, demonstrating its superiority over purely parametric models for knowledge-intensive tasks [6].
+          </p>
+
+          <!-- PARTIAL: FIGURE — image + numbered caption -->
+          <figure class="figure reveal">
+            <div class="figure-frame">
+              <img data-field="figure-1-src" src="https://i.ibb.co/C07Y4X5/RAG-Architecture.png" alt="Diagram showing the high-level RAG architecture">
+            </div>
+            <figcaption class="mono small" data-field="figure-1-caption">Figure 1. Conceptual architecture of a Retrieval-Augmented Generation (RAG) system. A user query is used to retrieve relevant documents from an external knowledge base. These retrieved documents, along with the original query, are then fed as context to a Large Language Model (LLM) to generate a more informed and accurate response.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ---------- 03 METHODOLOGY ---------- -->
+      <section class="paper-section" id="methodology">
+        <div class="section-heading reveal">
+          <span class="section-index mono">03</span>
+          <h2 class="section-title">Methodology</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <h3 data-field="method-h1">3.1 System Components and Setup</h3>
+          <p data-field="method-setup">
+            A typical RAG system consists of two primary components: a retriever and a generator (LLM). The retriever is responsible for searching a knowledge base (e.g., a vector database, a traditional search index, or a graph database) for relevant information. This knowledge base is typically pre-processed and indexed with embeddings to enable efficient semantic search. The generator is a pre-trained LLM that, upon receiving a user query and the retrieved context, synthesizes a coherent and accurate response. No specific experimental setup with hardware/software versions is provided as this report focuses on the conceptual framework.
+          </p>
+
+          <!-- PARTIAL: CODE BLOCK — for scripts, configs, queries -->
+          <div class="code-block reveal">
+            <div class="code-block-head mono small">
+              <span data-field="code-1-label">rag_pipeline_pseudocode.py</span>
+              <span class="code-dots"><span></span><span></span><span></span></span>
+            </div>
+            <pre><code data-field="code-1-body">
+# Pseudocode for a basic RAG query flow
+def rag_query(user_query, knowledge_base, llm):
+    # 1. Retrieve relevant documents/passages
+    print(f"Retrieving for query: {user_query}")
+    retrieved_docs = knowledge_base.search(user_query) # e.g., vector search
+    
+    # 2. Construct prompt with context
+    context = "\n".join([doc.content for doc in retrieved_docs])
+    prompt = f"Given the following context:\n\n{context}\n\nAnswer the question: {user_query}"
+    
+    # 3. Generate response using LLM
+    print("Generating response with LLM...")
+    response = llm.generate(prompt)
+    
+    return response
+
+# Example Usage (conceptual)
+class MockKnowledgeBase:
+    def search(self, query):
+        if "quantum computing" in query:
+            return [MockDocument("Quantum computing harnesses quantum-mechanical phenomena...")]
+        return [MockDocument("General knowledge...")]
+
+class MockLLM:
+    def generate(self, prompt):
+        return f"LLM generated response based on prompt: '{prompt[:100]}...' "
+
+class MockDocument:
+    def __init__(self, content):
+        self.content = content
+
+kb = MockKnowledgeBase()
+llm_model = MockLLM()
+result = rag_query("What is quantum computing?", kb, llm_model)
+print(result)
+            </code></pre>
+          </div>
+
+          <h3 data-field="method-h2">3.2 Procedure</h3>
+          <ol class="paper-list paper-list--numbered" data-field="method-steps">
+            <li>**User Query Input:** A user submits a natural language query to the RAG system.</li>
+            <li>**Retrieval Phase:** The query is first sent to the retriever component. The retriever processes the query (e.g., by creating an embedding) and searches the external knowledge base for the most semantically relevant documents or passages.</li>
+            <li>**Context Augmentation:** The top-k relevant retrieved documents are then concatenated with the original user query, forming an augmented prompt.</li>
+            <li>**Generation Phase:** This augmented prompt is fed into the Large Language Model (LLM). The LLM uses this context, in addition to its internal knowledge, to generate a comprehensive and accurate response.</li>
+            <li>**Response Output:** The LLM's generated response, grounded in the retrieved information, is presented to the user.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ---------- 04 RESULTS ---------- -->
+      <section class="paper-section" id="results">
+        <div class="section-heading reveal">
+          <span class="section-index mono">04</span>
+          <h2 class="section-title">Results</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <p data-field="results-intro">
+            While RAG is a conceptual framework, its efficacy is empirically demonstrated across numerous studies and benchmarks. The primary "results" are the observed improvements in LLM performance metrics when retrieval augmentation is applied. These improvements are consistently seen in factual accuracy, reduction in hallucination rates, and the ability to answer questions requiring up-to-date or domain-specific knowledge. Table 1 provides illustrative comparative results.
+          </p>
+
+          <!-- PARTIAL: DATA TABLE -->
+          <div class="table-wrap reveal">
+            <table class="data-table">
+              <caption class="mono small">Table 1. Illustrative Comparison of LLM Performance With and Without RAG</caption>
+              <thead>
+                <tr>
+                  <th data-field="table-1-col-1">Performance Metric</th>
+                  <th data-field="table-1-col-2">Standalone LLM (Baseline)</th>
+                  <th data-field="table-1-col-3">LLM with RAG (Treatment)</th>
+                  <th data-field="table-1-col-4">Improvement (Δ)</th>
+                </tr>
+              </thead>
+              <tbody data-field="table-1-rows">
+                <tr><td>Factual Accuracy (on domain-specific questions)</td><td>55%</td><td>92%</td><td>+37%</td></tr>
+                <tr><td>Hallucination Rate (instances per 100 responses)</td><td>15</td><td>2</td><td>-13</td></tr>
+                <tr><td>Recency of Information (average days outdated)</td><td>~500 days</td><td>~1 day</td><td>Significant</td></tr>
+                <tr><td>Relevance Score (0-5, semantic similarity)</td><td>3.5</td><td>4.8</td><td>+1.3</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- PARTIAL: CALLOUT — highlight a key finding -->
+          <div class="callout callout--highlight">
+            <span class="callout-tag mono small">KEY FINDING</span>
+            <p data-field="results-key-finding">The integration of retrieval augmentation consistently leads to substantial improvements in the factual accuracy, reduction of hallucinations, and the ability of LLMs to provide current and domain-specific information.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 05 DISCUSSION ---------- -->
+      <section class="paper-section" id="discussion">
+        <div class="section-heading reveal">
+          <span class="section-index mono">05</span>
+          <h2 class="section-title">Discussion</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <h3 data-field="discuss-h1">5.1 Interpretation</h3>
+          <p data-field="discuss-interpretation">
+            The superior performance of RAG-enhanced LLMs can be attributed to their ability to access an external, dynamic knowledge source. By providing the LLM with relevant, up-to-date context, RAG effectively "opens up" the LLM's knowledge base beyond its fixed training data. This mechanism directly addresses the core weaknesses of standalone LLMs by grounding their generation in verifiable facts. The retrieved information acts as a factual anchor, guiding the LLM's response and significantly reducing the propensity for generating incorrect or invented details. This interpretation aligns with the observed reductions in hallucination rates and marked increases in factual accuracy across diverse knowledge-intensive tasks.
+          </p>
+
+          <h3 data-field="discuss-h2">5.2 Limitations and Challenges</h3>
+          <p data-field="discuss-limitations">
+            Despite its significant advantages, RAG is not without limitations. The quality of the generated response is highly dependent on the quality and relevance of the retrieved documents. Poor retrieval (e.g., retrieving irrelevant or conflicting information) can still lead to inaccurate or misleading LLM outputs, a phenomenon sometimes referred to as "retrieval-augmented hallucination." Maintaining and updating the external knowledge base can be resource-intensive, especially for rapidly evolving domains. Furthermore, the increased complexity of RAG systems can introduce latency, as retrieval adds an extra step to the generation process. Optimizing the embedding models for retrieval, managing large vector databases, and effectively handling diverse data types (text, images, structured data) remain ongoing research challenges. The token limit of LLMs also poses a constraint, as the retrieved context must fit within this window.
+          </p>
+        </div>
+      </section>
+
+      <!-- ---------- 06 CONCLUSION ---------- -->
+      <section class="paper-section" id="conclusion">
+        <div class="section-heading reveal">
+          <span class="section-index mono">06</span>
+          <h2 class="section-title">Conclusion</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <p data-field="conclusion-body">
+            Retrieval-Augmented Generation (RAG) represents a pivotal advancement in the field of natural language processing, effectively bridging the gap between the powerful generative capabilities of Large Language Models and the critical need for factual accuracy and up-to-date information. By strategically integrating a dynamic retrieval mechanism, RAG empowers LLMs to transcend the limitations of their static training data, leading to a substantial reduction in hallucinations and a marked improvement in the reliability and relevance of generated content. This hybrid approach unlocks new possibilities for knowledge-intensive applications across industries. Future work will likely focus on developing more sophisticated retrieval strategies, integrating multi-modal knowledge bases, improving contextual understanding for dense retrieval, and self-improving RAG systems that can learn from feedback.
+          </p>
+        </div>
+      </section>
+
+      <!-- ---------- 07 REFERENCES ---------- -->
+      <section class="paper-section" id="references">
+        <div class="section-heading reveal">
+          <span class="section-index mono">07</span>
+          <h2 class="section-title">References</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <ol class="reference-list" data-field="reference-list">
+            <li>[1] Brown, T. B., et al. (2020). Language Models are Few-Shot Learners. <em>Advances in Neural Information Processing Systems</em>, 33.</li>
+            <li>[2] Devlin, J., et al. (2019). BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding. <em>Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers)</em>.</li>
+            <li>[3] Salton, G., & McGill, M. J. (1983). <em>Introduction to Modern Information Retrieval</em>. McGraw-Hill.</li>
+            <li>[4] Robertson, S. E., & Zaragoza, H. (2009). The Probabilistic Relevance Framework: BM25 and Beyond. <em>Foundations and Trends in Information Retrieval</em>, 3(4), 333-389.</li>
+            <li>[5] Reimers, N., & Gurevych, I. (2019). Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks. <em>Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP)</em>.</li>
+            <li>[6] Lewis, P., et al. (2020). Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks. <em>Advances in Neural Information Processing Systems</em>, 33.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ---------- 08 APPENDIX ---------- -->
+      <section class="paper-section" id="appendix">
+        <div class="section-heading reveal">
+          <span class="section-index mono">08</span>
+          <h2 class="section-title">Appendix</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <p data-field="appendix-body">
+            This appendix could include detailed pseudo-code for a vector database search, a breakdown of various chunking strategies for knowledge base documents, or an exhaustive list of benchmarks used to evaluate RAG systems (e.g., Natural Questions, WebQuestions, MS MARCO). Further discussion on advanced RAG techniques such as query reformulation, iterative retrieval, or fine-tuning the retriever and generator components could also be expanded here. Due to the conceptual nature of this report, these details are omitted but represent areas for deeper exploration.
+          </p>
+        </div>
+      </section>
+
+      <footer class="report-footer mono small">
+        <span data-field="footer-text">Global AI Institute · Retrieval-Augmented Generation · Generated 15 October 2023</span>
+      </footer>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
