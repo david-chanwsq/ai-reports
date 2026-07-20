@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  IT RESEARCH REPORT TEMPLATE — "TERMINAL PAPER" STYLE
+  ============================================================================
+  WHAT THIS IS
+  A university-standard research report (abstract, sections, figures, tables,
+  references) rendered with a technical/systems aesthetic: a dark "console"
+  background, a boot-sequence hero, a scrollspy sidebar styled like a process
+  monitor, and paper-toned content cards for the actual academic writing.
+
+  HOW TO REUSE THIS TEMPLATE (for a human OR for an LLM like Gemini)
+  1. Every editable piece of text sits inside a tag carrying a
+     data-field="..." attribute. That attribute name tells you WHAT the
+     content is (e.g. data-field="report-title"), not how it looks.
+  2. Placeholder copy is written in [BRACKETS] with a short instruction and
+     an example. Replace the whole bracketed placeholder — keep the
+     surrounding tag and classes untouched.
+  3. Sections follow the numbering convention 01, 02, 03... To add a new
+     section: duplicate a <section class="paper-section"> block, its sidebar
+     <li> entry, and continue the numbering. The JS (script.js) auto-detects
+     any element with class="paper-section" — no JS edits needed.
+  4. Repeating pieces (figures, tables, callouts, references, code blocks)
+     are built as small reusable partials — search for "PARTIAL:" comments
+     below to find and duplicate them.
+  5. Do not rename class names (they are the CSS/JS contract). You may freely
+     rename data-field attributes' VALUES' surrounding text content.
+  6. Color/type/spacing tokens all live in styles.css :root — change the
+     report's whole look by editing values there, not by adding inline styles.
+  ============================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-field="browser-title">Neural Networks: Architectures, Learning, & Applications</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ============ TOP PROGRESS BAR (reading/scroll progress) ============ -->
+  <div class="progress-rail" aria-hidden="true">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- ============ MOBILE NAV TOGGLE ============ -->
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle table of contents" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="layout">
+
+    <!-- ==================================================================
+         SIDEBAR — "SYSTEM STATUS" (this is the signature element).
+         Acts as the table of contents AND a live scrollspy. Each <li> maps
+         to a section by data-target="<section id>". Do not remove
+         data-target — script.js uses it to sync highlight + status light.
+         To add a section: copy one <li>, change data-target + label + code.
+    =================================================================== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-head">
+        <span class="status-dot status-dot--live" aria-hidden="true"></span>
+        <span class="mono small">SYSTEM STATUS</span>
+      </div>
+
+      <nav class="toc" aria-label="Report sections">
+        <ul id="tocList">
+          <li data-target="abstract"><span class="toc-code mono">00</span><span class="toc-label">Abstract</span><span class="toc-light"></span></li>
+          <li data-target="introduction"><span class="toc-code mono">01</span><span class="toc-label">Introduction</span><span class="toc-light"></span></li>
+          <li data-target="background"><span class="toc-code mono">02</span><span class="toc-label">Background &amp; Related Work</span><span class="toc-light"></span></li>
+          <li data-target="methodology"><span class="toc-code mono">03</span><span class="toc-label">Methodology</span><span class="toc-light"></span></li>
+          <li data-target="results"><span class="toc-code mono">04</span><span class="toc-label">Results</span><span class="toc-light"></span></li>
+          <li data-target="discussion"><span class="toc-code mono">05</span><span class="toc-label">Discussion</span><span class="toc-light"></span></li>
+          <li data-target="conclusion"><span class="toc-code mono">06</span><span class="toc-label">Conclusion</span><span class="toc-light"></span></li>
+          <li data-target="references"><span class="toc-code mono">07</span><span class="toc-label">References</span><span class="toc-light"></span></li>
+          <li data-target="appendix"><span class="toc-code mono">08</span><span class="toc-label">Appendix</span><span class="toc-light"></span></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-foot mono small">
+        <div class="foot-row"><span>BUILD</span><span id="buildTime">—</span></div>
+        <div class="foot-row"><span>PROGRESS</span><span id="progressPct">0%</span></div>
+      </div>
+    </aside>
+
+    <!-- ==================================================================
+         MAIN — hero (terminal boot sequence) + paper sections
+    =================================================================== -->
+    <main class="main">
+
+      <!-- ============ HERO / COVER ============ -->
+      <header class="hero" id="top">
+        <div class="hero-console mono">
+          <div class="console-line" data-typed data-text="booting report_engine v1.0 ..."></div>
+          <div class="console-line" data-typed data-text="loading dataset: NeuralNetwork_Fundamentals"></div>
+          <div class="console-line" data-typed data-text="status: ready_for_review"></div>
+        </div>
+
+        <p class="eyebrow mono" data-field="course-code">AI & Machine Learning Research</p>
+
+        <h1 class="hero-title" data-field="report-title">
+          Neural Networks: Architectures, Learning Mechanisms, and Applications
+        </h1>
+
+        <p class="hero-subtitle" data-field="report-subtitle">
+          An in-depth exploration of the foundational principles and diverse applications of artificial neural networks.
+        </p>
+
+        <div class="hero-meta">
+          <div class="meta-block">
+            <span class="mono small label">AUTHOR(S)</span>
+            <span data-field="authors">AI Research Team</span>
+          </div>
+          <div class="meta-block">
+            <span class="mono small label">INSTITUTION</span>
+            <span data-field="institution">Global Tech University, Department of Computer Science</span>
+          </div>
+          <div class="meta-block">
+            <span class="mono small label">SUPERVISOR</span>
+            <span data-field="supervisor">Dr. A.I. Explorer</span>
+          </div>
+          <div class="meta-block">
+            <span class="mono small label">DATE</span>
+            <span data-field="report-date">25 October 2023</span>
+          </div>
+        </div>
+
+        <div class="hero-tags mono small" data-field="keywords">
+          <span class="tag">Neural Networks</span>
+          <span class="tag">Deep Learning</span>
+          <span class="tag">Machine Learning</span>
+          <span class="tag">AI</span>
+          <span class="tag">Backpropagation</span>
+          <span class="tag">Convolutional Networks</span>
+          <span class="tag">Recurrent Networks</span>
+          <span class="tag">Transformers</span>
+        </div>
+
+        <div class="scroll-cue mono small" aria-hidden="true">
+          <span>scroll</span>
+          <span class="scroll-cue-bar"></span>
+        </div>
+      </header>
+
+      <!-- ==================================================================
+           PARTIAL: PAPER SECTION
+           Every academic section is a <section class="paper-section">.
+           - id must match a sidebar data-target
+           - .section-index / .section-title form the numbered heading
+           - Body content is free-form: paragraphs, figures, tables, callouts
+           - class="reveal" elements fade/slide in on scroll (IntersectionObserver)
+      =================================================================== -->
+
+      <!-- ---------- 00 ABSTRACT ---------- -->
+      <section class="paper-section" id="abstract">
+        <div class="section-heading reveal">
+          <span class="section-index mono">00</span>
+          <h2 class="section-title">Abstract</h2>
+        </div>
+        <div class="paper-card reveal">
+          <p data-field="abstract-body">
+            This report provides a comprehensive overview of artificial neural networks (ANNs), a core technology in modern artificial intelligence. We delve into their foundational principles, inspired by the human brain, and explore how they learn complex patterns from data. The report details key architectural variations, including Multi-Layer Perceptrons (MLPs), Convolutional Neural Networks (CNNs) for image processing, Recurrent Neural Networks (RNNs) for sequential data, and the transformative Transformer architecture for natural language processing. We also cover the fundamental learning algorithms like backpropagation and optimization techniques. Through this exploration, we aim to elucidate the mechanisms driving their impressive capabilities across diverse applications.
+          </p>
+        </div>
+      </section>
+
+      <!-- ---------- 01 INTRODUCTION ---------- -->
+      <section class="paper-section" id="introduction">
+        <div class="section-heading reveal">
+          <span class="section-index mono">01</span>
+          <h2 class="section-title">Introduction</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <h3 data-field="intro-h1">1.1 Problem Statement</h3>
+          <p data-field="intro-problem">
+            Traditional programming struggles with tasks requiring pattern recognition, inference, and adaptation to unstructured data (e.g., images, natural language). The challenge lies in enabling machines to learn directly from data, rather than being explicitly programmed for every scenario. This limitation in conventional algorithmic approaches has historically hindered progress in areas demanding human-like perception and understanding.
+          </p>
+
+          <h3 data-field="intro-h2">1.2 Research Questions / Objectives</h3>
+          <ul class="paper-list" data-field="intro-objectives">
+            <li>To explain the fundamental components and operational principles of artificial neural networks.</li>
+            <li>To identify and describe major neural network architectures and their specialized applications.</li>
+            <li>To elucidate the core learning algorithms, particularly backpropagation and gradient descent variants.</li>
+            <li>To discuss the current impact and future potential of neural networks across various domains.</li>
+          </ul>
+
+          <!-- PARTIAL: CALLOUT — use for a scope note, assumption, or warning -->
+          <div class="callout callout--info">
+            <span class="callout-tag mono small">SCOPE</span>
+            <p data-field="intro-scope">This report focuses on the theoretical underpinnings and major architectures of neural networks. It covers supervised learning paradigms primarily and provides a high-level overview of their applications. It does not delve into highly specialized advanced topics, specific hardware optimizations, or unsupervised/reinforcement learning in detail.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 02 BACKGROUND / RELATED WORK ---------- -->
+      <section class="paper-section" id="background">
+        <div class="section-heading reveal">
+          <span class="section-index mono">02</span>
+          <h2 class="section-title">Background &amp; Related Work</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <p data-field="background-body">
+            Artificial neural networks draw inspiration from the biological brain's structure and function. The concept dates back to the 1940s with McCulloch and Pitts' model of artificial neurons [1], which proposed a simplified mathematical representation of biological neurons. The perceptron, introduced by Frank Rosenblatt in 1957, was a significant early step, capable of learning linear patterns [2]. However, limitations with non-linear problems, famously highlighted by Minsky and Papert, led to an "AI winter" in the field of neural networks. The resurgence began with the development of backpropagation in the 1980s by Rumelhart, Hinton, and Williams [3], which enabled the efficient training of multi-layered networks by calculating gradients. The advent of large datasets (e.g., ImageNet [4]) and powerful computational resources (GPUs) in the 2000s fueled the "deep learning" revolution, demonstrating ANNs' ability to achieve state-of-the-art results in previously intractable problems such as image recognition, natural language processing, and speech recognition [5].
+          </p>
+
+          <!-- PARTIAL: FIGURE — image + numbered caption -->
+          <figure class="figure reveal">
+            <div class="figure-frame">
+              <img data-field="figure-1-src" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Artificial_neural_network.svg/1024px-Artificial_neural_network.svg.png" alt="Diagram illustrating the basic structure of an artificial neuron (perceptron)">
+            </div>
+            <figcaption class="mono small" data-field="figure-1-caption">Figure 1. Basic Structure of an Artificial Neuron. An artificial neuron takes multiple inputs, applies learned weights, sums them, adds a bias, and passes the result through an activation function to produce an output, mimicking a biological neuron's processing.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ---------- 03 METHODOLOGY ---------- -->
+      <section class="paper-section" id="methodology">
+        <div class="section-heading reveal">
+          <span class="section-index mono">03</span>
+          <h2 class="section-title">Methodology</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <h3 data-field="method-h1">3.1 Fundamental Components & Experimental Setup Principles</h3>
+          <p data-field="method-setup">
+            Understanding neural networks involves grasping their core computational units and the overarching training paradigm. The "experimental setup" in this context refers to the principles governing network design and data preparation:
+            <ul class="paper-list">
+              <li><strong>Neurons (Nodes):</strong> Basic computational units, organized into layers.</li>
+              <li><strong>Weights (<code class="mono">w</code>):</strong> Parameters determining the strength of connections between neurons. These are learned during training.</li>
+              <li><strong>Biases (<code class="mono">b</code>):</strong> Learnable parameters added to the weighted sum, allowing for flexible activation thresholds.</li>
+              <li><strong>Activation Functions (<code class="mono">f</code>):</strong> Non-linear functions (e.g., ReLU, Sigmoid, Tanh) applied to the weighted sum, introducing non-linearity crucial for learning complex, non-linear patterns. A neuron's output is typically <code class="mono">y = f(Σ(w_i * x_i) + b)</code>.</li>
+              <li><strong>Layers:</strong> Neurons are organized into an input layer, one or more hidden layers, and an output layer.</li>
+              <li><strong>Loss Function:</strong> Quantifies the discrepancy between the network's predictions and the true labels (e.g., Mean Squared Error for regression, Cross-Entropy for classification).</li>
+              <li><strong>Optimizer:</strong> An algorithm (e.g., Stochastic Gradient Descent (SGD), Adam, RMSprop) that adjusts weights and biases to minimize the loss function.</li>
+            The "experimental setup" also involves preparing the dataset (e.g., normalization, splitting into training, validation, and test sets) and defining the model's architecture (number of layers, neurons per layer, activation functions).
+          </p>
+
+          <!-- PARTIAL: CODE BLOCK — for scripts, configs, queries -->
+          <div class="code-block reveal">
+            <div class="code-block-head mono small">
+              <span data-field="code-1-label">pytorch_mlp_definition.py</span>
+              <span class="code-dots"><span></span><span></span><span></span></span>
+            </div>
+            <pre><code data-field="code-1-body">import torch
+import torch.nn as nn
+import torch.optim as optim
+
+# Define a simple Multi-Layer Perceptron (MLP)
+class SimpleNN(nn.Module):
+    def __init__(self, input_size, hidden_size, num_classes):
+        super(SimpleNN, self).__init__()
+        self.fc1 = nn.Linear(input_size, hidden_size) 
+        self.relu = nn.ReLU()
+        self.fc2 = nn.Linear(hidden_size, num_classes)  
+    
+    def forward(self, x):
+        out = self.fc1(x)
+        out = self.relu(out)
+        out = self.fc2(out)
+        return out
+
+# Example Usage:
+input_size = 784 # For flattened 28x28 images (e.g., MNIST)
+hidden_size = 128
+num_classes = 10 # For 10 digit classification
+
+model = SimpleNN(input_size, hidden_size, num_classes)
+print("--- Model Architecture ---")
+print(model)
+
+# --- Conceptual Training Loop Snippet ---
+# criterion = nn.CrossEntropyLoss() # Loss function for classification
+# optimizer = optim.Adam(model.parameters(), lr=0.001) # Adam optimizer
+
+# for epoch in range(num_epochs):
+#     for i, (images, labels) in enumerate(train_loader):
+#         images = images.reshape(-1, input_size).to(device)
+#         labels = labels.to(device)
+        
+#         # Forward pass
+#         outputs = model(images)
+#         loss = criterion(outputs, labels)
+        
+#         # Backward and optimize
+#         optimizer.zero_grad() # Clear gradients
+#         loss.backward()       # Compute gradients
+#         optimizer.step()      # Update weights
+# --- End Conceptual Training Loop Snippet ---</code></pre>
+          </div>
+
+          <h3 data-field="method-h2">3.2 The Learning Procedure: Backpropagation and Optimization</h3>
+          <ol class="paper-list paper-list--numbered" data-field="method-steps">
+            <li><strong>Forward Pass:</strong> Input data is fed through the network, layer by layer. Each neuron computes its output based on the weighted sum of its inputs, bias, and activation function. This process culminates in the network making a prediction at the output layer.</li>
+            <li><strong>Calculate Loss:</strong> The network's prediction is compared to the actual target (ground truth) using a chosen loss function. This quantifies the error or discrepancy between prediction and reality.</li>
+            <li><strong>Backward Pass (Backpropagation):</strong> The calculated loss is propagated backward through the network, from the output layer towards the input layer. Using the chain rule of calculus, the gradient of the loss function with respect to each weight and bias in the network is computed. This gradient indicates the direction and magnitude of change needed for each parameter to reduce the loss.</li>
+            <li><strong>Parameter Update:</strong> An optimization algorithm (e.g., Adam, SGD) uses these gradients to update the weights and biases. The update rule typically involves subtracting a fraction (determined by the learning rate) of the gradient from the current parameter value, iteratively moving towards a local or global minimum of the loss function. This entire process (steps 1-4) is repeated over many iterations (epochs and batches) until the network's performance converges or reaches a satisfactory level on unseen data.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ---------- 04 RESULTS ---------- -->
+      <section class="paper-section" id="results">
+        <div class="section-heading reveal">
+          <span class="section-index mono">04</span>
+          <h2 class="section-title">Results</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <p data-field="results-intro">
+            The effectiveness of neural networks varies significantly with architecture and task, demonstrating the principle of specialization in AI. While "results" are typically derived from specific experiments, we can illustrate the generalized performance characteristics of different architectures on their specialized domains, drawing from established benchmarks and state-of-the-art achievements. The following table provides an illustrative overview of typical accuracy ranges and key strengths for prominent neural network architectures. These figures are approximations and can vary widely based on dataset complexity, model size, hyperparameter tuning, and training duration.
+          </p>
+
+          <!-- PARTIAL: DATA TABLE -->
+          <div class="table-wrap reveal">
+            <table class="data-table">
+              <caption class="mono small">Table 1. Illustrative Performance Trends and Characteristics of Key Neural Network Architectures.</caption>
+              <thead>
+                <tr>
+                  <th data-field="table-1-col-1">Architecture</th>
+                  <th data-field="table-1-col-2">Primary Application Domains</th>
+                  <th data-field="table-1-col-3">Key Strengths & Inductive Biases</th>
+                  <th data-field="table-1-col-4">Typical Accuracy Range (Illustrative)</th>
+                </tr>
+              </thead>
+              <tbody data-field="table-1-rows">
+                <tr><td><strong>Multi-Layer Perceptron (MLP)</strong></td><td>Tabular Data, Simple Classification/Regression, Feature Learning</td><td>Versatile, foundational, universal function approximator.</td><td>70-90% (on simple, structured datasets)</td></tr>
+                <tr><td><strong>Convolutional Neural Network (CNN)</strong></td><td>Image & Video Recognition, Computer Vision, Medical Imaging</td><td>Spatial feature extraction, parameter sharing, translation invariance.</td><td>85-99% (on large-scale image classification like ImageNet)</td></tr>
+                <tr><td><strong>Recurrent Neural Network (RNN / LSTM / GRU)</strong></td><td>Sequential Data (Text, Time Series, Speech Recognition)</td><td>Captures temporal dependencies, processes variable-length sequences.</td><td>75-95% (on sentiment analysis, simple language modeling)</td></tr>
+                <tr><td><strong>Transformer</strong></td><td>Natural Language Processing (NLP), Vision, Multimodal Learning</td><td>Attention mechanism for long-range dependencies, highly parallelizable.</td><td>88-99% (SOTA in NLP tasks, emerging SOTA in vision)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- PARTIAL: CALLOUT — highlight a key finding -->
+          <div class="callout callout--highlight">
+            <span class="callout-tag mono small">KEY FINDING</span>
+            <p data-field="results-key-finding">The selection of neural network architecture is highly dependent on the nature of the input data and the specific problem to be solved, with specialized architectures consistently outperforming generic ones on their respective domains. For instance, CNNs inherently excel at hierarchical feature learning from images, while Transformers revolutionize sequence modeling by efficiently capturing global dependencies, leading to remarkable advancements in AI.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 05 DISCUSSION ---------- -->
+      <section class="paper-section" id="discussion">
+        <div class="section-heading reveal">
+          <span class="section-index mono">05</span>
+          <h2 class="section-title">Discussion</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <h3 data-field="discuss-h1">5.1 Interpretation</h3>
+          <p data-field="discuss-interpretation">
+            The "results" presented in Table 1 highlight the power of architectural specialization and the continuous evolution of neural networks. MLPs, while foundational and theoretically universal function approximators, often struggle with high-dimensional, structured data like images or sequences due to their lack of inductive biases; they treat every input feature independently. CNNs overcome this by leveraging local connectivity, shared weights, and pooling operations, which allow them to efficiently learn hierarchical spatial features and achieve translation invariance, making them ideal for computer vision tasks. RNNs and their variants (LSTMs, GRUs) are specifically designed to process sequential data by maintaining an internal state, enabling them to capture temporal dependencies crucial for tasks like natural language processing and time series analysis. The Transformer architecture, introduced by Vaswani et al. [6], revolutionized sequence modeling by replacing recurrence with an attention mechanism, allowing it to weigh the importance of different parts of the input sequence. This innovation not only enables the modeling of long-range dependencies more effectively but also allows for significant parallelization during training, leading to unprecedented performance in NLP and increasingly in computer vision. The continuous innovation in architectures and training techniques underpins the rapid advancements in AI across diverse applications.
+          </p>
+
+          <h3 data-field="discuss-h2">5.2 Limitations</h3>
+          <p data-field="discuss-limitations">
+            Despite their transformative power, neural networks face several significant limitations. First, they are notoriously data-hungry, often requiring vast labeled datasets for effective training, which can be expensive and time-consuming to acquire. Second, training complex deep neural networks can be computationally expensive, demanding significant hardware resources (e.g., high-performance GPUs or TPUs) and substantial energy consumption. Third, interpretability remains a challenge; understanding *why* a neural network makes a particular decision is often difficult, making them "black boxes." This lack of transparency can be problematic in critical applications such as healthcare, finance, or autonomous driving, where explainability and accountability are paramount. Furthermore, neural networks can be susceptible to adversarial attacks, where small, imperceptible perturbations to input data can lead to erroneous or malicious outputs. Finally, ethical concerns regarding bias in training data, which can lead to discriminatory outcomes when models are deployed, are increasingly prominent and require careful mitigation strategies.
+          </p>
+        </div>
+      </section>
+
+      <!-- ---------- 06 CONCLUSION ---------- -->
+      <section class="paper-section" id="conclusion">
+        <div class="section-heading reveal">
+          <span class="section-index mono">06</span>
+          <h2 class="section-title">Conclusion</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <p data-field="conclusion-body">
+            Neural networks have fundamentally transformed the landscape of artificial intelligence, enabling machines to perform complex tasks that were once exclusively human domains. From the foundational Multi-Layer Perceptrons to specialized Convolutional Neural Networks, Recurrent Neural Networks, and the revolutionary Transformer architecture, these diverse models, coupled with sophisticated learning algorithms like backpropagation, have unlocked unprecedented capabilities in perception, language understanding, and decision-making. While persistent challenges such as data requirements, computational cost, interpretability, and ethical considerations remain, ongoing research into novel architectures, more efficient training methods, and robust models promises to further expand their impact. The future of AI will undoubtedly continue to be shaped by the ingenious evolution and application of neural networks, pushing the boundaries of what intelligent machines can achieve and paving the way for increasingly sophisticated autonomous systems.
+          </p>
+        </div>
+      </section>
+
+      <!-- ---------- 07 REFERENCES ---------- -->
+      <section class="paper-section" id="references">
+        <div class="section-heading reveal">
+          <span class="section-index mono">07</span>
+          <h2 class="section-title">References</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <ol class="reference-list" data-field="reference-list">
+            <li>[1] McCulloch, W. S., & Pitts, W. (1943). A logical calculus of the ideas immanent in nervous activity. <em>The Bulletin of Mathematical Biophysics, 5</em>(4), 115-133.</li>
+            <li>[2] Rosenblatt, F. (1958). The perceptron: a probabilistic model for information storage and organization in the brain. <em>Psychological Review, 65</em>(6), 386-408.</li>
+            <li>[3] Rumelhart, D. E., Hinton, G. E., & Williams, R. J. (1986). Learning representations by back-propagating errors. <em>Nature, 323</em>(6088), 533-536.</li>
+            <li>[4] Deng, J., Dong, W., Socher, R., Li, L. J., Li, K., & Fei-Fei, L. (2009). ImageNet: A large-scale hierarchical image database. In <em>2009 IEEE conference on computer vision and pattern recognition</em> (pp. 248-255). Ieee.</li>
+            <li>[5] LeCun, Y., Bengio, Y., & Hinton, G. (2015). Deep learning. <em>Nature, 521</em>(7553), 436-444.</li>
+            <li>[6] Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., ... & Polosukhin, I. (2017). Attention Is All You Need. <em>Advances in Neural Information Processing Systems, 30</em>.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ---------- 08 APPENDIX ---------- -->
+      <section class="paper-section" id="appendix">
+        <div class="section-heading reveal">
+          <span class="section-index mono">08</span>
+          <h2 class="section-title">Appendix</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <p data-field="appendix-body">
+            This section could include a more detailed mathematical derivation of backpropagation, an extended code example for training a Convolutional Neural Network (CNN) on a small dataset (e.g., CIFAR-10), a comprehensive glossary of terms related to neural networks, or additional visualizations of complex architectures. For brevity in this report, it serves as a placeholder for supplementary material that supports the main text without interrupting its flow, offering deeper technical insights for interested readers.
+          </p>
+        </div>
+      </section>
+
+      <footer class="report-footer mono small">
+        <span data-field="footer-text">Global Tech University · Neural Networks Report · Generated 25 October 2023</span>
+      </footer>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
