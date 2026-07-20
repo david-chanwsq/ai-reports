@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  IT RESEARCH REPORT TEMPLATE — "TERMINAL PAPER" STYLE
+  ============================================================================
+  WHAT THIS IS
+  A university-standard research report (abstract, sections, figures, tables,
+  references) rendered with a technical/systems aesthetic: a dark "console"
+  background, a boot-sequence hero, a scrollspy sidebar styled like a process
+  monitor, and paper-toned content cards for the actual academic writing.
+
+  HOW TO REUSE THIS TEMPLATE (for a human OR for an LLM like Gemini)
+  1. Every editable piece of text sits inside a tag carrying a
+     data-field="..." attribute. That attribute name tells you WHAT the
+     content is (e.g. data-field="report-title"), not how it looks.
+  2. Placeholder copy is written in [BRACKETS] with a short instruction and
+     an example. Replace the whole bracketed placeholder — keep the
+     surrounding tag and classes untouched.
+  3. Sections follow the numbering convention 01, 02, 03... To add a new
+     section: duplicate a <section class="paper-section"> block, its sidebar
+     <li> entry, and continue the numbering. The JS (script.js) auto-detects
+     any element with class="paper-section" — no JS edits needed.
+  4. Repeating pieces (figures, tables, callouts, references, code blocks)
+     are built as small reusable partials — search for "PARTIAL:" comments
+     below to find and duplicate them.
+  5. Do not rename class names (they are the CSS/JS contract). You may freely
+     rename data-field attributes' VALUES' surrounding text content.
+  6. Color/type/spacing tokens all live in styles.css :root — change the
+     report's whole look by editing values there, not by adding inline styles.
+  ============================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-field="browser-title">Research Report: Binomial Distribution</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ============ TOP PROGRESS BAR (reading/scroll progress) ============ -->
+  <div class="progress-rail" aria-hidden="true">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- ============ MOBILE NAV TOGGLE ============ -->
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle table of contents" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="layout">
+
+    <!-- ==================================================================
+         SIDEBAR — "SYSTEM STATUS" (this is the signature element).
+         Acts as the table of contents AND a live scrollspy. Each <li> maps
+         to a section by data-target="<section id>". Do not remove
+         data-target — script.js uses it to sync highlight + status light.
+         To add a section: copy one <li>, change data-target + label + code.
+    =================================================================== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-head">
+        <span class="status-dot status-dot--live" aria-hidden="true"></span>
+        <span class="mono small">SYSTEM STATUS</span>
+      </div>
+
+      <nav class="toc" aria-label="Report sections">
+        <ul id="tocList">
+          <li data-target="abstract"><span class="toc-code mono">00</span><span class="toc-label">Abstract</span><span class="toc-light"></span></li>
+          <li data-target="introduction"><span class="toc-code mono">01</span><span class="toc-label">Introduction</span><span class="toc-light"></span></li>
+          <li data-target="background"><span class="toc-code mono">02</span><span class="toc-label">Background &amp; Related Work</span><span class="toc-light"></span></li>
+          <li data-target="methodology"><span class="toc-code mono">03</span><span class="toc-label">Methodology</span><span class="toc-light"></span></li>
+          <li data-target="results"><span class="toc-code mono">04</span><span class="toc-label">Results</span><span class="toc-light"></span></li>
+          <li data-target="discussion"><span class="toc-code mono">05</span><span class="toc-label">Discussion</span><span class="toc-light"></span></li>
+          <li data-target="conclusion"><span class="toc-code mono">06</span><span class="toc-label">Conclusion</span><span class="toc-light"></span></li>
+          <li data-target="references"><span class="toc-code mono">07</span><span class="toc-label">References</span><span class="toc-light"></span></li>
+          <li data-target="appendix"><span class="toc-code mono">08</span><span class="toc-label">Appendix</span><span class="toc-light"></span></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-foot mono small">
+        <div class="foot-row"><span>BUILD</span><span id="buildTime">—</span></div>
+        <div class="foot-row"><span>PROGRESS</span><span id="progressPct">0%</span></div>
+      </div>
+    </aside>
+
+    <!-- ==================================================================
+         MAIN — hero (terminal boot sequence) + paper sections
+    =================================================================== -->
+    <main class="main">
+
+      <!-- ============ HERO / COVER ============ -->
+      <header class="hero" id="top">
+        <div class="hero-console mono">
+          <div class="console-line" data-typed data-text="booting report_engine v1.0 ..."></div>
+          <div class="console-line" data-typed data-text="loading dataset: binomial_distribution_theory"></div>
+          <div class="console-line" data-typed data-text="status: ready_for_review"></div>
+        </div>
+
+        <p class="eyebrow mono" data-field="course-code">STAT301 · Probability & Statistics</p>
+
+        <h1 class="hero-title" data-field="report-title">
+          Understanding and Applying the Binomial Distribution
+        </h1>
+
+        <p class="hero-subtitle" data-field="report-subtitle">
+          A Comprehensive Analysis of its Properties, Applications, and Computational Aspects
+        </p>
+
+        <div class="hero-meta">
+          <div class="meta-block">
+            <span class="mono small label">AUTHOR(S)</span>
+            <span data-field="authors">AI Research Agent</span>
+          </div>
+          <div class="meta-block">
+            <span class="mono small label">INSTITUTION</span>
+            <span data-field="institution">Global Research Institute, AI Division</span>
+          </div>
+          <div class="meta-block">
+            <span class="mono small label">SUPERVISOR</span>
+            <span data-field="supervisor">Dr. A.I. Analyst</span>
+          </div>
+          <div class="meta-block">
+            <span class="mono small label">DATE</span>
+            <span data-field="report-date">October 26, 2023</span>
+          </div>
+        </div>
+
+        <div class="hero-tags mono small" data-field="keywords">
+          <span class="tag">probability</span>
+          <span class="tag">binomial</span>
+          <span class="tag">distribution</span>
+          <span class="tag">discrete</span>
+          <span class="tag">statistics</span>
+          <span class="tag">Bernoulli</span>
+        </div>
+
+        <div class="scroll-cue mono small" aria-hidden="true">
+          <span>scroll</span>
+          <span class="scroll-cue-bar"></span>
+        </div>
+      </header>
+
+      <!-- ==================================================================
+           PARTIAL: PAPER SECTION
+           Every academic section is a <section class="paper-section">.
+           - id must match a sidebar data-target
+           - .section-index / .section-title form the numbered heading
+           - Body content is free-form: paragraphs, figures, tables, callouts
+           - class="reveal" elements fade/slide in on scroll (IntersectionObserver)
+      =================================================================== -->
+
+      <!-- ---------- 00 ABSTRACT ---------- -->
+      <section class="paper-section" id="abstract">
+        <div class="section-heading reveal">
+          <span class="section-index mono">00</span>
+          <h2 class="section-title">Abstract</h2>
+        </div>
+        <div class="paper-card reveal">
+          <p data-field="abstract-body">
+            This report provides a comprehensive overview of the binomial distribution, a fundamental concept in probability theory and statistics. It begins by defining the core principles of Bernoulli trials and their aggregation into a binomial process. The report elucidates the mathematical formula for calculating binomial probabilities, detailing the role of parameters such as the number of trials (n) and the probability of success (p). Furthermore, it explores key properties, including the mean, variance, and shape of the distribution under varying parameters. Practical applications across various fields, from quality control to medical research, are discussed. The methodology includes theoretical derivations and computational examples using Python, illustrating how to calculate and visualize binomial probabilities. Key findings highlight its utility in modeling discrete events with binary outcomes, providing a robust framework for prediction and analysis.
+          </p>
+        </div>
+      </section>
+
+      <!-- ---------- 01 INTRODUCTION ---------- -->
+      <section class="paper-section" id="introduction">
+        <div class="section-heading reveal">
+          <span class="section-index mono">01</span>
+          <h2 class="section-title">Introduction</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <h3 data-field="intro-h1">1.1 Problem Statement</h3>
+          <p data-field="intro-problem">
+            In many real-world scenarios, we encounter situations where an experiment is repeated a fixed number of times, and each repetition has only two possible outcomes: "success" or "failure." For instance, a quality control inspector might check 10 items from a production line, each being either defective or non-defective. A medical researcher might observe 50 patients, each either responding to a treatment or not. The challenge lies in accurately modeling and predicting the number of successes in such a series of independent trials, which is crucial for decision-making and risk assessment. Without a proper statistical framework, determining the likelihood of various outcomes becomes an intuitive guess rather than a precise calculation.
+          </p>
+
+          <h3 data-field="intro-h2">1.2 Research Questions / Objectives</h3>
+          <ul class="paper-list" data-field="intro-objectives">
+            <li>To define the binomial distribution and its underlying assumptions.</li>
+            <li>To derive and explain the probability mass function (PMF) of the binomial distribution.</li>
+            <li>To explore the key properties, such as the mean and variance, of a binomial random variable.</li>
+            <li>To illustrate the practical applications of the binomial distribution in various domains.</li>
+            <li>To demonstrate how to calculate and visualize binomial probabilities using computational tools.</li>
+          </ul>
+
+          <!-- PARTIAL: CALLOUT — use for a scope note, assumption, or warning -->
+          <div class="callout callout--info">
+            <span class="callout-tag mono small">SCOPE</span>
+            <p data-field="intro-scope">This report focuses on the foundational theoretical aspects and common applications of the binomial distribution for discrete random variables, assuming independent trials and a constant probability of success. It does not delve into approximations (e.g., normal approximation) or advanced topics like negative binomial or multinomial distributions, except where contextually relevant for understanding.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 02 BACKGROUND / RELATED WORK ---------- -->
+      <section class="paper-section" id="background">
+        <div class="section-heading reveal">
+          <span class="section-index mono">02</span>
+          <h2 class="section-title">Background &amp; Related Work</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <p data-field="background-body">
+            The binomial distribution is rooted in the concept of a Bernoulli trial, named after the Swiss mathematician Jacob Bernoulli, who discussed it in his work "Ars Conjectandi" (1713). A Bernoulli trial is a random experiment with exactly two possible outcomes, typically labeled "success" (with probability <em>p</em>) and "failure" (with probability <em>1-p</em>). When a sequence of <em>n</em> independent Bernoulli trials is performed, the total number of successes observed follows a binomial distribution. This forms the basis for understanding discrete probability distributions where outcomes are binary.
+            <br><br>
+            Its mathematical formulation builds upon basic combinatorics, specifically combinations (denoted as "n choose k" or <sup>n</sup>C<sub>k</sub>), which calculate the number of ways to achieve <em>k</em> successes in <em>n</em> trials without regard to order. The binomial distribution is a cornerstone in introductory statistics and probability courses [1], providing a fundamental model for numerous real-world phenomena. Its relationship to other distributions, such as the Poisson distribution (as a limiting case for large <em>n</em> and small <em>p</em>) and the normal distribution (as an approximation for large <em>n</em>), highlights its central role in statistical theory [2].
+          </p>
+
+          <!-- PARTIAL: FIGURE — image + numbered caption -->
+          <figure class="figure reveal">
+            <div class="figure-frame">
+              <img data-field="figure-1-src" src="https://via.placeholder.com/900x480/0f172a/5eead4?text=Conceptual+Diagram:+Bernoulli+Trials+to+Binomial+Distribution" alt="Diagram illustrating the progression from single Bernoulli trials to a binomial distribution as trials are repeated.">
+            </div>
+            <figcaption class="mono small" data-field="figure-1-caption">Figure 1. Conceptual flow from a single Bernoulli trial (success/failure) to multiple trials leading to a binomial distribution of total successes. Each trial is independent with a constant probability of success.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ---------- 03 METHODOLOGY ---------- -->
+      <section class="paper-section" id="methodology">
+        <div class="section-heading reveal">
+          <span class="section-index mono">03</span>
+          <h2 class="section-title">Methodology</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <h3 data-field="method-h1">3.1 Theoretical Framework and Computational Setup</h3>
+          <p data-field="method-setup">
+            This report employs a theoretical approach, starting with the definition of a Bernoulli trial and the derivation of the binomial probability mass function (PMF). The PMF defines the probability of obtaining exactly <em>k</em> successes in <em>n</em> independent Bernoulli trials, each with a probability of success <em>p</em>, given by:
+            <br>
+            P(X = k) = C(n, k) * p<sup>k</sup> * (1-p)<sup>(n-k)</sup>
+            <br>
+            where C(n, k) = n! / (k! * (n-k)!) is the binomial coefficient, representing the number of ways to choose <em>k</em> successes from <em>n</em> trials.
+            <br><br>
+            To illustrate these concepts and perform calculations, Python 3.x with the `scipy.stats` library is used. This library provides functions for various probability distributions, including `binom.pmf` for calculating point probabilities and `binom.cdf` for cumulative probabilities. Visualization is achieved using `matplotlib.pyplot`.
+          </p>
+
+          <!-- PARTIAL: CODE BLOCK — for scripts, configs, queries -->
+          <div class="code-block reveal">
+            <div class="code-block-head mono small">
+              <span data-field="code-1-label">binomial_calculator.py</span>
+              <span class="code-dots"><span></span><span></span><span></span></span>
+            </div>
+            <pre><code data-field="code-1-body">import numpy as np
+from scipy.stats import binom
+import matplotlib.pyplot as plt
+
+# Define parameters for the binomial distribution
+n = 10  # Number of trials
+p = 0.5 # Probability of success on each trial
+
+# Calculate probability of exactly k successes
+k_successes = 5
+prob_k_successes = binom.pmf(k_successes, n, p)
+print(f"Probability of exactly {k_successes} successes in {n} trials with p={p}: {prob_k_successes:.4f}")
+
+# Generate probabilities for all possible number of successes (0 to n)
+x = np.arange(0, n + 1)
+pmf_values = binom.pmf(x, n, p)
+
+# Plotting the PMF
+plt.figure(figsize=(8, 5))
+plt.bar(x, pmf_values, color='skyblue', edgecolor='black')
+plt.title(f'Binomial Distribution (n={n}, p={p})')
+plt.xlabel('Number of Successes (k)')
+plt.ylabel('Probability P(X=k)')
+plt.xticks(x)
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.show()</code></pre>
+          </div>
+
+          <h3 data-field="method-h2">3.2 Procedure for Analysis</h3>
+          <ol class="paper-list paper-list--numbered" data-field="method-steps">
+            <li>**Parameter Definition:** Identify the number of trials (n) and the probability of success (p) for a given scenario.</li>
+            <li>**Formula Application:** Apply the binomial PMF formula to calculate the probability of a specific number of successes (k).</li>
+            <li>**Property Calculation:** Calculate the mean (E[X] = n*p) and variance (Var(X) = n*p*(1-p)) to understand the distribution's central tendency and spread.</li>
+            <li>**Computational Demonstration:** Use Python to compute binomial probabilities for various <em>k</em> values and visualize the resulting probability distribution.</li>
+            <li>**Interpretation:** Analyze the shape of the PMF curve and the calculated probabilities to draw conclusions about the likelihood of different outcomes.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ---------- 04 RESULTS ---------- -->
+      <section class="paper-section" id="results">
+        <div class="section-heading reveal">
+          <span class="section-index mono">04</span>
+          <h2 class="section-title">Results</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <p data-field="results-intro">
+            The application of the binomial distribution framework yields precise probabilities for discrete events with binary outcomes. For a binomial random variable X with parameters <em>n</em> (number of trials) and <em>p</em> (probability of success), the expected number of successes (mean) is E[X] = <em>n*p</em>, and the variance is Var(X) = <em>n*p*(1-p)</em>. These properties provide quick insights into the distribution's characteristics without needing to calculate all probabilities.
+            <br><br>
+            Consider an example where we perform 10 coin flips (n=10) and the probability of heads is 0.5 (p=0.5). The expected number of heads is 10 * 0.5 = 5. The variance is 10 * 0.5 * 0.5 = 2.5. The probability mass function provides the likelihood for each possible number of heads (k=0 to 10).
+          </p>
+
+          <!-- PARTIAL: DATA TABLE -->
+          <div class="table-wrap reveal">
+            <table class="data-table">
+              <caption class="mono small">Table 1. Binomial Probabilities for n=10, p=0.5</caption>
+              <thead>
+                <tr>
+                  <th data-field="table-1-col-1">Number of Successes (k)</th>
+                  <th data-field="table-1-col-2">P(X=k)</th>
+                  <th data-field="table-1-col-3">Cumulative P(X≤k)</th>
+                  <th data-field="table-1-col-4"></th>
+                </tr>
+              </thead>
+              <tbody data-field="table-1-rows">
+                <tr><td>0</td><td>0.0010</td><td>0.0010</td><td></td></tr>
+                <tr><td>1</td><td>0.0098</td><td>0.0107</td><td></td></tr>
+                <tr><td>2</td><td>0.0439</td><td>0.0547</td><td></td></tr>
+                <tr><td>3</td><td>0.1172</td><td>0.1719</td><td></td></tr>
+                <tr><td>4</td><td>0.2051</td><td>0.3770</td><td></td></tr>
+                <tr><td>5</td><td>0.2461</td><td>0.6230</td><td></td></tr>
+                <tr><td>6</td><td>0.2051</td><td>0.8281</td><td></td></tr>
+                <tr><td>7</td><td>0.1172</td><td>0.9453</td><td></td></tr>
+                <tr><td>8</td><td>0.0439</td><td>0.9893</td><td></td></tr>
+                <tr><td>9</td><td>0.0098</td><td>0.9990</td><td></td></tr>
+                <tr><td>10</td><td>0.0010</td><td>1.0000</td><td></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- PARTIAL: CALLOUT — highlight a key finding -->
+          <div class="callout callout--highlight">
+            <span class="callout-tag mono small">KEY FINDING</span>
+            <p data-field="results-key-finding">The binomial distribution accurately models the number of successes in a fixed series of independent Bernoulli trials, providing a quantifiable probability for each possible outcome. The distribution's shape is symmetric when p=0.5, skewing right for p&lt;0.5 and left for p&gt;0.5.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 05 DISCUSSION ---------- -->
+      <section class="paper-section" id="discussion">
+        <div class="section-heading reveal">
+          <span class="section-index mono">05</span>
+          <h2 class="section-title">Discussion</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <h3 data-field="discuss-h1">5.1 Interpretation of Results</h3>
+          <p data-field="discuss-interpretation">
+            The results demonstrate the power of the binomial distribution in quantifying uncertainty for repeated binary events. As observed in Table 1, for a fair coin (p=0.5), the probabilities peak at the expected value (k=5), indicating the most likely outcome is 5 heads in 10 flips. The probabilities decrease symmetrically as we move further from the mean. This symmetrical bell-like shape is characteristic of binomial distributions when p is close to 0.5. For scenarios where p deviates significantly from 0.5, the distribution would exhibit a clear skew, highlighting the dominant outcome. For example, if p=0.1, the probabilities would be much higher for k=0 or k=1, and rapidly diminish for larger k values. This predictive capability is invaluable in diverse fields such as quality control, where one can assess the probability of a certain number of defective items, or in marketing, for estimating the number of successful conversions from a campaign.
+          </p>
+
+          <h3 data-field="discuss-h2">5.2 Limitations and Assumptions</h3>
+          <p data-field="discuss-limitations">
+            While robust, the binomial distribution relies on several critical assumptions that, if violated, can lead to inaccurate predictions. These include:
+            <br>
+            <ul class="paper-list">
+                <li>**Fixed Number of Trials (n):** The number of repetitions of the experiment must be predetermined and constant.</li>
+                <li>**Independence of Trials:** The outcome of one trial must not influence the outcome of any other trial.</li>
+                <li>**Only Two Outcomes (Success/Failure):** Each trial must result in one of exactly two mutually exclusive outcomes.</li>
+                <li>**Constant Probability of Success (p):** The probability of success must remain the same for every trial.</li>
+            </ul>
+            <br>
+            Threats to validity arise if, for instance, the "probability of success" changes over time (e.g., a machine's defect rate worsening), or if trials are not independent (e.g., sampling without replacement from a small population). In such cases, alternative distributions like the hypergeometric distribution or more complex statistical models would be more appropriate. The sample size, `n`, must also be considered; for very large `n`, approximations like the normal distribution might be used, which have their own set of assumptions and limitations.
+          </p>
+        </div>
+      </section>
+
+      <!-- ---------- 06 CONCLUSION ---------- -->
+      <section class="paper-section" id="conclusion">
+        <div class="section-heading reveal">
+          <span class="section-index mono">06</span>
+          <h2 class="section-title">Conclusion</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <p data-field="conclusion-body">
+            The binomial distribution stands as a cornerstone of statistical inference, offering a powerful and intuitive model for scenarios involving a fixed number of independent trials with two possible outcomes. This report has defined its theoretical underpinnings, elucidated its probability mass function, and detailed its crucial properties, including the mean and variance. Through computational examples, we demonstrated its practical utility in calculating probabilities for various numbers of successes. Understanding the binomial distribution allows for informed decision-making across scientific, engineering, and business disciplines, providing a solid framework for analyzing and predicting outcomes in a wide array of binary event processes. Future work could involve exploring its approximations under different conditions, delving into its Bayesian interpretations, or comparing its performance against other discrete distributions for specific datasets.
+          </p>
+        </div>
+      </section>
+
+      <!-- ---------- 07 REFERENCES ---------- -->
+      <section class="paper-section" id="references">
+        <div class="section-heading reveal">
+          <span class="section-index mono">07</span>
+          <h2 class="section-title">References</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <ol class="reference-list" data-field="reference-list">
+            <li>[1] Ross, S. M. (2014). <em>A First Course in Probability</em> (9th ed.). Pearson.</li>
+            <li>[2] Walpole, R. E., Myers, R. H., Myers, S. L., & Ye, K. (2017). <em>Probability & Statistics for Engineers & Scientists</em> (9th ed.). Pearson.</li>
+            <li>[3] Python Software Foundation. (n.d.). <em>The Python Standard Library</em>. Available at: <a href="https://docs.python.org/3/library/index.html" target="_blank">https://docs.python.org/3/library/index.html</a></li>
+            <li>[4] SciPy. (n.d.). <em>scipy.stats.binom</em>. Available at: <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.binom.html" target="_blank">https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.binom.html</a></li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ---------- 08 APPENDIX ---------- -->
+      <section class="paper-section" id="appendix">
+        <div class="section-heading reveal">
+          <span class="section-index mono">08</span>
+          <h2 class="section-title">Appendix</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <p data-field="appendix-body">
+            This appendix includes an expanded Python script to generate the probability mass function (PMF) and cumulative distribution function (CDF) plots for binomial distributions with varying parameters, showcasing how changes in 'p' affect the distribution's shape and skewness.
+          </p>
+          <div class="code-block reveal">
+            <div class="code-block-head mono small">
+              <span data-field="code-1-label">extended_binomial_plots.py</span>
+              <span class="code-dots"><span></span><span></span><span></span></span>
+            </div>
+            <pre><code data-field="code-1-body">import numpy as np
+from scipy.stats import binom
+import matplotlib.pyplot as plt
+
+def plot_binomial_distribution(n, p_values):
+    plt.figure(figsize=(12, 6))
+    for p in p_values:
+        x = np.arange(0, n + 1)
+        pmf_values = binom.pmf(x, n, p)
+        plt.plot(x, pmf_values, marker='o', linestyle='-', label=f'p={p}')
+
+    plt.title(f'Binomial Probability Mass Function for n={n}')
+    plt.xlabel('Number of Successes (k)')
+    plt.ylabel('Probability P(X=k)')
+    plt.xticks(x)
+    plt.grid(axis='y', linestyle='--', alpha=0.7)
+    plt.legend()
+    plt.show()
+
+def plot_binomial_cdf(n, p_values):
+    plt.figure(figsize=(12, 6))
+    for p in p_values:
+        x = np.arange(0, n + 1)
+        cdf_values = binom.cdf(x, n, p)
+        plt.step(x, cdf_values, where='post', label=f'p={p}')
+
+    plt.title(f'Binomial Cumulative Distribution Function for n={n}')
+    plt.xlabel('Number of Successes (k)')
+    plt.ylabel('Cumulative Probability P(X≤k)')
+    plt.xticks(x)
+    plt.grid(axis='y', linestyle='--', alpha=0.7)
+    plt.legend()
+    plt.show()
+
+# Example usage:
+n_example = 20
+p_examples = [0.1, 0.5, 0.9]
+
+plot_binomial_distribution(n_example, p_examples)
+plot_binomial_cdf(n_example, p_examples)
+</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <footer class="report-footer mono small">
+        <span data-field="footer-text">Global Research Institute · Binomial Distribution Report · Generated October 26, 2023</span>
+      </footer>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
