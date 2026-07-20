@@ -18,7 +18,7 @@ Context:
 Framework: 
 1. Prepare the context
 - Analyse the user's intention from the message
-- Name all the folders the name given by the user but replace the spaces with dashes and lower caps any capitalized letters. Example: "Dangling POINTER report" -> "danging-pointer-report"
+- Name the folder the name given by the user but replace the spaces with dashes and lower caps any capitalized letters. Example: "Dangling POINTER report" -> "danging-pointer-report"
 
 2. Create the page
 - Check if there is already a similar report or a report with the same name using the list files in GitHub tool. You do not need to provide a path for this step. Search for names that are similar like "diamond problem" and the user asks you to make "diamond-problem-report". When this happens tell the user that the report already exists and do not create a new report. 
