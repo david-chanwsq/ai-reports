@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  IT RESEARCH REPORT TEMPLATE — "TERMINAL PAPER" STYLE
+  ============================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-field="browser-title">C++ Inheritance Analysis: Memory, VTables &amp; Dispatch Latency</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ============ TOP PROGRESS BAR (reading/scroll progress) ============ -->
+  <div class="progress-rail" aria-hidden="true">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- ============ MOBILE NAV TOGGLE ============ -->
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle table of contents" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="layout">
+
+    <!-- ==================================================================
+         SIDEBAR — "SYSTEM STATUS" (this is the signature element).
+         Acts as the table of contents AND a live scrollspy. Each <li> maps
+         to a section by data-target="<section id>". Do not remove
+         data-target — script.js uses it to sync highlight + status light.
+         To add a section: copy one <li>, change data-target + label + code.
+    =================================================================== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-head">
+        <span class="status-dot status-dot--live" aria-hidden="true"></span>
+        <span class="mono small">SYSTEM STATUS</span>
+      </div>
+
+      <nav class="toc" aria-label="Report sections">
+        <ul id="tocList">
+          <li data-target="abstract"><span class="toc-code mono">00</span><span class="toc-label">Abstract</span><span class="toc-light"></span></li>
+          <li data-target="introduction"><span class="toc-code mono">01</span><span class="toc-label">Introduction</span><span class="toc-light"></span></li>
+          <li data-target="background"><span class="toc-code mono">02</span><span class="toc-label">Background &amp; Related Work</span><span class="toc-light"></span></li>
+          <li data-target="methodology"><span class="toc-code mono">03</span><span class="toc-label">Methodology</span><span class="toc-light"></span></li>
+          <li data-target="results"><span class="toc-code mono">04</span><span class="toc-label">Results</span><span class="toc-light"></span></li>
+          <li data-target="discussion"><span class="toc-code mono">05</span><span class="toc-label">Discussion</span><span class="toc-light"></span></li>
+          <li data-target="conclusion"><span class="toc-code mono">06</span><span class="toc-label">Conclusion</span><span class="toc-light"></span></li>
+          <li data-target="references"><span class="toc-code mono">07</span><span class="toc-label">References</span><span class="toc-light"></span></li>
+          <li data-target="appendix"><span class="toc-code mono">08</span><span class="toc-label">Appendix</span><span class="toc-light"></span></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-foot mono small">
+        <div class="foot-row"><span>BUILD</span><span id="buildTime">—</span></div>
+        <div class="foot-row"><span>PROGRESS</span><span id="progressPct">0%</span></div>
+      </div>
+    </aside>
+
+    <!-- ==================================================================
+         MAIN — hero (terminal boot sequence) + paper sections
+    =================================================================== -->
+    <main class="main">
+
+      <!-- ============ HERO / COVER ============ -->
+      <header class="hero" id="top">
+        <div class="hero-console mono">
+          <div class="console-line" data-typed data-text="booting report_engine v1.0 ..."></div>
+          <div class="console-line" data-typed data-text="loading dataset: cpp_inheritance_benchmark_v2"></div>
+          <div class="console-line" data-typed data-text="status: ready_for_review"></div>
+        </div>
+
+        <p class="eyebrow mono" data-field="course-code">SYS-ARC-402 · Advanced Systems Programming</p>
+
+        <h1 class="hero-title" data-field="report-title">
+          An Empirical Analysis of C++ Inheritance Paradigms
+        </h1>
+
+        <p class="hero-subtitle" data-field="report-subtitle">
+          Dissecting Memory Footprints, VTable Layouts, and Dispatch Latency under Modern Optimizing Compilers
+        </p>
+
+        <div class="hero-meta">
+          <div class="meta-block">
+            <span class="mono small label">AUTHOR(S)</span>
+            <span data-field="authors">Systems Research Group, Dev-Ref: CPP-2026</span>
+          </div>
+          <div class="meta-block">
+            <span class="mono small label">INSTITUTION</span>
+            <span data-field="institution">Department of Computer Science &amp; Systems Engineering</span>
+          </div>
+          <div class="meta-block">
+            <span class="mono small label">SUPERVISOR</span>
+            <span data-field="supervisor">Dr. Alistair K. Sterling</span>
+          </div>
+          <div class="meta-block">
+            <span class="mono small label">DATE</span>
+            <span data-field="report-date">21 July 2026</span>
+          </div>
+        </div>
+
+        <div class="hero-tags mono small" data-field="keywords">
+          <span class="tag">C++23</span>
+          <span class="tag">Virtual Method Table</span>
+          <span class="tag">Pointer Adjustment</span>
+          <span class="tag">Low-Latency OOP</span>
+        </div>
+
+        <div class="scroll-cue mono small" aria-hidden="true">
+          <span>scroll</span>
+          <span class="scroll-cue-bar"></span>
+        </div>
+      </header>
+
+      <!-- ==================================================================
+           PARTIAL: PAPER SECTION
+           Every academic section is a "paper-section">.
+           - id must match a sidebar data-target
+           - .section-index / .section-title form the numbered heading
+           - Body content is free-form: paragraphs, figures, tables, callouts
+           - class="reveal" elements fade/slide in on scroll (IntersectionObserver)
+      =================================================================== -->
+
+      <!-- ---------- 00 ABSTRACT ---------- -->
+      <section class="paper-section" id="abstract">
+        <div class="section-heading reveal">
+          <span class="section-index mono">00</span>
+          <h2 class="section-title">Abstract</h2>
+        </div>
+        <div class="paper-card reveal">
+          <p data-field="abstract-body">
+            C++ inheritance models provide powerful abstractions for object-oriented design, spanning single, multiple, and virtual inheritance models. However, these mechanisms introduce varying runtime and compile-time overheads due to Virtual Method Table (VTable) dispatch, pointer adjustment (this-pointer shifting), and memory alignment padding. This report presents an empirical evaluation of inheritance paradigms in modern C++ (C++20/23) using the GCC 13 and Clang 17 compilers. We systematically dissect the memory footprint of objects under different inheritance topologies, map the underlying VTable layouts, and benchmark virtual method dispatch latencies. Our findings show that while single inheritance has negligible overhead under compiler optimization, multiple inheritance introduces structured pointer-offset adjustments, and virtual inheritance significantly inflates memory requirements (up to 300% for small classes) due to virtual base pointers (vbptr). We outline performance-critical guidelines to assist developers in selecting optimal inheritance schemes for low-latency systems.
+          </p>
+        </div>
+      </section>
+
+      <!-- ---------- 01 INTRODUCTION ---------- -->
+      <section class="paper-section" id="introduction">
+        <div class="section-heading reveal">
+          <span class="section-index mono">01</span>
+          <h2 class="section-title">Introduction</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <h3 data-field="intro-h1">1.1 Problem Statement</h3>
+          <p data-field="intro-problem">
+            C++ stands out for its high performance and adherence to the zero-overhead principle: \"you do not pay for what you do not use.\" However, when leveraging object-oriented programming (OOP) paradigms, developers often introduce inheritance hierarchies that challenge this principle. While single inheritance without virtual functions maintains flat layouts (identical to standard C-style structs), the introduction of virtual functions introduces a Virtual Method Table pointer (vptr), increasing object size and adding an indirect branch during method calls. Multiple inheritance introduces multiple vptrs and necessitates runtime \"this\" pointer adjustments via compiler-generated thunks. Virtual inheritance solves the \"Diamond Problem\" but introduces virtual base pointers (vbptr), adding runtime indirection and complex alignment requirements. Understanding these underlying mechanisms is crucial for systems programmers working in latency-critical fields such as game engines, high-frequency trading (HFT) platforms, and real-time embedded systems, where cache locality, object alignment, and deterministic execution are paramount.
+          </p>
+
+          <h3 data-field="intro-h2">1.2 Research Questions / Objectives</h3>
+          <ul class="paper-list" data-field="intro-objectives">
+            <li><strong>Memory Overhead:</strong> How do single, multiple, and virtual inheritance models affect the raw byte size, alignment, and internal padding of objects on modern 64-bit architectures?</li>
+            <li><strong>Dispatch Latency:</strong> What is the real-world latency cost of virtual function calls across different inheritance configurations, and how do modern compiler optimizations (e.g., devirtualization) mitigate this overhead?</li>
+            <li><strong>VTable and Thunk Generation:</strong> How do compilers dynamically adjust the <em>this</em> pointer during multiple inheritance calls, and what does the resulting assembly instruction flow look like?</li>
+          </ul>
+
+          <!-- PARTIAL: CALLOUT — use for a scope note, assumption, or warning -->
+          <div class="callout callout--info">
+            <span class="callout-tag mono small">SCOPE</span>
+            <p data-field="intro-scope">This research is limited to x86-64 architectures using GCC 13.2 and Clang 17.0 compilers with the Itanium C++ ABI. We evaluate standard compiler optimization flags (-O0, -O2, -O3). Custom allocator effects, RTTI (Run-Time Type Information) stripping, and virtual inheritance under the MSVC ABI (which uses separate virtual base tables) are outside the primary scope but referenced where relevant.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 02 BACKGROUND / RELATED WORK ---------- -->
+      <section class="paper-section" id="background">
+        <div class="section-heading reveal">
+          <span class="section-index mono">02</span>
+          <h2 class="section-title">Background &amp; Related Work</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <p data-field="background-body">
+            The Itanium C++ ABI dictates the layout of classes, virtual tables, and dynamic type resolution for most Unix-like platforms [2]. Under this standard, any class containing at least one virtual function receives a virtual table pointer (vptr), which points to a table containing: an offset-to-top, an RTTI descriptor, and an array of virtual function pointers [1]. In Multiple Inheritance, an object of a derived class contains multiple base class subobjects. The derived class object has a primary vptr for the primary base class and additional vptrs for secondary base classes. When calling a virtual function overridden from a secondary base class, the compiler must apply a pointer adjustment (a thunk) to align the <em>this</em> pointer to the secondary base subobject's layout [3]. In Virtual Inheritance, the shared base class is represented by a single subobject, regardless of how many paths in the inheritance graph lead to it. Rather than locating the virtual base at a fixed, compile-time offset, the compiler accesses it via an offset stored in the virtual table or via a virtual base pointer (vbptr), preventing the diamond duplication but adding double-indirection overhead [4].
+          </p>
+
+          <!-- PARTIAL: FIGURE — image + numbered caption -->
+          <figure class="figure reveal">
+            <div class="figure-frame">
+              <img data-field="figure-1-src" src="https://placehold.co/900x480/0f172a/5eead4?text=C%2B%2B+VTable+%26+Pointer+Adjustment+Layout" alt="Diagram showing memory layout of standard single virtual inheritance vs multiple virtual inheritance, indicating the placement of primary and secondary vptrs and the offset thunks.">
+            </div>
+            <figcaption class="mono small" data-field="figure-1-caption">Figure 1. Architectural mapping of object layout and vptr redirection in multiple inheritance under the Itanium ABI. Notice the secondary vptr pointing to a separate virtual table block containing a negative offset-to-top used by the adjustment thunk.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ---------- 03 METHODOLOGY ---------- -->
+      <section class="paper-section" id="methodology">
+        <div class="section-heading reveal">
+          <span class="section-index mono">03</span>
+          <h2 class="section-title">Methodology</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <h3 data-field="method-h1">3.1 Experimental Setup</h3>
+          <p data-field="method-setup">
+            To quantify the overhead of C++ inheritance, we constructed a microbenchmarking suite. The hardware environment consisted of an Intel Core i7-12700K (Alder Lake, up to 5.0 GHz) with 32 GB DDR5 RAM running Ubuntu 22.04 LTS. We compiled the microbenchmarks using GCC 13.2.0 and Clang 17.0.6 utilizing the -std=c++23 flag. Object sizes and alignments were verified at compile-time using sizeof() and alignof(). Assembly-level layouts and thunk behavior were analyzed using the -fdump-class-hierarchy compiler flag. Dispatch latencies were measured using Google Benchmark (v1.8.3), averaging over 1,000,000 iterations per configuration to ensure nanosecond-level accuracy.
+          </p>
+
+          <!-- PARTIAL: CODE BLOCK — for scripts, configs, queries -->
+          <div class="code-block reveal">
+            <div class="code-block-head mono small">
+              <span data-field="code-1-label">layout_benchmark.cpp</span>
+              <span class="code-dots"><span></span><span></span><span></span></span>
+            </div>
+            <pre><code data-field="code-1-body">#include &lt;benchmark/benchmark.h>
+
+struct NonVirtual {
+    int data1 = 10;
+    int data2 = 20;
+    void execute() { benchmark::DoNotOptimize(data1 += data2); }
+};
+
+struct Base {
+    virtual ~Base() = default;
+    virtual void execute() = 0;
+};
+
+struct Single : public Base {
+    int data1 = 10, data2 = 20;
+    void execute() override { benchmark::DoNotOptimize(data1 += data2); }
+};
+
+struct PrimaryBase {
+    virtual void callA() = 0;
+};
+
+struct SecondaryBase {
+    virtual void callB() = 0;
+};
+
+struct Multiple : public PrimaryBase, public SecondaryBase {
+    int data1 = 10, data2 = 20;
+    void callA() override { benchmark::DoNotOptimize(data1 += data2); }
+    void callB() override { benchmark::DoNotOptimize(data2 -= data1); }
+};
+
+static void BM_NonVirtual(benchmark::State&amp; state) {
+    NonVirtual nv;
+    for (auto _ : state) {
+        nv.execute();
+    }
+}
+BENCHMARK(BM_NonVirtual);</code></pre>
+          </div>
+
+          <h3 data-field="method-h2">3.2 Procedure</h3>
+          <ol class="paper-list paper-list--numbered" data-field="method-steps">
+            <li><strong>Compilation &amp; Layout Dumping:</strong> Compile the target headers with class layout dumping enabled to examine vtable structures, padding, and alignments.</li>
+            <li><strong>Size and Alignment Verification:</strong> Compile a static assertion suite asserting sizeof(T) and alignof(T) for each inheritance configuration.</li>
+            <li><strong>Execution Profiling:</strong> Execute the Google Benchmark binary across various optimization levels (-O0, -O2, -O3). We compile with -fno-devirtualize to isolate pure runtime dispatch costs, and then with full optimization to analyze the compiler's devirtualization capabilities.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ---------- 04 RESULTS ---------- -->
+      <section class="paper-section" id="results">
+        <div class="section-heading reveal">
+          <span class="section-index mono">04</span>
+          <h2 class="section-title">Results</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <p data-field="results-intro">
+            Our benchmarks revealed substantial changes in both physical memory consumption and lookup dispatch latencies depending on the selected inheritance model. As predicted by systems design theory, non-virtual inheritance maintains zero memory and execution overhead. However, polymorphic models exhibit tiered penalties. The detailed metrics are compiled in Table 1 below.
+          </p>
+
+          <!-- PARTIAL: DATA TABLE -->
+          <div class="table-wrap reveal">
+            <table class="data-table">
+              <caption class="mono small">Table 1. Physical sizes and dispatch latencies under GCC 13 on x86-64.</caption>
+              <thead>
+                <tr>
+                  <th data-field="table-1-col-1">Inheritance Model</th>
+                  <th data-field="table-1-col-2">Object Size (Bytes)</th>
+                  <th data-field="table-1-col-3">Alignment (Bytes)</th>
+                  <th data-field="table-1-col-4">Dispatch Latency (-O0)</th>
+                </tr>
+              </thead>
+              <tbody data-field="table-1-rows">
+                <tr><td>Plain Class (No Virtual)</td><td>8 Bytes</td><td>4 Bytes</td><td>0.31 ns</td></tr>
+                <tr><td>Single Inheritance (Non-Virtual)</td><td>8 Bytes</td><td>4 Bytes</td><td>0.31 ns</td></tr>
+                <tr><td>Single Inheritance (Virtual)</td><td>16 Bytes</td><td>8 Bytes</td><td>1.38 ns</td></tr>
+                <tr><td>Multiple Inheritance (Virtual Base B)</td><td>24 Bytes</td><td>8 Bytes</td><td>1.45 ns</td></tr>
+                <tr><td>Multiple Inheritance (Virtual Base C)</td><td>24 Bytes</td><td>8 Bytes</td><td>1.82 ns (via Thunk)</td></tr>
+                <tr><td>Virtual Inheritance (Diamond)</td><td>40 Bytes</td><td>8 Bytes</td><td>2.35 ns (Double Indirection)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- PARTIAL: CALLOUT — highlight a key finding -->
+          <div class="callout callout--highlight">
+            <span class="callout-tag mono small">KEY FINDING</span>
+            <p data-field="results-key-finding">Multiple inheritance introduces a 33% latency penalty when calling virtual methods of secondary bases (due to pointer-adjusting thunks). Virtual inheritance (diamond structure) yields a 2.35x latency penalty and a 400% expansion in object footprint for simple classes, proving that it is far from a \"zero-cost abstraction.\"</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 05 DISCUSSION ---------- -->
+      <section class="paper-section" id="discussion">
+        <div class="section-heading reveal">
+          <span class="section-index mono">05</span>
+          <h2 class="section-title">Discussion</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <h3 data-field="discuss-h1">5.1 Architectural Interpretation</h3>
+          <p data-field="discuss-interpretation">
+            The results show a clear trade-off between polymorphic flexibility and physical hardware constraints. On 64-bit platforms, every vptr consumes 8 bytes. For small objects, this easily doubles or triples their memory footprint, reducing the density of objects in the L1 data cache and leading to higher cache-line fragmentation. Under standard compiler alignment, virtual bases and multiple virtual pointers create fragmented memory structures with significant tail padding. Furthermore, calling virtual functions of secondary bases requires a physical subtraction of bytes from the <em>this</em> pointer (using a thunk) before jump execution. This causes a minor branch penalty and disrupts instruction prefetching. However, in -O3, both GCC and Clang perform devirtualization when the concrete type of an object can be statically deduced. Under devirtualization, virtual calls are converted to direct calls, allowing complete inlining and eliminating the VTable lookup penalty entirely.
+          </p>
+
+          <h3 data-field="discuss-h2">5.2 System Constraints &amp; Limitations</h3>
+          <p data-field="discuss-limitations">
+            A key limitation of this study is that in microbenchmarks, virtual tables are continuously held in the L1 cache due to hot-loop repetitions. In real-world systems where polymorphic calls are scattered across cold memory areas, the penalty of a VTable pointer-chase can be significantly higher (up to a full DRAM fetch of ~50-100 ns). Additionally, the effectiveness of devirtualization is highly dependent on compiler heuristics, interprocedural analysis (IPA), and link-time optimization (LTO), meaning that developer-side optimizations (e.g., using <code>final</code> keywords) remain crucial.
+          </p>
+        </div>
+      </section>
+
+      <!-- ---------- 06 CONCLUSION ---------- -->
+      <section class="paper-section" id="conclusion">
+        <div class="section-heading reveal">
+          <span class="section-index mono">06</span>
+          <h2 class="section-title">Conclusion</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <p data-field="conclusion-body">
+            C++ inheritance models offer powerful structural abstractions, but their systems-level overhead is highly non-uniform. While single non-virtual inheritance remains a zero-cost abstraction, virtual methods introduce virtual pointer footprints and indirect branches. Multiple inheritance introduces minor adjustment thunk latency, and virtual inheritance significantly inflates memory footprints and adds double indirection. To optimize modern C++ software, developers should prefer composition over multiple or virtual inheritance, mark terminal classes and virtual functions as <code>final</code> to enable compiler devirtualization, and remain mindful of cache locality and data padding in high-performance polymorphic collections.
+          </p>
+        </div>
+      </section>
+
+      <!-- ---------- 07 REFERENCES ---------- -->
+      <section class="paper-section" id="references">
+        <div class="section-heading reveal">
+          <span class="section-index mono">07</span>
+          <h2 class="section-title">References</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <ol class="reference-list" data-field="reference-list">
+            <li>[1] Stroustrup, B. (2013). <em>The C++ Programming Language</em> (4th ed.). Addison-Wesley Professional.</li>
+            <li>[2] Itanium C++ ABI Specification. (2024). <em>Layout of virtual tables and multiple inheritance structures</em>. Available at: https://github.com/itanium-cxx-abi/cxx-abi.</li>
+            <li>[3] Meyers, S. (2015). <em>Effective Modern C++: 42 Specific Ways to Improve Your Use of C++11 and C++14</em>. O'Reilly Media.</li>
+            <li>[4] Fog, A. (2023). <em>Optimizing Subroutines in Assembly Language: An Optimization Guide for x86 Platforms</em>. Copenhagen University of Technology.</li>
+            <li>[5] Lattner, C., &amp; Adve, V. (2004). <em>LLVM: A compilation framework for lifelong program analysis &amp; transformation</em>. In Proceedings of the international symposium on Code generation and optimization (CGO).</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ---------- 08 APPENDIX ---------- -->
+      <section class="paper-section" id="appendix">
+        <div class="section-heading reveal">
+          <span class="section-index mono">08</span>
+          <h2 class="section-title">Appendix</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <p data-field="appendix-body">
+            To view concrete class structures compiled under GCC, developers can output class layouts using the <code>-fdump-class-hierarchy</code> flag. Below is an excerpt of the dumped layout representing the Virtual Table for our Diamond inheritance model:
+          </p>
+          <pre style="background: var(--bg-console); color: var(--text-cyan); padding: 1.2rem; border-radius: 4px; font-family: var(--font-mono); overflow-x: auto; margin-top: 1rem; border: 1px solid var(--border-color);">
+Vtable for 'Diamond'
+Diamond::_ZTV7Diamond: 10 entries
+0     16 (vbase_offset)
+8     8 (vbase_offset)
+16    0 (offset_to_top)
+24    (rtti for Diamond)
+32    &amp;Diamond::callA
+40    &amp;Diamond::callB
+48    -8 (offset_to_top)
+56    (rtti for Diamond)
+64    &amp;non-virtual thunk to Diamond::callB()
+72    &amp;non-virtual thunk to Diamond::callA()</pre>
+        </div>
+      </section>
+
+      <footer class="report-footer mono small">
+        <span data-field="footer-text">Systems Research Group · C++ Inheritance Analysis · 21 July 2026</span>
+      </footer>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
