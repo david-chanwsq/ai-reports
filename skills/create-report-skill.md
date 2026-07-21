@@ -33,4 +33,4 @@ If any of these are missing stop the program and raise an error
   - all the files in the report are not in binary 
   - all the files created have the exact same data as what was provided in the user prompt
 If any files are missing create them 
-- Return the page URL and a message 
+- Return the page URL (e.g https://david-chanwsq.github.io/ai-reports/c-inheritance/) and a message 
