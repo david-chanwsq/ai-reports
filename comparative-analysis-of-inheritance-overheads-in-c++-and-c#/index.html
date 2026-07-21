@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  IT RESEARCH REPORT TEMPLATE — "TERMINAL PAPER" STYLE
+  ============================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-field="browser-title">C++ vs. C# Inheritance Overheads: A Comprehensive Performance &amp; Memory Analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ============ TOP PROGRESS BAR (reading/scroll progress) ============ -->
+  <div class="progress-rail" aria-hidden="true">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- ============ MOBILE NAV TOGGLE ============ -->
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle table of contents" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="layout">
+
+    <!-- ==================================================================
+         SIDEBAR — "SYSTEM STATUS" (this is the signature element).
+    =================================================================== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-head">
+        <span class="status-dot status-dot--live" aria-hidden="true"></span>
+        <span class="mono small">SYSTEM STATUS</span>
+      </div>
+
+      <nav class="toc" aria-label="Report sections">
+        <ul id="tocList">
+          <li data-target="abstract"><span class="toc-code mono">00</span><span class="toc-label">Abstract</span><span class="toc-light"></span></li>
+          <li data-target="introduction"><span class="toc-code mono">01</span><span class="toc-label">Introduction</span><span class="toc-light"></span></li>
+          <li data-target="background"><span class="toc-code mono">02</span><span class="toc-label">Background &amp; Related Work</span><span class="toc-light"></span></li>
+          <li data-target="methodology"><span class="toc-code mono">03</span><span class="toc-label">Methodology</span><span class="toc-light"></span></li>
+          <li data-target="results"><span class="toc-code mono">04</span><span class="toc-label">Results</span><span class="toc-light"></span></li>
+          <li data-target="discussion"><span class="toc-code mono">05</span><span class="toc-label">Discussion</span><span class="toc-light"></span></li>
+          <li data-target="conclusion"><span class="toc-code mono">06</span><span class="toc-label">Conclusion</span><span class="toc-light"></span></li>
+          <li data-target="references"><span class="toc-code mono">07</span><span class="toc-label">References</span><span class="toc-light"></span></li>
+          <li data-target="appendix"><span class="toc-code mono">08</span><span class="toc-label">Appendix</span><span class="toc-light"></span></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-foot mono small">
+        <div class="foot-row"><span>BUILD</span><span id="buildTime">—</span></div>
+        <div class="foot-row"><span>PROGRESS</span><span id="progressPct">0%</span></div>
+      </div>
+    </aside>
+
+    <!-- ==================================================================
+         MAIN — hero (terminal boot sequence) + paper sections
+    =================================================================== -->
+    <main class="main">
+
+      <!-- ============ HERO / COVER ============ -->
+      <header class="hero" id="top">
+        <div class="hero-console mono">
+          <div class="console-line" data-typed data-text="booting virtualization_benchmark_engine v2.4 ..."></div>
+          <div class="console-line" data-typed data-text="loading profiles: x64_sysv_abi / dotnet_clr_v8.0"></div>
+          <div class="console-line" data-typed data-text="status: analytical_report_active"></div>
+        </div>
+
+        <p class="eyebrow mono" data-field="course-code">CS-602 · ADVANCED COMPILER DESIGN &amp; SYSTEMS ARCHITECTURE</p>
+
+        <h1 class="hero-title" data-field="report-title">
+          Comparative Analysis of Inheritance Overheads in C++ and C#
+        </h1>
+
+        <p class="hero-subtitle" data-field="report-subtitle">
+          Evaluating memory layouts, virtual dispatch latency, and compilation mechanics across native and JIT-compiled runtimes
+        </p>
+
+        <div class="hero-meta">
+          <div class="meta-block">
+            <span class="mono small label">AUTHOR(S)</span>
+            <span data-field="authors">Dr. Marcus Thorne &amp; Sarah Jenkins</span>
+          </div>
+          <div class="meta-block">
+            <span class="mono small label">INSTITUTION</span>
+            <span data-field="institution">Institute for Systems Programming, Horizon University</span>
+          </div>
+          <div class="meta-block">
+            <span class="mono small label">SUPERVISOR</span>
+            <span data-field="supervisor">Review Committee on Programming Language Paradigms</span>
+          </div>
+          <div class="meta-block">
+            <span class="mono small label">DATE</span>
+            <span data-field="report-date">July 21, 2026</span>
+          </div>
+        </div>
+
+        <div class="hero-tags mono small" data-field="keywords">
+          <span class="tag">C++ Polymorphism</span>
+          <span class="tag">CLR Internals</span>
+          <span class="tag">Virtual Stub Dispatch</span>
+          <span class="tag">Memory Layout</span>
+        </div>
+
+        <div class="scroll-cue mono small" aria-hidden="true">
+          <span>scroll</span>
+          <span class="scroll-cue-bar"></span>
+        </div>
+      </header>
+
+      <!-- ---------- 00 ABSTRACT ---------- -->
+      <section class="paper-section" id="abstract">
+        <div class="section-heading reveal">
+          <span class="section-index mono">00</span>
+          <h2 class="section-title">Abstract</h2>
+        </div>
+        <div class="paper-card reveal">
+          <p data-field="abstract-body">
+            This report presents a rigorous comparative analysis of inheritance overheads in C++ and C#, examining the trade-offs between C++'s native, "zero-overhead" compilation model and C#'s managed, Common Language Runtime (CLR) execution paradigm. Using x86-64 target architectures, we evaluate the physical memory layouts of polymorphic objects, comparing C++ virtual pointer (vptr) and virtual table (vtable) schemas with the CLR's mandatory SyncBlock and MethodTable (TypeHandle) headers. We profile runtime execution dispatches under monomorphic, polymorphic, and megamorphic call-site configurations. Our empirical results demonstrate that while both compilers leverage advanced optimization patterns—such as Guarded Devirtualization (GDV) in the .NET 8 JIT and Link-Time Optimization (LTO) in GCC 13.2—significant performance divergence occurs at polymorphic call sites. C# interface invocations managed via Virtual Stub Dispatch (VSD) show a 15–20% latency penalty compared to C++ virtual dispatches under branch target buffer (BTB) miss conditions. Furthermore, value-type interface dispatches in C# incur severe performance penalties due to boxing unless optimized via generic constraints, whereas C++ templates enforce compile-time monomorphization with zero runtime cost.
+          </p>
+        </div>
+      </section>
+
+      <!-- ---------- 01 INTRODUCTION ---------- -->
+      <section class="paper-section" id="introduction">
+        <div class="section-heading reveal">
+          <span class="section-index mono">01</span>
+          <h2 class="section-title">Introduction</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <h3 data-field="intro-h1">1.1 Theoretical Framework</h3>
+          <p data-field="intro-problem">
+            Modern systems programming requires deep mechanical sympathy with execution runtimes to maximize hardware utilization. Polymorphism is a pillar of object-oriented design, yet its implementations in native compilation (such as C++) and virtual machine execution (such as C# .NET) represent opposing architectural philosophies. C++ adheres to the design rule that "you do not pay for what you do not use," keeping non-polymorphic classes identical to flat C structs in memory, and only allocating a virtual table pointer (vptr) when virtual functions are explicitly declared. Conversely, C# operates on a unified model where every reference type inherits from System.Object, forcing a mandatory 16-byte header overhead (SyncBlock and TypeHandle) on all heap-allocated objects on 64-bit platforms, regardless of virtual method usage. Understanding how these differences manifest in memory footprint, CPU instruction density, and branch prediction efficiency is critical for low-latency domain development.
+          </p>
+
+          <h3 data-field="intro-h2">1.2 Research Objectives</h3>
+          <ul class="paper-list" data-field="intro-objectives">
+            <li><strong>Deconstruct Memory Layouts:</strong> Map and quantify the physical bytes allocated for single, multiple, and virtual inheritance in C++ versus single and interface-based inheritance in C#.</li>
+            <li><strong>Profile Dispatch Latency:</strong> Measure execution times across monomorphic and polymorphic virtual call paths to isolate the costs of CPU branch target buffer (BTB) misses.</li>
+            <li><strong>Analyze Special Inheritance Paradigms:</strong> Evaluate the performance impact of C++ multiple inheritance offset-adjustments (thunks) against C# Virtual Stub Dispatch (VSD) and value-type boxing constraints.</li>
+          </ul>
+
+          <!-- PARTIAL: CALLOUT -->
+          <div class="callout callout--info">
+            <span class="callout-tag mono small">SCOPE</span>
+            <p data-field="intro-scope">This investigation evaluates performance strictly on x86-64 architectures executing under GCC 13.2 (with -O3 and Link-Time Optimization) and the .NET 8.0 CLR (RyuJIT Tier 1 compilation). Heap garbage collection pauses, JIT compilation warm-up cycles, and thread-synchronization behaviors are explicitly excluded from profiling to isolate primary dispatch and layout overheads.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 02 BACKGROUND / RELATED WORK ---------- -->
+      <section class="paper-section" id="background">
+        <div class="section-heading reveal">
+          <span class="section-index mono">02</span>
+          <h2 class="section-title">Background &amp; Related Work</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <p data-field="background-body">
+            Prior research on object-oriented overheads has heavily focused on virtual dispatch elimination. The standard C++ application binary interface (Itanium ABI) specifies that the virtual table pointer (vptr) resides at offset zero of the object layout, pointing directly to a virtual table (vtable) shared by all instances of that class [1]. Multiple inheritance in C++ introduces supplementary vptrs and requires pointer adjustments ("thunks") to correctly set the <code>this</code> pointer during virtual calls on non-primary bases [2]. 
+            <br><br>
+            In contrast, the .NET CLR employs a highly uniform layout. Every heap-allocated instance of a reference type contains a 16-byte prefix comprising an 8-byte SyncBlock index (used for locking and hash codes) and an 8-byte TypeHandle pointing to the class's MethodTable [3]. Because C# restricts inheritance to single-base class schemas, it avoids C++'s multiple vptr overhead. To support interface polymorphism, however, the .NET JIT implements Virtual Stub Dispatch (VSD). Unlike standard virtual dispatches that resolve through a fixed MethodTable index, interface dispatches utilize dynamically self-modifying call-site stubs. VSD utilizes monomorphic inline caching for the fast path, transitioning to polymorphic stubs and ultimately to global hash-table lookups (megamorphic path) if type targets diversify [4]. Modern JIT engines also utilize Guarded Devirtualization (GDV) to speculatively convert polymorphic calls into direct branches, relying on runtime checks to validate compiler assumptions.
+          </p>
+
+          <!-- PARTIAL: FIGURE -->
+          <figure class="figure reveal">
+            <div class="figure-frame">
+              <img data-field="figure-1-src" src="https://placehold.co/900x480/0d1117/58a6ff?text=Memory+Layout:+Itanium+C%2B%2B+vs+.NET+CLR+Heap" alt="Comparison of C++ and C# memory layouts on 64-bit architectures">
+            </div>
+            <figcaption class="mono small" data-field="figure-1-caption">Figure 1. 64-bit object memory layout comparison. In C++ (left), non-polymorphic structures incur 0-byte header overhead, while virtual classes add an 8-byte vptr. In C# (right), reference types always carry a mandatory 16-byte prefix (SyncBlock + TypeHandle), yielding a minimum heap footprint of 24 bytes (including padding).</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ---------- 03 METHODOLOGY ---------- -->
+      <section class="paper-section" id="methodology">
+        <div class="section-heading reveal">
+          <span class="section-index mono">03</span>
+          <h2 class="section-title">Methodology</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <h3 data-field="method-h1">3.1 Experimental Design</h3>
+          <p data-field="method-setup">
+            Microbenchmarks were executed on an AMD Ryzen 9 5950X (16 physical cores, 3.4 GHz base, 64 MB L3 cache) running Ubuntu 22.04 LTS. C++ code was compiled using GCC 13.2 with the flags <code>-O3 -march=native -flto</code>. C# benchmarks were compiled using the .NET 8.0 SDK (Release configuration) with Tier 1 compilation forced via environment variables. BenchmarkDotNet v0.13.10 was used for the C# runtime profiling to ensure high-resolution timing and JIT warm-up isolation. The core testing suites utilize identical class hierarchies consisting of a base interface/class containing a single virtual method and multiple child classes to systematically control polymorphism levels.
+          </p>
+
+          <!-- PARTIAL: CODE BLOCK -->
+          <div class="code-block reveal">
+            <div class="code-block-head mono small">
+              <span data-field="code-1-label">benchmark_definitions.cpp / .cs</span>
+              <span class="code-dots"><span></span><span></span><span></span></span>
+            </div>
+            <pre><code data-field="code-1-body">// C++ Benchmark Implementation
+struct Base {
+    virtual void Update() = 0;
+    virtual ~Base() = default;
+};
+struct DerivedA : Base {
+    int data = 0;
+    void Update() override { data++; }
+};
+
+// C# Benchmark Implementation
+public abstract class BaseClass {
+    public abstract void Update();
+}
+public class DerivedClassA : BaseClass {
+    public int Data = 0;
+    public override void Update() => Data++;
+}</code></pre>
+          </div>
+
+          <h3 data-field="method-h2">3.2 Benchmark Execution Protocol</h3>
+          <ol class="paper-list paper-list--numbered" data-field="method-steps">
+            <li><strong>Baseline Allocation Profiling:</strong> Measuring raw memory instantiation footprints for empty classes and classes with varying levels of inheritance deep-hierarchies.</li>
+            <li><strong>Monomorphic Dispatch Execution:</strong> Running tight loops (10^7 iterations) invoking the virtual function over a single, uniform concrete class instance to optimize CPU branch prediction.</li>
+            <li><strong>Polymorphic Dispatch Execution:</strong> Iterating through arrays containing mixed child instances in random sequences (using 4 concrete subclasses) to deliberately saturate the CPU's Branch Target Buffer (BTB) and trigger virtual table lookup penalties.</li>
+            <li><strong>Interface and Struct Evaluation:</strong> Evaluating the latency of interface dispatch on structs in C# under both standard boxing dispatches and generic-constrained monomorphized dispatches.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ---------- 04 RESULTS ---------- -->
+      <section class="paper-section" id="results">
+        <div class="section-heading reveal">
+          <span class="section-index mono">04</span>
+          <h2 class="section-title">Results</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <p data-field="results-intro">
+            The results are split into two major categories: physical memory footprint and runtime execution latency. Table 1 outlines the measured memory allocation overhead and call-site execution times under varying dispatch types, demonstrating the significant divergence between native and JIT models.
+          </p>
+
+          <!-- PARTIAL: DATA TABLE -->
+          <div class="table-wrap reveal">
+            <table class="data-table">
+              <caption class="mono small">Table 1. Physical layout dimensions and invocation latencies on x86-64.</caption>
+              <thead>
+                <tr>
+                  <th data-field="table-1-col-1">Benchmark Metric / Scenario</th>
+                  <th data-field="table-1-col-2">C++ (GCC 13.2 -O3 -flto)</th>
+                  <th data-field="table-1-col-3">C# (.NET 8.0 RyuJIT)</th>
+                  <th data-field="table-1-col-4">Relative Analysis / Delta</th>
+                </tr>
+              </thead>
+              <tbody data-field="table-1-rows">
+                <tr><td>Empty Class Heap Footprint</td><td>1 byte (C++ requirement)</td><td>24 bytes (16-byte headers + padding)</td><td>C# has 24x baseline heap overhead</td></tr>
+                <tr><td>Single Virtual-Base Footprint</td><td>8 bytes (1 vptr)</td><td>24 bytes (reuses TypeHandle)</td><td>C++ incurs vptr overhead; C# is invariant</td></tr>
+                <tr><td>Multiple Virtual-Base Footprint</td><td>16 bytes (2 vptrs)</td><td>N/A (Interface map in metadata)</td><td>C++ layout grows; C# metadata grows instead</td></tr>
+                <tr><td>Direct Member Call (Baseline)</td><td>0.38 ns</td><td>0.40 ns</td><td>Identical (Direct register call / inlined)</td></tr>
+                <tr><td>Monomorphic Virtual Call</td><td>1.12 ns</td><td>1.18 ns</td><td>Both optimized heavily by branch predictors</td></tr>
+                <tr><td>Polymorphic Virtual Call (Random)</td><td>2.41 ns</td><td>2.85 ns</td><td>C# JIT suffers 18.2% greater BTB overhead</td></tr>
+                <tr><td>Struct Interface Call (Generic)</td><td>0.38 ns (Template)</td><td>0.40 ns (Generics Struct Specialized)</td><td>Both achieve complete zero-cost abstraction</td></tr>
+                <tr><td>Struct Interface Call (Boxed)</td><td>N/A (Not applicable)</td><td>12.45 ns</td><td>C# incurs huge boxing &amp; GC allocation cost</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- PARTIAL: CALLOUT -->
+          <div class="callout callout--highlight">
+            <span class="callout-tag mono small">KEY FINDING</span>
+            <p data-field="results-key-finding">While monomorphic calls perform similarly in both languages due to branch prediction and speculative JIT devirtualization, C# polymorphic virtual calls are 18.2% slower than C++ counterparts, and boxed struct interface dispatches in C# incur a staggering 3,112% performance penalty compared to zero-cost generic monomorphization.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 05 DISCUSSION ---------- -->
+      <section class="paper-section" id="discussion">
+        <div class="section-heading reveal">
+          <span class="section-index mono">05</span>
+          <h2 class="section-title">Discussion</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <h3 data-field="discuss-h1">5.1 Mechanical Sympathy &amp; Dispatch Internals</h3>
+          <p data-field="discuss-interpretation">
+            The results reflect the divergent philosophies of the two runtimes. C++'s Itanium ABI organizes virtual inheritance linearly: the primary base class vptr is located at offset 0, meaning a virtual call requires dereferencing the pointer, loading the function pointer from the vtable, and executing an indirect call. When multiple inheritance is introduced, the C++ compiler places secondary vptrs at the offset of each subobject. Invoking a virtual method on a secondary base class requires an adjusting thunk (adjusting the <code>this</code> pointer by a constant offset) before jumping to the target code [5]. This architecture ensures that virtual dispatches scale with simple pointer arithmetic.
+            <br><br>
+            In C#, the CLR bypasses multiple inheritance issues by supporting only single class inheritance, guaranteeing a unified TypeHandle (MethodTable pointer) layout. However, to handle interfaces, C# cannot use simple vtable offsets, because a class may implement many interfaces, each specifying methods at overlapping logical positions. The CLR resolves this via Virtual Stub Dispatch (VSD). A call site begins pointing to an lookup stub, which resolves the call and modifies the site to point to a Monomorphic Inline Cache (MIC). The MIC consists of a hardcoded comparison: if the incoming object's MethodTable matches the cached type, it directly branches to the target method. When the call site encounters multiple types (polymorphism), it is rewritten to point to a Polymorphic Stub, which traverses a lookup table of up to four types. Beyond four types, the dispatch falls back to a global hash lookup (Megamorphic path). Under heavy polymorphism, VSD causes significant CPU cache pollution and branch predictor misses, explaining the 2.85 ns runtime latency.
+          </p>
+
+          <h3 data-field="discuss-h2">5.2 Systemic Constraints &amp; Mitigations</h3>
+          <p data-field="discuss-limitations">
+            While C++ outperforms C# in raw polymorphic dispatches, the gaps are narrow in real-world scenarios due to advanced compiler optimizations. Link-Time Optimization (LTO) in modern C++ toolchains can perform whole-program devirtualization, identifying virtual methods that have only one override and converting them into direct calls. Similarly, .NET's Guarded Devirtualization (GDV) utilizes runtime profiling to inject speculative checks, compiling highly optimized execution paths for the most common runtime types. Developers must also design for the GC: C# allocations of small objects inherit a high tax due to the 16-byte object header, whereas C++ developers can leverage custom pool allocators to achieve optimal cache locality.
+          </p>
+        </div>
+      </section>
+
+      <!-- ---------- 06 CONCLUSION ---------- -->
+      <section class="paper-section" id="conclusion">
+        <div class="section-heading reveal">
+          <span class="section-index mono">06</span>
+          <h2 class="section-title">Conclusion</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <p data-field="conclusion-body">
+            This study highlights the persistent trade-offs between compiled native systems and managed JIT runtimes. C++ remains the gold standard for predictable, low-latency, and highly constrained environments, as it offers granular layout control and static polymorphism (via templates and the Curiously Recurring Template Pattern - CRTP) to bypass runtime dispatches entirely. C# offers a highly uniform, developer-friendly model where Guarded Devirtualization and Virtual Stub Dispatch yield excellent performance for monomorphic paths, but developers must remain hyper-vigilant regarding heap layout costs and interface-induced boxing on value types. Future work will investigate the impact of .NET's Native AOT compilation on virtualization mechanisms and register allocation paths.
+          </p>
+        </div>
+      </section>
+
+      <!-- ---------- 07 REFERENCES ---------- -->
+      <section class="paper-section" id="references">
+        <div class="section-heading reveal">
+          <span class="section-index mono">07</span>
+          <h2 class="section-title">References</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <ol class="reference-list" data-field="reference-list">
+            <li>[1] Itanium C++ ABI Committee. (2023). <em>Itanium C++ ABI (Revision 1.83)</em>. Spechub Publications.</li>
+            <li>[2] Lippman, S. B. (1996). <em>Inside the C++ Object Model</em>. Addison-Wesley Professional.</li>
+            <li>[3] .NET Runtime Architecture Team. (2024). <em>The Book of the Runtime: CLR Object Layout</em>. Microsoft GitHub Archive.</li>
+            <li>[4] Richter, J. (2012). <em>CLR via C# (4th Edition)</em>. Microsoft Press.</li>
+            <li>[5] Stroustrup, B. (1994). <em>The Design and Evolution of C++</em>. Addison-Wesley.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ---------- 08 APPENDIX ---------- -->
+      <section class="paper-section" id="appendix">
+        <div class="section-heading reveal">
+          <span class="section-index mono">08</span>
+          <h2 class="section-title">Appendix</h2>
+        </div>
+
+        <div class="paper-card reveal">
+          <p data-field="appendix-body">
+            Below are the disassembled x86-64 machine instructions illustrating the difference between a native C++ virtual dispatch and C#'s Virtual Stub Dispatch (VSD).
+            <br><br>
+            <strong>Listing 1: C++ Virtual Method Call Disassembly</strong>
+            <pre class="mono small" style="background:#090d16; padding:12px; border-radius:4px; border:1px solid var(--border-color); color:var(--text-bright); overflow-x:auto;">
+movq    (%rdi), %rax          ; Load the vptr (located at offset 0 of the object)
+movq    24(%rax), %rax        ; Retrieve function pointer at offset 24 of the vtable
+call    *%rax                 ; Execute the indirect call
+            </pre>
+            <br>
+            <strong>Listing 2: C# CLR Virtual Stub Dispatch (Monomorphic Inline Cache Path)</strong>
+            <pre class="mono small" style="background:#090d16; padding:12px; border-radius:4px; border:1px solid var(--border-color); color:var(--text-bright); overflow-x:auto;">
+movq    (%rcx), %rax          ; Load MethodTable (TypeHandle) from offset 0
+cmpq    $0x00007fff8e9c1b48, %rax ; Compare against cached MethodTable address
+jne     OutOfLineLookup       ; If mismatch, branch to polymorphic lookup stub
+jmp     DirectMethodAddress   ; Fast path: jump directly to targeted native code
+            </pre>
+          </p>
+        </div>
+      </section>
+
+      <footer class="report-footer mono small">
+        <span data-field="footer-text">Horizon University · Systems Architecture Research · Generated July 21, 2026</span>
+      </footer>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
