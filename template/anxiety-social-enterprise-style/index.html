@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  SOCIAL ENTERPRISE WELLBEING RESEARCH TEMPLATE — "FIELD JOURNAL" STYLE
+  ============================================================================
+  WHAT THIS IS
+  A sidebar-plus-content research report for studies on social anxiety among
+  a population (e.g. youth, young adults) in Singapore, written for the
+  audience most likely to act on it: Singapore's community/mental-health
+  social enterprises, their funders, and policymakers. The population under
+  study is people experiencing social anxiety — not the enterprises' own
+  founders or staff. The sidebar is a printed contents page, not a system
+  console: serif labels, an italic heading, one calm breathing-pulse dot.
+  The content column is an editorial manuscript rather than a stack of
+  dashboard cards — sections read as chapters, each with a large outline
+  numeral in a left margin column beside flowing serif text and an automatic
+  drop cap. Structure follows a standard mixed-methods social science paper:
+  intro, literature review, conceptual framework, methodology, findings,
+  discussion, practice implications, conclusion.
+
+  HOW TO REUSE THIS TEMPLATE (for a human OR for an LLM)
+  1. Every editable piece of text sits inside a tag carrying a
+     data-field="..." attribute. That attribute name tells you WHAT the
+     content is (e.g. data-field="report-title"), not how it looks.
+  2. Placeholder copy is written in [BRACKETS] with a short instruction and
+     an example. Replace the whole bracketed placeholder — keep the
+     surrounding tag and classes untouched.
+  3. Sections follow the numbering convention 00, 01, 02... To add a section:
+     duplicate a <section class="chapter"> block (including its
+     .chapter-frame > .chapter-num + .chapter-body structure), its sidebar
+     <li> entry, and continue the numbering. script.js auto-detects any
+     element matching #tocList li[data-target] and needs no edits.
+  4. Repeating pieces (figures, tables, callouts, references, participant
+     quotes) are small reusable partials — search for "PARTIAL:" comments
+     below to find and duplicate them.
+  5. Do not rename class names (they are the CSS/JS contract). You may
+     freely rewrite the text content inside data-field attributes.
+  6. Color/type/spacing tokens all live in styles.css :root — change the
+     report's whole look by editing values there, not by adding inline styles.
+  7. Use .quote-block for verbatim interview/survey-open-response data —
+     always attribute it (role, and only the demographic detail the study's
+     consent/anonymisation plan allows) via .quote-attribution.
+  8. Every chapter's first paragraph gets an automatic drop cap
+     (styles.css, ::first-letter) — no markup needed, just start each
+     .chapter-body with a <p>.
+  ============================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-field="browser-title">[BROWSER TAB TITLE — e.g. "Naming It: Social Anxiety Among Young Adults in Singapore"]</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500;1,6..72,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ============ TOP PROGRESS BAR (reading/scroll progress) ============ -->
+  <div class="progress-rail" aria-hidden="true">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- ============ MOBILE NAV TOGGLE ============ -->
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle table of contents" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="layout">
+
+    <!-- ==================================================================
+         SIDEBAR — reads as a printed contents page, not a system console.
+         Acts as the table of contents AND a live scrollspy. Each <li> maps
+         to a section by data-target="<section id>". Do not remove
+         data-target — script.js uses it to sync highlight + "done" marker.
+         To add a section: copy one <li>, change data-target + label + code.
+    =================================================================== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-head">
+        <span class="status-dot status-dot--live" aria-hidden="true"></span>
+        <span>Contents</span>
+      </div>
+
+      <nav class="toc" aria-label="Report sections">
+        <ul id="tocList">
+          <li data-target="abstract"><span class="toc-code mono">00</span><span class="toc-label">Abstract</span></li>
+          <li data-target="introduction"><span class="toc-code mono">01</span><span class="toc-label">Introduction</span></li>
+          <li data-target="literature"><span class="toc-code mono">02</span><span class="toc-label">Literature Review</span></li>
+          <li data-target="framework"><span class="toc-code mono">03</span><span class="toc-label">Conceptual Framework</span></li>
+          <li data-target="methodology"><span class="toc-code mono">04</span><span class="toc-label">Methodology</span></li>
+          <li data-target="findings"><span class="toc-code mono">05</span><span class="toc-label">Findings</span></li>
+          <li data-target="discussion"><span class="toc-code mono">06</span><span class="toc-label">Discussion</span></li>
+          <li data-target="implications"><span class="toc-code mono">07</span><span class="toc-label">Implications</span></li>
+          <li data-target="conclusion"><span class="toc-code mono">08</span><span class="toc-label">Conclusion</span></li>
+          <li data-target="references"><span class="toc-code mono">09</span><span class="toc-label">References</span></li>
+          <li data-target="appendix"><span class="toc-code mono">10</span><span class="toc-label">Appendix</span></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-foot small">
+        <div class="foot-row"><span>Logged</span><span id="buildTime">—</span></div>
+        <div class="foot-row"><span>Progress</span><span id="progressPct">0%</span></div>
+      </div>
+    </aside>
+
+    <!-- ==================================================================
+         MAIN — masthead + manuscript. Every section is a
+         <section class="chapter">.
+         - id must match a sidebar data-target
+         - .chapter-num is the big margin numeral; .chapter-body holds the
+           heading + free-form content: paragraphs, figures, tables, quotes
+         - class="reveal" elements fade/slide in on scroll (IntersectionObserver)
+    =================================================================== -->
+    <main class="main">
+
+      <!-- ============ MASTHEAD ============ -->
+      <header class="masthead" id="top">
+        <p class="epigraph" data-typed data-text="In Singapore, staying quiet is often mistaken for being fine."></p>
+
+        <p class="eyebrow" data-field="course-code">[PROGRAMME / RESEARCH UNIT — e.g. "Dept of Psychology, [NUS / NTU / SMU] · in partnership with [Singapore community mental health social enterprise]"]</p>
+
+        <h1 class="masthead-title" data-field="report-title">
+          [REPORT TITLE — e.g. "Naming It: Social Anxiety Among Young Adults in Singapore and What Community Mental Health Social Enterprises Can Do"]
+        </h1>
+
+        <p class="masthead-subtitle" data-field="report-subtitle">
+          [ONE-LINE SUBTITLE describing the angle of the research — e.g. "A mixed-methods study of social anxiety, stigma, and help-seeking among youth in Singapore, with implications for community-based mental health social enterprises"]
+        </p>
+
+        <p class="byline">
+          <span data-field="authors">[Author Name(s), Student/Staff ID]</span><span class="byline-sep">·</span><span data-field="institution">[University / School Name, Department]</span><span class="byline-sep">·</span><span data-field="supervisor">[Supervisor / Reviewer Name]</span><span class="byline-sep">·</span><span data-field="report-date">[Submission Date — e.g. 21 July 2026]</span>
+        </p>
+
+        <p class="masthead-tags mono small" data-field="keywords">[social anxiety] · [Singapore] · [mental health social enterprise] · [stigma &amp; help-seeking]</p>
+      </header>
+
+      <div class="manuscript">
+
+      <!-- ---------- 00 ABSTRACT ---------- -->
+      <section class="chapter reveal" id="abstract">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">00</span>
+          <div class="chapter-body">
+            <h2>Abstract</h2>
+            <p data-field="abstract-body">
+              [ABSTRACT — 150–250 words summarizing the problem, method, and key
+              finding. Write it last, once the rest of the report is done.
+              Example opener: "This study examines the prevalence and lived
+              experience of social anxiety among young adults in Singapore,
+              and the role community mental health social enterprises play
+              in lowering the stigma and cost barriers that keep many from
+              seeking formal psychiatric care..."]
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 01 INTRODUCTION ---------- -->
+      <section class="chapter reveal" id="introduction">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">01</span>
+          <div class="chapter-body">
+            <h2>Introduction</h2>
+
+            <h3 data-field="intro-h1">1.1 Problem Statement</h3>
+            <p data-field="intro-problem">
+              [Describe the real-world problem motivating this research — e.g.
+              social anxiety is common among [target population, e.g. youth
+              and young adults] in Singapore, yet stigma, cost, and long
+              waits for formal psychiatric care (e.g. at IMH or polyclinics)
+              keep many from seeking help. Community-based mental health
+              social enterprises have emerged to fill part of this gap —
+              ground the report in a specific population, region, or
+              programme type.]
+            </p>
+
+            <h3 data-field="intro-h2">1.2 Research Questions / Objectives</h3>
+            <ul class="paper-list" data-field="intro-objectives">
+              <li>[Research question or objective 1 — e.g. what is the prevalence and severity of social anxiety symptoms among [population] in Singapore?]</li>
+              <li>[Research question or objective 2 — e.g. what stigma- or cost-related barriers keep them from seeking formal or community support?]</li>
+              <li>[Research question or objective 3 — e.g. how do participants experience a community mental health social enterprise's programme, and does it reduce anxiety or stigma?]</li>
+            </ul>
+
+            <!-- PARTIAL: CALLOUT — use for a scope note, ethics note, or assumption -->
+            <div class="callout callout--info reveal">
+              <span class="callout-tag mono">Scope &amp; Ethics</span>
+              <p data-field="intro-scope">[State what is explicitly in and out of scope, plus a one-line note on ethical approval (e.g. university IRB, or the Domain Specific Review Board if run through a healthcare institution), informed consent, and PDPA-compliant handling of the data, since this study involves sensitive mental-health disclosures.]</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 02 LITERATURE REVIEW ---------- -->
+      <section class="chapter reveal" id="literature">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">02</span>
+          <div class="chapter-body">
+            <h2>Literature Review</h2>
+
+            <h3 data-field="lit-h1">2.1 Social Anxiety: Clinical Background &amp; Prevalence in Singapore</h3>
+            <p data-field="lit-anxiety">
+              [Summarize the clinical literature on social anxiety disorder —
+              diagnostic criteria (DSM-5), measurement instruments (e.g. the
+              Social Interaction Anxiety Scale, SIAS, or the Liebowitz Social
+              Anxiety Scale, LSAS), and what local prevalence/stigma data
+              (e.g. from the Singapore Mental Health Study) suggests about
+              help-seeking attitudes in Singapore. Cite sources using the
+              numbered style below, e.g. the stigma model described in [1].]
+            </p>
+
+            <h3 data-field="lit-h2">2.2 Mental Health Social Enterprises in Singapore</h3>
+            <p data-field="lit-se">
+              [Summarize the landscape of community-based / social enterprise
+              mental health provision in Singapore — how these organisations
+              (peer support groups, drop-in spaces, workshops) position
+              themselves between formal clinical care (IMH, polyclinics,
+              private psychiatry) and informal family/community support, and
+              any prior work connecting this kind of engagement to reduced
+              anxiety or stigma, as in [2].]
+            </p>
+
+            <!-- PARTIAL: FIGURE — image + italic caption -->
+            <figure class="figure reveal">
+              <img data-field="figure-1-src" src="https://placehold.co/900x480/f6f0e4/56704f?text=FIGURE+1" alt="[Describe figure 1 content for accessibility]">
+              <figcaption data-field="figure-1-caption">Figure 1. [Caption describing what the figure shows and why it matters — e.g. a mapping of help-seeking barriers and enablers identified across the reviewed literature.]</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 03 CONCEPTUAL FRAMEWORK ---------- -->
+      <section class="chapter reveal" id="framework">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">03</span>
+          <div class="chapter-body">
+            <h2>Conceptual Framework</h2>
+            <p data-field="framework-body">
+              [Explain the model guiding this study — e.g. how stigma and
+              cost/access barriers are hypothesised to suppress help-seeking,
+              and how engagement with a community mental health social
+              enterprise is expected to moderate that relationship by
+              lowering perceived stigma and offering a lower-cost, lower-
+              commitment entry point than formal psychiatric care. State the
+              working hypotheses, if any, explicitly.]
+            </p>
+
+            <ol class="paper-list paper-list--numbered" data-field="framework-hypotheses">
+              <li>[Hypothesis / proposition 1]</li>
+              <li>[Hypothesis / proposition 2]</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 04 METHODOLOGY ---------- -->
+      <section class="chapter reveal" id="methodology">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">04</span>
+          <div class="chapter-body">
+            <h2>Methodology</h2>
+
+            <h3 data-field="method-h1">4.1 Research Design</h3>
+            <p data-field="method-design">
+              [Describe the overall design — e.g. a convergent mixed-methods
+              design combining a validated social anxiety scale survey with
+              semi-structured interviews among participants of [a named
+              Singapore community mental health social enterprise's
+              programme].]
+            </p>
+
+            <h3 data-field="method-h2">4.2 Participants &amp; Setting</h3>
+            <p data-field="method-participants">
+              [Describe sampling strategy, recruitment, and setting — e.g.
+              recruiting participants through the partner social enterprise's
+              programme in Singapore, and any inclusion/exclusion criteria.]
+            </p>
+
+            <!-- PARTIAL: DATA TABLE — sample / demographics -->
+            <div class="table-wrap reveal">
+              <table class="data-table">
+                <caption>Table 1. [Caption — e.g. participant demographics by programme group and prior help-seeking history.]</caption>
+                <thead>
+                  <tr>
+                    <th data-field="table-1-col-1">[Participant group]</th>
+                    <th data-field="table-1-col-2">[n]</th>
+                    <th data-field="table-1-col-3">[Mean age]</th>
+                    <th data-field="table-1-col-4">[Prior formal care sought]</th>
+                  </tr>
+                </thead>
+                <tbody data-field="table-1-rows">
+                  <tr><td>[New programme participants]</td><td>[value]</td><td>[value]</td><td>[value]</td></tr>
+                  <tr><td>[Returning/regular participants]</td><td>[value]</td><td>[value]</td><td>[value]</td></tr>
+                  <tr><td>[Peer support volunteers]</td><td>[value]</td><td>[value]</td><td>[value]</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 data-field="method-h3">4.3 Instruments &amp; Procedure</h3>
+            <p data-field="method-instruments">
+              [Name the instruments used — e.g. the Social Interaction
+              Anxiety Scale (SIAS) for symptom severity, plus a
+              semi-structured interview protocol (see Appendix) — and the
+              data collection procedure, timeline, and PDPA-compliant consent
+              process.]
+            </p>
+
+            <ol class="paper-list paper-list--numbered" data-field="method-steps">
+              <li>[Step one of the procedure — e.g. survey distribution and consent]</li>
+              <li>[Step two — e.g. interview scheduling and recording]</li>
+              <li>[Step three — e.g. thematic coding approach]</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 05 FINDINGS ---------- -->
+      <section class="chapter reveal" id="findings">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">05</span>
+          <div class="chapter-body">
+            <h2>Findings</h2>
+
+            <h3 data-field="findings-h1">5.1 Quantitative Results</h3>
+            <p data-field="findings-quant-intro">
+              [Introduce what the survey data shows before presenting the table.]
+            </p>
+
+            <div class="table-wrap reveal">
+              <table class="data-table">
+                <caption>Table 2. [Caption — e.g. mean SIAS scores by participant group and months of programme engagement.]</caption>
+                <thead>
+                  <tr>
+                    <th data-field="table-2-col-1">[Group]</th>
+                    <th data-field="table-2-col-2">[Mean score]</th>
+                    <th data-field="table-2-col-3">[SD]</th>
+                    <th data-field="table-2-col-4">[p-value]</th>
+                  </tr>
+                </thead>
+                <tbody data-field="table-2-rows">
+                  <tr><td>[row label]</td><td>[value]</td><td>[value]</td><td>[value]</td></tr>
+                  <tr><td>[row label]</td><td>[value]</td><td>[value]</td><td>[value]</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 data-field="findings-h2">5.2 Qualitative Themes</h3>
+            <p data-field="findings-qual-intro">
+              [Introduce the thematic analysis and list the themes identified — e.g. stigma and "loss of face", the cost/wait barrier to formal care, and the programme as a lower-stakes first step.]
+            </p>
+
+            <!-- PARTIAL: PARTICIPANT QUOTE — verbatim interview/survey data -->
+            <div class="quote-block reveal">
+              <blockquote data-field="quote-1-body">[Verbatim participant quote illustrating a theme — e.g. "Here, nobody asks why you're so quiet. That's already different from outside."]</blockquote>
+              <span class="quote-attribution mono" data-field="quote-1-attribution">[Anonymised attribution consistent with the study's ethics approval — e.g. "Programme participant, P04"]</span>
+            </div>
+
+            <!-- PARTIAL: CALLOUT — highlight a key finding -->
+            <div class="callout callout--highlight reveal">
+              <span class="callout-tag mono">Key Finding</span>
+              <p data-field="findings-key-finding">[State the single most important result in one or two sentences.]</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 06 DISCUSSION ---------- -->
+      <section class="chapter reveal" id="discussion">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">06</span>
+          <div class="chapter-body">
+            <h2>Discussion</h2>
+
+            <h3 data-field="discuss-h1">6.1 Interpretation</h3>
+            <p data-field="discuss-interpretation">
+              [Explain what the results mean in context — do they support or
+              complicate the conceptual framework from Section 03? How do the
+              quantitative and qualitative strands converge or diverge?]
+            </p>
+
+            <h3 data-field="discuss-h2">6.2 Limitations</h3>
+            <p data-field="discuss-limitations">
+              [Be explicit about constraints: sample size, recruiting only
+              from people already engaged with the partner social enterprise
+              (missing those who never sought any help), single-organisation
+              or single-region scope within Singapore, and social
+              desirability bias in self-reported anxiety.]
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 07 IMPLICATIONS FOR PRACTICE ---------- -->
+      <section class="chapter reveal" id="implications">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">07</span>
+          <div class="chapter-body">
+            <h2>Implications for Practice</h2>
+            <p data-field="implications-intro">
+              [Translate the findings into concrete recommendations for the
+              people who can act on them.]
+            </p>
+            <ul class="paper-list" data-field="implications-list">
+              <li>[Recommendation for Singapore mental health social enterprise leaders/programme designers]</li>
+              <li>[Recommendation for funders (e.g. Tote Board, Community Chest, corporate CSR partners)]</li>
+              <li>[Recommendation for policymakers (e.g. MOH, MSF, NCSS) on integrating community social enterprises into Singapore's mental health strategy]</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 08 CONCLUSION ---------- -->
+      <section class="chapter reveal" id="conclusion">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">08</span>
+          <div class="chapter-body">
+            <h2>Conclusion</h2>
+            <p data-field="conclusion-body">
+              [Summarize the contribution in 3–5 sentences — what this adds
+              to understanding social anxiety and help-seeking in Singapore —
+              and state concrete next steps or future research directions,
+              e.g. a longitudinal follow-up or a multi-site comparison
+              across several Singapore mental health social enterprises.]
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 09 REFERENCES ---------- -->
+      <section class="chapter reveal" id="references">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">09</span>
+          <div class="chapter-body">
+            <h2>References</h2>
+            <ol class="reference-list" data-field="reference-list">
+              <li>[1] [Author, A. (Year). <em>Title of work</em>. Publisher/Journal.]</li>
+              <li>[2] [Author, B. (Year). <em>Title of work</em>. Publisher/Journal.]</li>
+              <li>[3] [Author, C. (Year). <em>Title of work</em>. Publisher/Journal.]</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 10 APPENDIX ---------- -->
+      <section class="chapter reveal" id="appendix">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">10</span>
+          <div class="chapter-body">
+            <h2>Appendix</h2>
+            <p data-field="appendix-body">
+              [Optional: full interview protocol, SIAS/LSAS scale items, the
+              PDPA-compliant consent form, extended tables, or anything
+              supplementary that supports the main text without
+              interrupting its flow.]
+            </p>
+          </div>
+        </div>
+      </section>
+
+      </div>
+
+      <footer class="report-footer mono small">
+        <span data-field="footer-text">[Institution Name] · [Report Title, shortened] · Generated [Date]</span>
+      </footer>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

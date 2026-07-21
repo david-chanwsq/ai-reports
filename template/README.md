@@ -25,6 +25,30 @@ examples: [
     "write a report on the diamond problem in C++"
 ]
 --------------------------------------------------
+name: anxiety-social-enterprise-style
+description: Warm, light editorial "field journal" style for mixed-methods mental health research — specifically social anxiety in a population (e.g. youth/young adults) in Singapore, written for the audience most likely to act on it: Singapore's community/mental-health social enterprises, their funders, and policymakers. The population studied is people experiencing social anxiety, not the enterprises' own founders/staff. Moss-green sidebar styled as a printed contents page (serif italic labels, not a system console), and a card-free serif manuscript body with large margin numerals per section and automatic drop caps.
+animations: typed italic epigraph line at the top, calm breathing-pulse status dot in the sidebar (no blinking alert), colourful progress bar animation at the top, segment fade in animations
+contents:
+- title
+- subtitle
+- authors & date
+- abstract
+- introduction
+- literature review
+- conceptual framework
+- methodology
+- findings
+- discussion
+- implications for practice
+- conclusion
+- references
+- appendix
+notes: placeholders reference Singapore-specific context (IMH, the Singapore Mental Health Study, PDPA consent, SIAS/LSAS scales, funders like Tote Board/Community Chest, policy bodies like MOH/MSF/NCSS). There are demographic/results table examples, and a participant-quote block (pull-quote with attribution) for verbatim interview or survey data — use it in place of a code block wherever the report needs qualitative evidence.
+examples: [
+    "write a report on social anxiety among youth in Singapore and what mental health social enterprises can do about it",
+    "write a mixed-methods report on social anxiety and help-seeking for a Singapore-based mental health social enterprise"
+]
+--------------------------------------------------
 
 ONLY pick from the templates above do not come up with your own templates. 
 
