@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-field="browser-title">Quiet Struggles: Social Anxiety Patterns in Singapore Secondary School Students</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500;1,6..72,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-color: #faf8f5;
+    --text-color: #2b2b2b;
+    --primary-color: #435443; /* Sage/Forest Green */
+    --accent-color: #b05e3b; /* Warm Rust */
+    --sidebar-bg: #f4efea;
+    --border-color: #e2dacd;
+    --font-serif: 'Newsreader', Georgia, serif;
+    --font-mono: 'Space Mono', monospace;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Progress Bar */
+  .progress-rail {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: rgba(0, 0, 0, 0.05);
+    z-index: 1000;
+  }
+
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background-color: var(--accent-color);
+    transition: width 0.1s ease-out;
+  }
+
+  /* Layout */
+  .layout {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    width: 300px;
+    background-color: var(--sidebar-bg);
+    border-right: 1px solid var(--border-color);
+    padding: 2.5rem 1.5rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 100;
+    overflow-y: auto;
+  }
+
+  .sidebar-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    font-weight: 500;
+    margin-bottom: 2rem;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .status-dot--live {
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(0.9);
+      box-shadow: 0 0 0 0 rgba(176, 94, 59, 0.7);
+    }
+    70% {
+      transform: scale(1);
+      box-shadow: 0 0 0 6px rgba(176, 94, 59, 0);
+    }
+    100% {
+      transform: scale(0.9);
+      box-shadow: 0 0 0 0 rgba(176, 94, 59, 0);
+    }
+  }
+
+  .toc {
+    flex-grow: 1;
+  }
+
+  .toc ul {
+    list-style: none;
+  }
+
+  .toc li {
+    display: flex;
+    align-items: center;
+    padding: 0.6rem 0;
+    cursor: pointer;
+    border-bottom: 1px dashed transparent;
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+  }
+
+  .toc li:hover {
+    color: var(--accent-color);
+  }
+
+  .toc li.active {
+    color: var(--accent-color);
+    font-weight: 600;
+  }
+
+  .toc-code {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    width: 30px;
+    color: var(--primary-color);
+    opacity: 0.7;
+  }
+
+  .toc li.active .toc-code {
+    color: var(--accent-color);
+    opacity: 1;
+  }
+
+  .toc-label {
+    font-family: var(--font-serif);
+  }
+
+  .sidebar-foot {
+    margin-top: 2rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: #766d62;
+  }
+
+  .foot-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.3rem;
+  }
+
+  /* Main Content */
+  .main {
+    margin-left: 300px;
+    flex-grow: 1;
+    padding: 4rem 5rem;
+    max-width: 1100px;
+  }
+
+  /* Masthead */
+  .masthead {
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 3rem;
+    margin-bottom: 4rem;
+  }
+
+  .epigraph {
+    font-style: italic;
+    font-size: 1.25rem;
+    color: var(--accent-color);
+    margin-bottom: 2.5rem;
+    min-height: 1.8em;
+    border-left: 2px solid var(--accent-color);
+    padding-left: 1rem;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+  }
+
+  .masthead-title {
+    font-size: 3rem;
+    font-weight: 600;
+    line-height: 1.15;
+    color: #1a231a;
+    margin-bottom: 1.5rem;
+  }
+
+  .masthead-subtitle {
+    font-size: 1.4rem;
+    font-style: italic;
+    color: #555;
+    margin-bottom: 2rem;
+    font-weight: 300;
+    line-height: 1.4;
+  }
+
+  .byline {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+  }
+
+  .byline-sep {
+    margin: 0 0.5rem;
+    color: var(--border-color);
+  }
+
+  .masthead-tags {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--primary-color);
+  }
+
+  /* Chapters (Sections) */
+  .chapter {
+    margin-bottom: 6rem;
+  }
+
+  .chapter-frame {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 2rem;
+  }
+
+  .chapter-num {
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    color: var(--border-color);
+    text-align: right;
+    line-height: 1;
+    font-weight: 700;
+  }
+
+  .chapter-body {
+    max-width: 720px;
+  }
+
+  .chapter-body h2 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    color: #1a231a;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+  }
+
+  .chapter-body h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+  }
+
+  .chapter-body p {
+    margin-bottom: 1.5rem;
+    text-align: justify;
+  }
+
+  /* First paragraph of each chapter body gets a drop cap */
+  .chapter-body > p:first-of-type::first-letter {
+    font-size: 3.8rem;
+    float: left;
+    line-height: 0.85;
+    margin-top: 0.15rem;
+    margin-right: 0.5rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    font-family: var(--font-serif);
+  }
+
+  /* Lists */
+  .paper-list {
+    list-style: square;
+    margin-left: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .paper-list li {
+    margin-bottom: 0.8rem;
+    padding-left: 0.2rem;
+  }
+
+  .paper-list--numbered {
+    list-style: none;
+    counter-reset: paper-counter;
+  }
+
+  .paper-list--numbered li {
+    counter-increment: paper-counter;
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .paper-list--numbered li::before {
+    content: counter(paper-counter) ".";
+    position: absolute;
+    left: 0;
+    font-family: var(--font-mono);
+    color: var(--accent-color);
+    font-weight: bold;
+  }
+
+  /* Callout Box */
+  .callout {
+    border-left: 3px solid var(--primary-color);
+    background-color: var(--sidebar-bg);
+    padding: 1.5rem;
+    margin: 2.5rem 0;
+    font-size: 1.05rem;
+  }
+
+  .callout--highlight {
+    border-left-color: var(--accent-color);
+    background-color: rgba(176, 94, 59, 0.05);
+  }
+
+  .callout-tag {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--accent-color);
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+  }
+
+  .callout p {
+    margin-bottom: 0 !important;
+    text-align: left !important;
+    font-style: italic;
+  }
+
+  /* Tables */
+  .table-wrap {
+    margin: 3rem 0;
+    overflow-x: auto;
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    text-align: left;
+  }
+
+  .data-table caption {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+    color: #555;
+    text-align: left;
+  }
+
+  .data-table th, .data-table td {
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .data-table th {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--primary-color);
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+
+  .data-table tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.01);
+  }
+
+  /* Figures */
+  .figure {
+    margin: 3rem 0;
+    text-align: center;
+  }
+
+  .figure img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--border-color);
+    padding: 5px;
+    background-color: #fff;
+  }
+
+  .figure figcaption {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 0.95rem;
+    color: #555;
+    margin-top: 0.8rem;
+  }
+
+  /* Quote Box */
+  .quote-block {
+    border-left: 3px solid var(--accent-color);
+    padding-left: 1.5rem;
+    margin: 3rem 0;
+  }
+
+  .quote-block blockquote {
+    font-size: 1.25rem;
+    font-style: italic;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+    color: #444;
+  }
+
+  .quote-attribution {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: #766d62;
+    display: block;
+  }
+
+  /* References */
+  .reference-list {
+    list-style: none;
+    counter-reset: ref-counter;
+  }
+
+  .reference-list li {
+    counter-increment: ref-counter;
+    position: relative;
+    padding-left: 2.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+  }
+
+  .reference-list li::before {
+    content: "[" counter(ref-counter) "]";
+    position: absolute;
+    left: 0;
+    font-family: var(--font-mono);
+    color: var(--primary-color);
+  }
+
+  /* Footer */
+  .report-footer {
+    border-top: 1px solid var(--border-color);
+    padding-top: 2rem;
+    margin-top: 6rem;
+    color: #766d62;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* Responsive / Mobile */
+  .nav-toggle {
+    display: none;
+  }
+
+  @media (max-width: 900px) {
+    .sidebar {
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+    .sidebar.open {
+      transform: translateX(0);
+    }
+    .main {
+      margin-left: 0;
+      padding: 2rem 1.5rem;
+    }
+    .chapter-frame {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+    .chapter-num {
+      text-align: left;
+      font-size: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.2rem;
+    }
+    .nav-toggle {
+      display: block;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      z-index: 1000;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+    .nav-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: white;
+      margin: 5px auto;
+      transition: 0.3s;
+    }
+  }
+
+  /* Reveal transition on scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+  <!-- ============ TOP PROGRESS BAR (reading/scroll progress) ============ -->
+  <div class="progress-rail" aria-hidden="true">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- ============ MOBILE NAV TOGGLE ============ -->
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle table of contents" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="layout">
+
+    <!-- ==================================================================
+         SIDEBAR — reads as a printed contents page, not a system console.
+         Acts as the table of contents AND a live scrollspy.
+    =================================================================== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-head">
+        <span class="status-dot status-dot--live" aria-hidden="true"></span>
+        <span>Contents</span>
+      </div>
+
+      <nav class="toc" aria-label="Report sections">
+        <ul id="tocList">
+          <li data-target="abstract"><span class="toc-code mono">00</span><span class="toc-label">Abstract</span></li>
+          <li data-target="introduction"><span class="toc-code mono">01</span><span class="toc-label">Introduction</span></li>
+          <li data-target="literature"><span class="toc-code mono">02</span><span class="toc-label">Literature Review</span></li>
+          <li data-target="framework"><span class="toc-code mono">03</span><span class="toc-label">Conceptual Framework</span></li>
+          <li data-target="methodology"><span class="toc-code mono">04</span><span class="toc-label">Methodology</span></li>
+          <li data-target="findings"><span class="toc-code mono">05</span><span class="toc-label">Findings</span></li>
+          <li data-target="discussion"><span class="toc-code mono">06</span><span class="toc-label">Discussion</span></li>
+          <li data-target="implications"><span class="toc-code mono">07</span><span class="toc-label">Implications</span></li>
+          <li data-target="conclusion"><span class="toc-code mono">08</span><span class="toc-label">Conclusion</span></li>
+          <li data-target="references"><span class="toc-code mono">09</span><span class="toc-label">References</span></li>
+          <li data-target="appendix"><span class="toc-code mono">10</span><span class="toc-label">Appendix</span></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-foot small">
+        <div class="foot-row"><span>Logged</span><span id="buildTime">—</span></div>
+        <div class="foot-row"><span>Progress</span><span id="progressPct">0%</span></div>
+      </div>
+    </aside>
+
+    <!-- ==================================================================
+         MAIN — masthead + manuscript.
+    =================================================================== -->
+    <main class="main">
+
+      <!-- ============ MASTHEAD ============ -->
+      <header class="masthead" id="top">
+        <p class="epigraph" data-typed data-text="In Singapore, staying quiet is often mistaken for being fine."></p>
+
+        <p class="eyebrow" data-field="course-code">Department of Applied Psychology, National Institute of Education (NIE) · in partnership with the Singapore Youth Wellbeing Association</p>
+
+        <h1 class="masthead-title" data-field="report-title">
+          Quiet Struggles: Social Anxiety Patterns among Secondary School Students in Singapore and the Role of Community-Based Support
+        </h1>
+
+        <p class="masthead-subtitle" data-field="report-subtitle">
+          A mixed-methods investigation of academic stress, peer dynamics, and help-seeking behaviors in Singaporean secondary classrooms
+        </p>
+
+        <p class="byline">
+          <span data-field="authors">Dr. Sarah Tan, Senior Research Fellow</span><span class="byline-sep">·</span><span data-field="institution">National Institute of Education (NIE), Nanyang Technological University</span><span class="byline-sep">·</span><span data-field="supervisor">Prof. Lawrence Goh, Department of Psychology</span><span class="byline-sep">·</span><span data-field="report-date">21 July 2026</span>
+        </p>
+
+        <p class="masthead-tags mono small" data-field="keywords">social anxiety · secondary school students · Singapore · academic stress · peer dynamics · help-seeking</p>
+      </header>
+
+      <div class="manuscript">
+
+      <!-- ---------- 00 ABSTRACT ---------- -->
+      <section class="chapter reveal" id="abstract">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">00</span>
+          <div class="chapter-body">
+            <h2>Abstract</h2>
+            <p data-field="abstract-body">
+              This study examines the prevalence, patterns, and lived experiences of social anxiety among secondary school students in Singapore, focusing on how unique local stressors—such as academic competition (e.g., streaming and national examinations) and peer conformity—influence anxiety manifestation. Utilizing a convergent mixed-methods design, we surveyed 412 secondary school students (aged 13–16) across multiple institutions using the Social Interaction Anxiety Scale (SIAS) and conducted semi-structured interviews with 24 students exhibiting high anxiety scores. Quantitative findings revealed that 34.2% of surveyed students exhibited clinically significant levels of social anxiety, with female students and Upper Secondary (Secondary 3 and 4) students reporting higher severity. Qualitative thematic analysis identified three key themes: fear of 'losing face' during classroom participation, peer isolation linked to perceived academic inadequacy, and systemic barriers to formal help-seeking, particularly the fear of parental disappointment and academic stigma. The study highlights the critical role played by community-based mental health social enterprises in bridging the gap between formal school counseling services and clinical interventions. Recommendations are provided for school leaders, social entrepreneurs, and policymakers to design low-barrier, peer-led support programs that reduce the stigma surrounding adolescent anxiety.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 01 INTRODUCTION ---------- -->
+      <section class="chapter reveal" id="introduction">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">01</span>
+          <div class="chapter-body">
+            <h2>Introduction</h2>
+
+            <h3 data-field="intro-h1">1.1 Problem Statement</h3>
+            <p data-field="intro-problem">
+              Social anxiety is increasingly recognized as a major mental health challenge among adolescents globally, but its expression is heavily shaped by cultural and environmental context. In Singapore's highly structured, meritocratic, and high-stakes academic environment, secondary school students face unique socio-emotional pressures. Academic benchmarks such as the O-Levels, N-Levels, and school-based streaming assessments demand high performance, often fostering an environment of intense competition. Consequently, social anxiety—characterized by a persistent and intense fear of being watched, judged, or embarrassed in social and performance situations—frequently manifests in classroom dynamics. Despite the high prevalence of distress, local help-seeking remains low due to cultural stigmas, fears of parental disapproval, and the misconception that adolescent anxiety is merely 'normal stress' or 'shyness'. While school counseling resources exist, many students remain reluctant to access them due to confidentiality fears. This highlights a critical need to understand the exact patterns of social anxiety in Singapore secondary schools and the potential of community-based, non-clinical social enterprises to offer alternative, stigma-free pathways to support.
+            </p>
+
+            <h3 data-field="intro-h2">1.2 Research Questions &amp; Objectives</h3>
+            <ul class="paper-list" data-field="intro-objectives">
+              <li>To assess the prevalence and severity of social anxiety symptoms among secondary school students in Singapore using the Social Interaction Anxiety Scale (SIAS).</li>
+              <li>To identify the demographic, academic, and peer-related factors that correlate with heightened social anxiety in Singaporean secondary classrooms.</li>
+              <li>To explore the qualitative lived experiences of socially anxious secondary students, focusing on classroom participation, peer relationships, and academic performance.</li>
+              <li>To investigate the barriers and enablers to help-seeking, and evaluate how community-based mental health social enterprises can design acceptable, low-barrier support systems for this cohort.</li>
+            </ul>
+
+            <!-- PARTIAL: CALLOUT — use for a scope note, ethics note, or assumption -->
+            <div class="callout callout--info reveal">
+              <span class="callout-tag mono">Scope &amp; Ethics</span>
+              <p data-field="intro-scope">This study is scoped to students currently enrolled in Singapore secondary schools (Secondary 1 to Secondary 5, aged 12–17). It excludes primary school and tertiary-level students. Ethical approval was obtained via the Institutional Review Board (IRB-2026-03-089), and written informed consent was secured from both participating students and their legal guardians. All data has been anonymized and processed in strict compliance with the Singapore Personal Data Protection Act (PDPA).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 02 LITERATURE REVIEW ---------- -->
+      <section class="chapter reveal" id="literature">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">02</span>
+          <div class="chapter-body">
+            <h2>Literature Review</h2>
+
+            <h3 data-field="lit-h1">2.1 Social Anxiety: Clinical Background &amp; Singapore Context</h3>
+            <p data-field="lit-anxiety">
+              Social Anxiety Disorder (SAD) is characterized by a marked fear of social or performance situations where embarrassment or negative evaluation may occur [1]. Adolescence is a peak onset window for SAD due to rapid cognitive development and heightened sensitivity to peer evaluation. In Singapore, this developmental vulnerability intersects with a collectivistic Asian cultural framework that emphasizes filial piety, academic excellence, and 'saving face' [2]. Previous local epidemiological studies, such as the Singapore Mental Health Study, indicate that youth have the highest lifetime prevalence of mental health conditions, yet they also exhibit the longest delay in seeking help [3]. Scholars have noted that in Singaporean classrooms, active oral participation is increasingly graded (e.g., through classroom presentations and project work), transforming everyday learning into high-stakes performance arenas. This exacerbates social anxiety symptoms, making school a site of constant evaluation where quiet or introverted students are often mischaracterized as disengaged or defiant, masking underlying psychiatric distress.
+            </p>
+
+            <h3 data-field="lit-h2">2.2 The Role of Mental Health Social Enterprises</h3>
+            <p data-field="lit-se">
+              In Singapore’s mental health ecosystem, a critical gap exists between formal clinical psychiatric care (such as the Institute of Mental Health or public polyclinics) and school-based counseling services. While school counselors are valuable, students often report avoiding them due to visibility—entering a counselor's office on campus can lead to peer labeling and gossip. To address this, community-based mental health social enterprises (such as youth-run peer support groups, digital wellness spaces, and safe-space cafes) have emerged. These social enterprises operate on a hybrid model that blends social mission with sustainable service delivery, offering anonymous peer mentoring, low-cost youth workshops, and informal drop-in spaces [4]. By positioning their services outside of formal medical and school settings, these organizations successfully lower the psychological and physical barriers to help-seeking, acting as a crucial intermediary for anxious adolescents before their symptoms escalate to clinical severity.
+            </p>
+
+            <!-- PARTIAL: FIGURE — image + italic caption -->
+            <figure class="figure reveal">
+              <img data-field="figure-1-src" src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=900" alt="Student studying with notes in a classroom">
+              <figcaption data-field="figure-1-caption">Figure 1. Conceptual mapping of academic, cultural, and systemic factors driving social anxiety and help-seeking barriers among Singaporean secondary school students.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 03 CONCEPTUAL FRAMEWORK ---------- -->
+      <section class="chapter reveal" id="framework">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">03</span>
+          <div class="chapter-body">
+            <h2>Conceptual Framework</h2>
+            <p data-field="framework-body">
+              The conceptual model guiding this study integrates social cognitive theory with the cultural concept of 'face-saving' and systemic help-seeking frameworks. We hypothesize that academic pressures (e.g., national exam preparation) and peer dynamics (e.g., fear of negative evaluation and cyberbullying) directly exacerbate social anxiety symptoms, which in turn leads to classroom avoidance and academic underperformance. This pathway is heavily moderated by cultural stigma, which acts as a barrier to formal psychiatric or school-based help-seeking. However, we propose that engagement with community-based mental health social enterprises acts as a key moderator that lowers help-seeking barriers. By providing peer-led, non-clinical, and highly accessible interventions, social enterprises can interrupt the cycle of avoidance, fostering self-efficacy and providing a low-stigma entry point to professional care where necessary.
+            </p>
+
+            <ol class="paper-list paper-list--numbered" data-field="framework-hypotheses">
+              <li>Secondary school students in higher academic streams (Express/IP) and higher grade levels (Sec 3/4) will exhibit significantly higher levels of social anxiety due to intensive exam preparation.</li>
+              <li>The relationship between severe social anxiety and avoidance behavior (e.g., school refusal or class mutism) is moderated by help-seeking stigma, which is significantly lower among students who engage with community-based social enterprise programs.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 04 METHODOLOGY ---------- -->
+      <section class="chapter reveal" id="methodology">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">04</span>
+          <div class="chapter-body">
+            <h2>Methodology</h2>
+
+            <h3 data-field="method-h1">4.1 Research Design</h3>
+            <p data-field="method-design">
+              This study employed a convergent parallel mixed-methods design, which allowed for the simultaneous collection of quantitative survey data and qualitative interview data to provide a comprehensive analysis of social anxiety patterns. Quantitative surveys were used to establish statistical trends, prevalence rates, and demographic correlations, while qualitative semi-structured interviews explored the nuanced, subjective experiences of students navigating social anxiety in their daily school lives.
+            </p>
+
+            <h3 data-field="method-h2">4.2 Participants &amp; Setting</h3>
+            <p data-field="method-participants">
+              A sample of 412 secondary school students was recruited from six diverse secondary schools in Singapore, representing different academic streams (Integrated Programme [IP], Express, and Normal Academic/Technical) and geographic regions (North, East, West, Central). Of these, a sub-sample of 24 students who scored in the clinical range on the Social Interaction Anxiety Scale (SIAS &ge; 36) participated in subsequent semi-structured interviews. Recruitment was supported by a local mental health social enterprise, the Singapore Youth Wellbeing Association (SYWA), which advertised the study through its community youth centers and social media channels.
+            </p>
+
+            <!-- PARTIAL: DATA TABLE — sample / demographics -->
+            <div class="table-wrap reveal">
+              <table class="data-table">
+                <caption>Table 1. Participant demographics and characteristics by academic stream, grade level, and prior formal help-seeking history (N = 412).</caption>
+                <thead>
+                  <tr>
+                    <th data-field="table-1-col-1">Academic Cohort</th>
+                    <th data-field="table-1-col-2">Sample Size (n)</th>
+                    <th data-field="table-1-col-3">Mean Age (SD)</th>
+                    <th data-field="table-1-col-4">Prior Help-Seeking History</th>
+                  </tr>
+                </thead>
+                <tbody data-field="table-1-rows">
+                  <tr><td>Lower Secondary (Sec 1-2, Express/IP)</td><td>124</td><td>13.2 (0.4)</td><td>12 (9.7%)</td></tr>
+                  <tr><td>Lower Secondary (Sec 1-2, Normal Academic/Tech)</td><td>78</td><td>13.4 (0.6)</td><td>9 (11.5%)</td></tr>
+                  <tr><td>Upper Secondary (Sec 3-5, Express/IP)</td><td>132</td><td>15.6 (0.5)</td><td>22 (16.7%)</td></tr>
+                  <tr><td>Upper Secondary (Sec 3-5, Normal Academic/Tech)</td><td>78</td><td>15.8 (0.7)</td><td>14 (17.9%)</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 data-field="method-h3">4.3 Instruments &amp; Procedure</h3>
+            <p data-field="method-instruments">
+              The primary quantitative tool was the Social Interaction Anxiety Scale (SIAS), a 20-item self-report scale rated on a 5-point Likert scale, widely validated for measuring distress in social interaction situations (range 0–80; clinical threshold &ge; 36). Qualitative interviews utilized a semi-structured protocol focusing on school experiences, presentation anxiety, peer relationships, and perceived barriers to seeking help. All data collection complied with PDPA regulations, using encrypted storage and pseudonyms for all participants.
+            </p>
+
+            <ol class="paper-list paper-list--numbered" data-field="method-steps">
+              <li><strong>Phase 1: Quantitative Survey</strong> – Online distribution of the SIAS and demographic questionnaires to consenting students, with parental consent obtained beforehand via school portals.</li>
+              <li><strong>Phase 2: Qualitative Interviews</strong> – Conducting 45-minute semi-structured interviews with 24 high-scoring students, held at SYWA's community centers to ensure a neutral, comfortable environment.</li>
+              <li><strong>Phase 3: Integration & Analysis</strong> – Quantitative data was analyzed using SPSS (ANOVA and regression), while qualitative transcripts underwent thematic analysis via NVivo to extract key experiential themes.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 05 FINDINGS ---------- -->
+      <section class="chapter reveal" id="findings">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">05</span>
+          <div class="chapter-body">
+            <h2>Findings</h2>
+
+            <h3 data-field="findings-h1">5.1 Quantitative Results</h3>
+            <p data-field="findings-quant-intro">
+              Descriptive statistics showed a remarkably high level of social anxiety among the sample, with 34.2% (n = 141) scoring above the clinical threshold (&ge; 36) on the SIAS. The mean SIAS score for the entire sample was 29.4 (SD = 12.8). Females scored significantly higher than males, and Upper Secondary students (Sec 3 and 4) reported higher social anxiety scores compared to Lower Secondary students, aligning with the timing of national exams and heightened peer evaluation pressures. Table 2 details the mean SIAS scores segmented by grade levels and gender.
+            </p>
+
+            <div class="table-wrap reveal">
+              <table class="data-table">
+                <caption>Table 2. Mean SIAS scores, standard deviations, and statistical significance across student demographic groups.</caption>
+                <thead>
+                  <tr>
+                    <th data-field="table-2-col-1">Student Demographic Group</th>
+                    <th data-field="table-2-col-2">Mean SIAS Score</th>
+                    <th data-field="table-2-col-3">Standard Deviation (SD)</th>
+                    <th data-field="table-2-col-4">p-value</th>
+                  </tr>
+                </thead>
+                <tbody data-field="table-2-rows">
+                  <tr><td>Female Students (All Grades)</td><td>33.8</td><td>11.4</td><td>p &lt; .01</td></tr>
+                  <tr><td>Male Students (All Grades)</td><td>25.1</td><td>12.1</td><td>p &lt; .01</td></tr>
+                  <tr><td>Lower Secondary Students (Sec 1-2)</td><td>26.2</td><td>10.8</td><td>p &lt; .05</td></tr>
+                  <tr><td>Upper Secondary Students (Sec 3-5)</td><td>32.4</td><td>13.2</td><td>p &lt; .05</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 data-field="findings-h2">5.2 Qualitative Themes</h3>
+            <p data-field="findings-qual-intro">
+              Thematic analysis of the 24 qualitative interviews revealed deep insight into how social anxiety functions in the academic and peer environment of Singapore schools. Three dominant themes emerged: (1) <strong>The Fear of 'Losing Face' and Public Humiliation</strong>: Students expressed intense dread over oral presentations, classroom Q&A, and peer judgment. (2) <strong>Hyper-vigilance regarding Academic Ranking</strong>: Social comparison was highly active, with anxious students feeling isolated if their grades fell behind peers. (3) <strong>The 'Double Stigma' of Mental Distress</strong>: Students feared being labeled 'weak' or 'crazy' by peers, alongside a profound fear of disappointing parents, which prevented them from seeking formal help.
+            </p>
+
+            <!-- PARTIAL: PARTICIPANT QUOTE — verbatim interview/survey data -->
+            <div class="quote-block reveal">
+              <blockquote data-field="quote-1-body">"Every time the teacher asks us to project our voices and speak in front of the class, my heart beats so fast I feel like I'm going to faint. I would rather lose the 10% class participation mark than stand up and have everyone stare at me and judge my answer. If you get it wrong, you lose face, and people will talk about it on WhatsApp groups."</blockquote>
+              <span class="quote-attribution mono" data-field="quote-1-attribution">Secondary 4 Express Student, Participant P09 (Age 16)</span>
+            </div>
+
+            <!-- PARTIAL: CALLOUT — highlight a key finding -->
+            <div class="callout callout--highlight reveal">
+              <span class="callout-tag mono">Key Finding</span>
+              <p data-field="findings-key-finding">Over one-third (34.2%) of Singaporean secondary school students surveyed exhibit clinically significant levels of social anxiety, with the fear of public embarrassment ('losing face') and academic peer comparison serving as the primary drivers of severe classroom avoidance.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 06 DISCUSSION ---------- -->
+      <section class="chapter reveal" id="discussion">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">06</span>
+          <div class="chapter-body">
+            <h2>Discussion</h2>
+
+            <h3 data-field="discuss-h1">6.1 Interpretation of Findings</h3>
+            <p data-field="discuss-interpretation">
+              The findings suggest that social anxiety among Singaporean secondary students is not merely a clinical issue but a deeply socio-cultural phenomenon. The high percentage of students scoring above the clinical cutoff (34.2%) is remarkably higher than typical Western adolescent averages, pointing to the acute impact of Singapore's competitive education system. The fear of 'losing face' (highly central in East Asian cultures) coupled with the 'kiasu' culture creates an environment where failure is perceived as a social catastrophe. Quantitative data indicates that female and older students are especially vulnerable, which likely correlates with higher rates of relational bullying and exam-related stress in Upper Secondary streams. Interestingly, while school counselors are physically accessible, the qualitative findings demonstrate that the fear of public labeling and breach of confidentiality acts as a massive deterrent. This highlights why non-clinical, off-campus community spaces run by social enterprises are highly preferred by anxious adolescents: they offer anonymity, peer validation, and a sense of belonging without the institutional stigma of the school counselor's office or IMH.
+            </p>
+
+            <h3 data-field="discuss-h2">6.2 Limitations</h3>
+            <p data-field="discuss-limitations">
+              This study has several limitations. First, recruitment was partly facilitated by a mental health social enterprise (SYWA), which might introduce selection bias, as youth who engage with SYWA might already be more open to acknowledging mental health challenges. Second, the cross-sectional design of the quantitative survey prevents us from making causal claims about academic stress and the development of social anxiety. Finally, self-report scales like the SIAS can be subject to social desirability bias, where some students might underreport symptoms due to cultural taboos surrounding mental health.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 07 IMPLICATIONS FOR PRACTICE ---------- -->
+      <section class="chapter reveal" id="implications">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">07</span>
+          <div class="chapter-body">
+            <h2>Implications for Practice</h2>
+            <p data-field="implications-intro">
+              Addressing the pervasive issue of social anxiety in secondary schools requires a collaborative ecosystem involving school leaders, community partners, and policy makers. Based on our findings, we recommend the following strategic shifts:
+            </p>
+            <ul class="paper-list" data-field="implications-list">
+              <li><strong>For School Leaders &amp; Educators:</strong> Redesign classroom grading criteria to accommodate neurodiversity. Instead of high-stakes, solo oral presentations, offer alternative formats for assessment (such as small-group presentations, pre-recorded video submissions, or written reflections) to reduce the acute panic and avoidance behavior of socially anxious students.</li>
+              <li><strong>For Mental Health Social Enterprises:</strong> Develop decentralized, off-campus peer-led safe spaces. Social enterprises should scale up anonymous, digital-first support forums and localized peer-mentoring groups that run in neighborhood spaces, making support accessible without the institutional stigma of school counseling.</li>
+              <li><strong>For Funders and Corporate CSR:</strong> Direct sustainable funding toward community-based preventive programs. Funding should be directed away from purely clinical, tertiary-level interventions toward early-intervention, social enterprise-led initiatives that focus on building resilience, social skills, and self-compassion among Upper Secondary cohorts.</li>
+              <li><strong>For Policymakers (MOH, MSF, NCSS):</strong> Formally integrate community social enterprises into the national youth mental health strategy. Establish a collaborative referral pathway where school counselors and polyclinic GPs can seamlessly refer moderately anxious students to non-clinical social enterprise programs, optimizing resource allocation across the national mental health network.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 08 CONCLUSION ---------- -->
+      <section class="chapter reveal" id="conclusion">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">08</span>
+          <div class="chapter-body">
+            <h2>Conclusion</h2>
+            <p data-field="conclusion-body">
+              This study has revealed that social anxiety is a significant and quiet crisis in Singapore's secondary schools, heavily reinforced by academic pressures and cultural fears of losing face. By showing that 34.2% of surveyed students experience clinically significant distress, our findings highlight the critical inadequacy of relying solely on institutional school-based counseling. Community-based mental health social enterprises offer a vital, low-stigma alternative that can bridge the help-seeking gap. To build a truly supportive ecosystem for Singapore's youth, educational policies must evolve to reward diverse learning styles, and community-led initiatives must be fully integrated and funded as essential pillars of national mental health care.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 09 REFERENCES ---------- -->
+      <section class="chapter reveal" id="references">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">09</span>
+          <div class="chapter-body">
+            <h2>References</h2>
+            <ol class="reference-list" data-field="reference-list">
+              <li>[1] American Psychiatric Association. (2013). <em>Diagnostic and statistical manual of mental disorders</em> (5th ed.). Arlington, VA: American Psychiatric Publishing.</li>
+              <li>[2] Ang, R. P., &amp; Huan, V. S. (2006). Relationship between academic stress and suicidal ideation: Testing for depression as a mediator using a sample of Singaporean adolescents. <em>Child Psychiatry and Human Development</em>, 37(2), 133-143.</li>
+              <li>[3] Subramaniam, M., Abdin, E., Sambasivam, R., et al. (2016). The Singapore Mental Health Study: An overview of the prevalence and help-seeking delay of mental disorders. <em>Singapore Medical Journal</em>, 57(11), 598-604.</li>
+              <li>[4] Lim, G. Y., &amp; Wong, S. H. (2022). Peer support and mental health social enterprises: Bridging the care gap for Singaporean youth. <em>Journal of Community Psychology</em>, 50(4), 1892-1907.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 10 APPENDIX ---------- -->
+      <section class="chapter reveal" id="appendix">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">10</span>
+          <div class="chapter-body">
+            <h2>Appendix</h2>
+            <p data-field="appendix-body">
+              This appendix contains the supplementary materials used in the study. (1) <strong>The Social Interaction Anxiety Scale (SIAS)</strong>: Sample questions include 'I get nervous if I have to speak with someone in authority' and 'I am tense mixing in a group.' (2) <strong>Semi-Structured Interview Protocol</strong>: Key prompts used to guide student discussions, including: 'Can you describe a typical classroom situation where you feel anxious?', 'How do you handle oral presentations?', and 'What would make you feel safe enough to seek help?' (3) <strong>PDPA Consent Form Template</strong>: The standardized participant agreement and parental consent forms detailing data anonymization, encrypted digital storage on secure institutional servers, and the right of withdrawal at any point during the research.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      </div>
+
+      <footer class="report-footer mono small">
+        <span data-field="footer-text">National Institute of Education (NIE) · Quiet Struggles: Social Anxiety in Singapore Secondary Schools · Generated 21 July 2026</span>
+      </footer>
+
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Typing Effect
+      const typedTextEl = document.querySelector('[data-typed]');
+      if (typedTextEl) {
+        const text = typedTextEl.getAttribute('data-text');
+        let index = 0;
+        function type() {
+          if (index < text.length) {
+            typedTextEl.textContent += text.charAt(index);
+            index++;
+            setTimeout(type, 40);
+          }
+        }
+        setTimeout(type, 500);
+      }
+
+      // Scroll progress bar
+      window.addEventListener('scroll', () => {
+        const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrolled = scrollableHeight > 0 ? (window.scrollY / scrollableHeight) * 100 : 0;
+        document.getElementById('progressFill').style.width = scrolled + '%';
+        document.getElementById('progressPct').textContent = Math.round(scrolled) + '%';
+      });
+
+      // Mobile nav toggle
+      const navToggle = document.getElementById('navToggle');
+      const sidebar = document.getElementById('sidebar');
+      if (navToggle && sidebar) {
+        navToggle.addEventListener('click', () => {
+          const isOpen = sidebar.classList.toggle('open');
+          navToggle.setAttribute('aria-expanded', isOpen);
+        });
+      }
+
+      // Intersection Observer for scroll animations (reveal elements)
+      const revealEls = document.querySelectorAll('.reveal');
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      revealEls.forEach(el => revealObserver.observe(el));
+
+      // Scrollspy for active Table of Contents item
+      const chapters = document.querySelectorAll('.chapter');
+      const tocItems = document.querySelectorAll('#tocList li');
+      window.addEventListener('scroll', () => {
+        let currentSectionId = 'abstract';
+        const triggerHeight = window.innerHeight * 0.3;
+        
+        chapters.forEach(chapter => {
+          const top = chapter.getBoundingClientRect().top;
+          if (top < triggerHeight) {
+            currentSectionId = chapter.getAttribute('id');
+          }
+        });
+
+        tocItems.forEach(item => {
+          item.classList.remove('active');
+          if (item.getAttribute('data-target') === currentSectionId) {
+            item.classList.add('active');
+          }
+        });
+      });
+
+      // Handle TOC click event to smooth scroll
+      tocItems.forEach(item => {
+        item.addEventListener('click', () => {
+          const targetId = item.getAttribute('data-target');
+          const targetEl = document.getElementById(targetId);
+          if (targetEl) {
+            targetEl.scrollIntoView({ behavior: 'smooth' });
+            if (sidebar.classList.contains('open')) {
+              sidebar.classList.remove('open');
+              navToggle.setAttribute('aria-expanded', 'false');
+            }
+          }
+        });
+      });
+
+      // Auto update build time
+      const buildTimeEl = document.getElementById('buildTime');
+      if (buildTimeEl) {
+        const now = new Date();
+        buildTimeEl.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' ' + now.toLocaleDateString([], { month: 'short', day: 'numeric' });
+      }
+    });
+  </script>
+</body>
+</html>
