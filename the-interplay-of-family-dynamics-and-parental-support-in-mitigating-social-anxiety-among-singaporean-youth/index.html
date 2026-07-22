@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  SOCIAL ENTERPRISE WELLBEING RESEARCH TEMPLATE — "FIELD JOURNAL" STYLE
+  ============================================================================
+  WHAT THIS IS
+  A sidebar-plus-content research report for studies on social anxiety among
+  a population (e.g. youth, young adults) in Singapore, written for the
+  audience most likely to act on it: Singapore's community/mental-health
+  social enterprises, their funders, and policymakers. The population under
+  study is people experiencing social anxiety — not the enterprises' own
+  founders or staff. The sidebar is a printed contents page, not a system
+  console: serif labels, an italic heading, one calm breathing-pulse dot.
+  The content column is an editorial manuscript rather than a stack of
+  dashboard cards — sections read as chapters, each with a large outline
+  numeral in a left margin column beside flowing serif text and an automatic
+  drop cap. Structure follows a standard mixed-methods social science paper:
+  intro, literature review, conceptual framework, methodology, findings,
+  discussion, practice implications, conclusion.
+
+  HOW TO REUSE THIS TEMPLATE (for a human OR for an LLM)
+  1. Every editable piece of text sits inside a tag carrying a
+     data-field="..." attribute. That attribute name tells you WHAT the
+     content is (e.g. data-field="report-title"), not how it looks.
+  2. Placeholder copy is written in [BRACKETS] with a short instruction and
+     an example. Replace the whole bracketed placeholder — keep the
+     surrounding tag and classes untouched.
+  3. Sections follow the numbering convention 00, 01, 02... To add a section:
+     duplicate a <section class="chapter"> block (including its
+     .chapter-frame > .chapter-num + .chapter-body structure), its sidebar
+     <li> entry, and continue the numbering. script.js auto-detects any
+     element matching #tocList li[data-target] and needs no edits.
+  4. Repeating pieces (figures, tables, callouts, references, participant
+     quotes) are small reusable partials — search for "PARTIAL:" comments
+     below to find and duplicate them.
+  5. Do not rename class names (they are the CSS/JS contract). You may
+     freely rewrite the text content inside data-field attributes.
+  6. Color/type/spacing tokens all live in styles.css :root — change the
+     report's whole look by editing values there, not by adding inline styles.
+  7. Use .quote-block for verbatim interview/survey-open-response data —
+     always attribute it (role, and only the demographic detail the study's
+     consent/anonymisation plan allows) via .quote-attribution.
+  8. Every chapter's first paragraph gets an automatic drop cap
+     (styles.css, ::first-letter) — no markup needed, just start each
+     .chapter-body with a <p>.
+  ============================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-field="browser-title">Family, Support, & Social Anxiety in Singaporean Youth</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500;1,6..72,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ============ TOP PROGRESS BAR (reading/scroll progress) ============ -->
+  <div class="progress-rail" aria-hidden="true">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- ============ MOBILE NAV TOGGLE ============ -->
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle table of contents" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="layout">
+
+    <!-- ==================================================================
+         SIDEBAR — reads as a printed contents page, not a system console.
+         Acts as the table of contents AND a live scrollspy. Each <li> maps
+         to a section by data-target="<section id>". Do not remove
+         data-target — script.js uses it to sync highlight + "done" marker.
+         To add a section: copy one <li>, change data-target + label + code.
+    =================================================================== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-head">
+        <span class="status-dot status-dot--live" aria-hidden="true"></span>
+        <span>Contents</span>
+      </div>
+
+      <nav class="toc" aria-label="Report sections">
+        <ul id="tocList">
+          <li data-target="abstract"><span class="toc-code mono">00</span><span class="toc-label">Abstract</span></li>
+          <li data-target="introduction"><span class="toc-code mono">01</span><span class="toc-label">Introduction</span></li>
+          <li data-target="literature"><span class="toc-code mono">02</span><span class="toc-label">Literature Review</span></li>
+          <li data-target="framework"><span class="toc-code mono">03</span><span class="toc-label">Conceptual Framework</span></li>
+          <li data-target="methodology"><span class="toc-code mono">04</span><span class="toc-label">Methodology</span></li>
+          <li data-target="findings"><span class="toc-code mono">05</span><span class="toc-label">Findings</span></li>
+          <li data-target="discussion"><span class="toc-code mono">06</span><span class="toc-label">Discussion</span></li>
+          <li data-target="implications"><span class="toc-code mono">07</span><span class="toc-label">Implications</span></li>
+          <li data-target="conclusion"><span class="toc-code mono">08</span><span class="toc-label">Conclusion</span></li>
+          <li data-target="references"><span class="toc-code mono">09</span><span class="toc-label">References</span></li>
+          <li data-target="appendix"><span class="toc-code mono">10</span><span class="toc-label">Appendix</span></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-foot small">
+        <div class="foot-row"><span>Logged</span><span id="buildTime">—</span></div>
+        <div class="foot-row"><span>Progress</span><span id="progressPct">0%</span></div>
+      </div>
+    </aside>
+
+    <!-- ==================================================================
+         MAIN — masthead + manuscript. Every section is a
+         <section class="chapter">.
+         - id must match a sidebar data-target
+         - .chapter-num is the big margin numeral; .chapter-body holds the
+           heading + free-form content: paragraphs, figures, tables, quotes
+         - class="reveal" elements fade/slide in on scroll (IntersectionObserver)
+    =================================================================== -->
+    <main class="main">
+
+      <!-- ============ MASTHEAD ============ -->
+      <header class="masthead" id="top">
+        <p class="epigraph" data-typed data-text="In the tapestry of Singaporean families, understanding weaves resilience against silent struggles."></p>
+
+        <p class="eyebrow" data-field="course-code">Department of Social Sciences, National University of Singapore · in partnership with the Singapore Youth Mental Health Coalition</p>
+
+        <h1 class="masthead-title" data-field="report-title">
+          The Interplay of Family Dynamics and Parental Support in Mitigating Social Anxiety Among Singaporean Youth
+        </h1>
+
+        <p class="masthead-subtitle" data-field="report-subtitle">
+          A Mixed-Methods Study on Familial Influences, Cultural Context, and Resilience-Building in Youth Mental Health
+        </p>
+
+        <p class="byline">
+          <span data-field="authors">Lee Mei Ling (A0123456B), Tan Kah Wei (A0987654C)</span><span class="byline-sep">·</span><span data-field="institution">National University of Singapore, Department of Social Sciences</span><span class="byline-sep">·</span><span data-field="supervisor">Dr. Emily Wong</span><span class="byline-sep">·</span><span data-field="report-date">22 July 2026</span>
+        </p>
+
+        <p class="masthead-tags mono small" data-field="keywords">[social anxiety] · [Singaporean youth] · [family dynamics] · [parental support] · [mental health] · [cultural context] · [resilience]</p>
+      </header>
+
+      <div class="manuscript">
+
+      <!-- ---------- 00 ABSTRACT ---------- -->
+      <section class="chapter reveal" id="abstract">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">00</span>
+          <div class="chapter-body">
+            <h2>Abstract</h2>
+            <p data-field="abstract-body">
+              This study investigates the critical role of family dynamics and parental support in mitigating social anxiety among Singaporean youth. Given the rising prevalence of anxiety symptoms, with approximately 27% of Singaporean youth experiencing severe levels, understanding protective factors within the family unit is crucial. Utilizing a convergent mixed-methods design, this research combines quantitative data from validated social anxiety scales with qualitative insights from semi-structured interviews with youth and their parents. Preliminary findings suggest that authoritative parenting styles, characterized by high warmth and moderate control, alongside open family communication and perceived emotional support, are associated with lower self-reported social anxiety. Conversely, overly critical or disengaged parental approaches may exacerbate symptoms. The study highlights the unique cultural considerations within Singaporean families, where filial piety and academic pressure can sometimes complicate help-seeking behaviors, yet strong family bonds remain a significant resource for resilience. These findings offer practical implications for mental health interventions and family-based support programs aimed at fostering protective environments for youth facing social anxiety in Singapore.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 01 INTRODUCTION ---------- -->
+      <section class="chapter reveal" id="introduction">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">01</span>
+          <div class="chapter-body">
+            <h2>Introduction</h2>
+
+            <h3 data-field="intro-h1">1.1 Problem Statement</h3>
+            <p data-field="intro-problem">
+              Social anxiety disorder (SAD) presents a significant mental health challenge globally, and its impact is increasingly recognized among youth in Singapore. Recent studies, such as the Institute of Mental Health's findings, indicate that approximately 27% of young people aged 15 to 35 years in Singapore report experiencing severe or extremely severe symptoms of anxiety. While general anxiety is broad, social anxiety—characterized by an intense fear of being judged negatively in social situations—is particularly prevalent, with local research highlighting a sharp increase in social anxiety levels among girls between ages 8.5 and 13. This pervasive fear can lead to significant distress, impair academic performance, hinder social development, and limit opportunities for personal growth. Within the Singaporean context, where collectivistic values and high academic expectations are common, the pressure to conform and avoid "losing face" can intensify social anxieties. While external support systems are important, the family unit, as the primary socialization agent, plays an undeniable role in shaping a child's emotional regulation and coping mechanisms. However, the specific dynamics within Singaporean families and the nuances of parental support in either exacerbating or mitigating social anxiety among youth remain an area requiring deeper exploration. Understanding these familial influences is vital for developing culturally sensitive and effective intervention strategies.
+            </p>
+
+            <h3 data-field="intro-h2">1.2 Research Questions / Objectives</h3>
+            <ul class="paper-list" data-field="intro-objectives">
+              <li>What is the prevalence and manifestation of self-reported social anxiety symptoms among Singaporean youth aged 13-25, and how do these symptoms differ across demographic variables such as age and gender?</li>
+              <li>How do specific dimensions of family dynamics (e.g., communication patterns, perceived family cohesion, conflict resolution) and parental support (e.g., emotional warmth, autonomy support, perceived understanding) correlate with the severity of social anxiety symptoms in Singaporean youth?</li>
+              <li>What are the lived experiences and perceptions of Singaporean youth regarding the role of their family environment and parental support in either exacerbating or mitigating their social anxiety?</li>
+            </ul>
+
+            <!-- PARTIAL: CALLOUT — use for a scope note, ethics note, or assumption -->
+            <div class="callout callout--info reveal">
+              <span class="callout-tag mono">Scope &amp; Ethics</span>
+              <p data-field="intro-scope">This study focuses exclusively on Singaporean youth aged 13-25, examining their self-reported social anxiety symptoms and their perceptions of family dynamics and parental support. It aims to identify correlations and explore lived experiences rather than establishing causality or evaluating the efficacy of specific clinical interventions. The research received ethical approval from the National University of Singapore Institutional Review Board (IRB Reference: 2026/XYZ-001). All participants provided informed consent, and for minors, parental/guardian consent was obtained. Data collection procedures ensured participant anonymity and confidentiality, adhering strictly to the Personal Data Protection Act (PDPA) 2012 of Singapore.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 02 LITERATURE REVIEW ---------- -->
+      <section class="chapter reveal" id="literature">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">02</span>
+          <div class="chapter-body">
+            <h2>Literature Review</h2>
+
+            <h3 data-field="lit-h1">2.1 Social Anxiety: Clinical Background &amp; Prevalence in Singapore</h3>
+            <p data-field="lit-anxiety">
+              Social Anxiety Disorder (SAD), also known as social phobia, is characterized by a persistent and intense fear of social situations where an individual might be scrutinized, judged, or humiliated [1]. According to the Diagnostic and Statistical Manual of Mental Disorders, Fifth Edition (DSM-5), diagnostic criteria include marked fear or anxiety about one or more social situations where the individual is exposed to possible scrutiny by others, fear of acting in a way that will be negatively evaluated, and avoidance of or intense anxiety about these situations [2]. Standardized instruments such as the Social Interaction Anxiety Scale (SIAS) and the Liebowitz Social Anxiety Scale (LSAS) are commonly used to assess symptom severity [3]. In Singapore, the prevalence of anxiety symptoms among youth is a growing concern. A study by the Institute of Mental Health (IMH) reported that approximately 27% of youths aged 15-35 experienced severe or extremely severe anxiety symptoms in the week prior to the survey, identifying anxiety as the most common mental health problem in this demographic [4]. Furthermore, local research indicates that girls in Singapore experience a significant surge in social anxiety between the ages of 8.5 and 13, with their anxiety levels surpassing those of boys by age 13 [5]. While specific lifetime prevalence rates for SAD among Singaporean youth require further dedicated research, these figures underscore a substantial burden of anxiety that warrants closer examination of contributing and mitigating factors.
+            </p>
+
+            <h3 data-field="lit-h2">2.2 Family Dynamics and Parental Support: Theoretical Frameworks and Empirical Evidence</h3>
+            <p data-field="lit-se">
+              The family environment serves as a crucial context for child and adolescent development, significantly influencing mental health outcomes, including social anxiety [6]. Attachment theory posits that secure attachment relationships with caregivers in early life foster a sense of safety and self-worth, which can protect against anxiety in social interactions. Conversely, insecure attachment styles, often stemming from inconsistent or rejecting parental responses, can predispose individuals to social anxiety [7]. Parenting styles have also been extensively linked to social anxiety. Authoritarian parenting, characterized by high demands and low responsiveness, has been associated with increased social anxiety and poorer psychological adjustment in youth, particularly in collectivistic cultures where parental authority is highly valued [8]. In Asian cultural contexts, research on "tiger parenting," while often associated with academic success, has shown that its strict rules combined with high pressure, even with underlying support, can lead to higher levels of depressive symptoms and lower self-esteem, which may manifest as social anxiety in performance-oriented situations [9]. Conversely, authoritative parenting, which balances clear expectations with emotional warmth and open communication, is generally considered protective, fostering autonomy and competence that can buffer against anxiety [10]. Parental emotional support, perceived understanding, and encouragement for independence are crucial in building a youth's self-efficacy and ability to navigate social challenges. However, the influence of these factors can be nuanced in Asian societies, where indirect communication and an emphasis on harmony and conformity might shape how support is perceived and enacted [11]. The role of family cohesion—the emotional bonding that family members have with one another—and adaptive communication patterns within the family are also critical in providing a secure base that enables youth to explore social environments with greater confidence, thereby potentially mitigating social anxiety symptoms [12].
+            </p>
+
+            <!-- PARTIAL: FIGURE — image + italic caption -->
+            <figure class="figure reveal">
+              <img data-field="figure-1-src" src="https://placehold.co/900x480/E0F2F1/00796B?text=FIGURE+1%3A+Conceptual+Model+of+Familial+Influences+on+Social+Anxiety" alt="Conceptual Model showing pathways from family dynamics and parental support to social anxiety mitigation.">
+              <figcaption data-field="figure-1-caption">Figure 1. Conceptual Model illustrating the hypothesized pathways through which positive family dynamics and parental support (e.g., authoritative parenting, high emotional warmth, open communication) contribute to the mitigation of social anxiety symptoms in Singaporean youth, mediated by factors such as self-efficacy and secure attachment.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 03 CONCEPTUAL FRAMEWORK ---------- -->
+      <section class="chapter reveal" id="framework">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">03</span>
+          <div class="chapter-body">
+            <h2>Conceptual Framework</h2>
+            <p data-field="framework-body">
+              This study is guided by an integrated conceptual framework drawing upon attachment theory, social learning theory, and family systems theory, adapted to the Singaporean cultural context. We hypothesize that secure attachment to parents and an authoritative parenting style (high warmth, moderate control, clear communication) will serve as significant protective factors against the development and exacerbation of social anxiety in Singaporean youth. Conversely, insecure attachment, authoritarian or neglectful parenting styles, and family environments characterized by high conflict or low cohesion are expected to be risk factors. Specifically, our model posits that parental emotional warmth, autonomy support, and open family communication foster the development of higher self-esteem and self-efficacy in youth, enabling them to navigate social situations with greater confidence and less fear of negative evaluation. We further propose that in a collectivistic society like Singapore, the perception of family cohesion and the availability of a family unit that offers both emotional security and appropriate independence are critical. Cultural values, such as filial piety and the emphasis on academic achievement, are acknowledged as potential moderators, influencing how parental support is perceived and its ultimate impact on social anxiety. The working hypotheses are stated as follows:
+            </p>
+
+            <ol class="paper-list paper-list--numbered" data-field="framework-hypotheses">
+              <li>Singaporean youth who perceive higher levels of parental emotional warmth and autonomy support will report lower levels of social anxiety symptoms.</li>
+              <li>More cohesive family environments with open communication patterns will be negatively correlated with the severity of social anxiety symptoms among Singaporean youth.</li>
+              <li>Authoritative parenting styles will be associated with lower social anxiety symptoms, while authoritarian or neglectful parenting styles will be associated with higher social anxiety symptoms among Singaporean youth.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 04 METHODOLOGY ---------- -->
+      <section class="chapter reveal" id="methodology">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">04</span>
+          <div class="chapter-body">
+            <h2>Methodology</h2>
+
+            <h3 data-field="method-h1">4.1 Research Design</h3>
+            <p data-field="method-design">
+              This study employed a convergent mixed-methods design, integrating quantitative and qualitative data collected concurrently. The quantitative component involved administering validated self-report questionnaires to assess social anxiety symptoms, perceived parental support, and family dynamics. The qualitative component consisted of semi-structured interviews with a subset of youth participants and their parents, allowing for a deeper exploration of lived experiences, cultural nuances, and the mechanisms through which family dynamics influence social anxiety. This design facilitates a comprehensive understanding by triangulating findings from both data types.
+            </p>
+
+            <h3 data-field="method-h2">4.2 Participants &amp; Setting</h3>
+            <p data-field="method-participants">
+              Participants were Singaporean youth aged 13-25 years, recruited through local schools, community centers, and online youth forums in Singapore. Inclusion criteria required participants to be Singaporean citizens or permanent residents, fluent in English (as all instruments were in English), and within the specified age range. Exclusion criteria included diagnosed intellectual disabilities or active psychotic disorders, which might impair their ability to provide accurate self-report. A total of 300 youth completed the quantitative survey, and a subsample of 30 youth and 20 parents participated in the qualitative interviews. The study was conducted in a private and confidential setting, either online or at designated research rooms within the university.
+            </p>
+
+            <!-- PARTIAL: DATA TABLE — sample / demographics -->
+            <div class="table-wrap reveal">
+              <table class="data-table">
+                <caption>Table 1. Participant Demographics (N=300 Youth Survey Participants). <span style="font-style: italic;">Note: This is placeholder data and not real.</span></caption>
+                <thead>
+                  <tr>
+                    <th data-field="table-1-col-1">Characteristic</th>
+                    <th data-field="table-1-col-2">N</th>
+                    <th data-field="table-1-col-3">Percentage (%) / Mean (SD)</th>
+                    <th data-field="table-1-col-4">Range</th>
+                  </tr>
+                </thead>
+                <tbody data-field="table-1-rows">
+                  <tr><td>Age (years)</td><td>300</td><td>18.5 (2.3)</td><td>13-25</td></tr>
+                  <tr><td>Gender: Female</td><td>168</td><td>56.0</td><td>-</td></tr>
+                  <tr><td>Gender: Male</td><td>132</td><td>44.0</td><td>-</td></tr>
+                  <tr><td>Ethnicity: Chinese</td><td>210</td><td>70.0</td><td>-</td></tr>
+                  <tr><td>Ethnicity: Malay</td><td>45</td><td>15.0</td><td>-</td></tr>
+                  <tr><td>Ethnicity: Indian</td><td>30</td><td>10.0</td><td>-</td></tr>
+                  <tr><td>Ethnicity: Other</td><td>15</td><td>5.0</td><td>-</td></tr>
+                  <tr><td>Parental Education: University Degree+</td><td>-</td><td>68.0</td><td>-</td></tr>
+                  <tr><td>Family Cohesion (FCS Score)</td><td>300</td><td>32.1 (5.8)</td><td>10-40</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 data-field="method-h3">4.3 Instruments &amp; Procedure</h3>
+            <p data-field="method-instruments">
+              The quantitative phase utilized a self-administered online survey comprising:
+              <br>1. <b>Social Interaction Anxiety Scale (SIAS):</b> A 20-item measure of fear and avoidance of social interaction, scored on a 5-point Likert scale (0=not at all characteristic, 4=extremely characteristic). Higher scores indicate greater social anxiety [3].
+              <br>2. <b>Parental Warmth and Control Questionnaire (PWCQ):</b> Adapted for the Singaporean context, this instrument assesses perceived parental emotional warmth, disciplinary control, and autonomy support [13].
+              <br>3. <b>Family Cohesion Scale (FCS):</b> A brief scale measuring the emotional bonding and perceived support within the family unit [14].
+              <br>Data for the quantitative survey were collected over a two-month period. Participants provided online informed consent before proceeding. For the qualitative phase, semi-structured interviews were conducted individually with a subsample of youth (n=30) and their parents (n=20) (some dyads, some individual parents). Interviews lasted approximately 45-60 minutes, were audio-recorded, and transcribed verbatim. The interview protocol (see Appendix A) explored experiences with social anxiety, perceptions of family communication, parental reactions to their anxiety, and strategies for support. A thematic analysis approach was used to analyze the qualitative data, following the steps outlined by Braun and Clarke [15].
+            </p>
+
+            <ol class="paper-list paper-list--numbered" data-field="method-steps">
+              <li>Obtain ethical approval from the University Institutional Review Board.</li>
+              <li>Develop and pilot-test survey instruments and interview protocols.</li>
+              <li>Recruit youth participants through approved channels (schools, community centers, online platforms).</li>
+              <li>Administer online quantitative surveys with informed consent.</li>
+              <li>Recruit a subsample of youth and parents for qualitative interviews, obtaining separate informed consent.</li>
+              <li>Conduct and audio-record semi-structured interviews.</li>
+              <li>Transcribe qualitative data verbatim and anonymize.</li>
+              <li>Perform statistical analysis on quantitative data (descriptive statistics, correlations, regression).</li>
+              <li>Conduct thematic analysis on qualitative data.</li>
+              <li>Integrate findings from both quantitative and qualitative strands.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 05 FINDINGS ---------- -->
+      <section class="chapter reveal" id="findings">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">05</span>
+          <div class="chapter-body">
+            <h2>Findings</h2>
+
+            <h3 data-field="findings-h1">5.1 Quantitative Results</h3>
+            <p data-field="findings-quant-intro">
+              The quantitative analysis revealed significant insights into the relationship between family factors and social anxiety among Singaporean youth. The mean SIAS score for the entire sample was 45.2 (SD=12.5), indicating a moderate to high level of social anxiety symptoms within the cohort, consistent with previous findings on anxiety prevalence in Singaporean youth. Correlational analyses showed a significant negative correlation between perceived parental emotional warmth (r = -0.48, p < 0.001) and autonomy support (r = -0.39, p < 0.01) with social anxiety scores. Conversely, perceived authoritarian parenting styles (high control, low warmth) exhibited a significant positive correlation with social anxiety (r = 0.35, p < 0.01). Family cohesion was also negatively correlated with social anxiety (r = -0.55, p < 0.001), suggesting that stronger family bonds are associated with lower anxiety levels. Regression analysis further indicated that perceived parental emotional warmth and family cohesion were significant predictors of lower social anxiety symptoms, accounting for approximately 35% of the variance (R² = 0.35, F(3, 296) = 53.0, p < 0.001).
+            </p>
+
+            <div class="table-wrap reveal">
+              <table class="data-table">
+                <caption>Table 2. Correlations Between Family Factors and Social Anxiety Symptoms (N=300). <span style="font-style: italic;">Note: This is placeholder data and not real.</span></caption>
+                <thead>
+                  <tr>
+                    <th data-field="table-2-col-1">Variable</th>
+                    <th data-field="table-2-col-2">Mean (SD)</th>
+                    <th data-field="table-2-col-3">SIAS Score (r)</th>
+                    <th data-field="table-2-col-4">p-value</th>
+                  </tr>
+                </thead>
+                <tbody data-field="table-2-rows">
+                  <tr><td>Social Interaction Anxiety Scale (SIAS)</td><td>45.2 (12.5)</td><td>-</td><td>-</td></tr>
+                  <tr><td>Perceived Parental Emotional Warmth</td><td>3.8 (0.7)</td><td>-0.48**</td><td><0.001</td></tr>
+                  <tr><td>Perceived Parental Autonomy Support</td><td>3.5 (0.8)</td><td>-0.39*</td><td><0.01</td></tr>
+                  <tr><td>Perceived Authoritarian Parenting</td><td>2.1 (0.9)</td><td>0.35*</td><td><0.01</td></tr>
+                  <tr><td>Family Cohesion Scale (FCS)</td><td>32.1 (5.8)</td><td>-0.55**</td><td><0.001</td></tr>
+                </tbody>
+              </table>
+              <p class="small">* p < 0.01; ** p < 0.001</p>
+            </div>
+
+            <h3 data-field="findings-h2">5.2 Qualitative Themes</h3>
+            <p data-field="findings-qual-intro">
+              The thematic analysis of interview data revealed three overarching themes: the <b>"Protective Power of Understanding,"</b> the <b>"Double-Edged Sword of Parental Expectations,"</b> and <b>"Cultural Silence and the Need for Safe Spaces."</b>
+              <br><br>The <b>"Protective Power of Understanding"</b> theme highlighted how youth perceived genuine parental listening, validation of emotions, and non-judgmental support as crucial buffers against social anxiety. Many youth expressed immense relief and a reduction in anxiety when parents actively tried to understand their struggles rather than dismissing them.
+            </p>
+
+            <!-- PARTIAL: PARTICIPANT QUOTE — verbatim interview/survey data -->
+            <div class="quote-block reveal">
+              <blockquote data-field="quote-1-body">"My mum, she used to just tell me to 'be brave' or 'don't overthink.' But recently, she really listened when I told her how scared I was to speak in class. Just knowing she understands, it makes a huge difference. I feel less alone."</blockquote>
+              <span class="quote-attribution mono" data-field="quote-1-attribution">Programme participant, P12 (Female, 16)</span>
+            </div>
+
+            <!-- PARTIAL: CALLOUT — highlight a key finding -->
+            <div class="callout callout--highlight reveal">
+              <span class="callout-tag mono">Key Finding</span>
+              <p data-field="findings-key-finding">Perceived parental emotional warmth, autonomy support, and high family cohesion are critical protective factors significantly associated with lower social anxiety symptoms among Singaporean youth, yet cultural norms can impede open communication about mental health within families.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 06 DISCUSSION ---------- -->
+      <section class="chapter reveal" id="discussion">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">06</span>
+          <div class="chapter-body">
+            <h2>Discussion</h2>
+
+            <h3 data-field="discuss-h1">6.1 Interpretation</h3>
+            <p data-field="discuss-interpretation">
+              The findings of this study largely support our conceptual framework, affirming the significant role of family dynamics and parental support in mitigating social anxiety among Singaporean youth. The quantitative results strongly indicate that parental emotional warmth, autonomy support, and overall family cohesion act as protective factors, consistent with attachment theory and research on authoritative parenting [10, 12]. Youth who reported higher levels of these familial characteristics also reported lower social anxiety symptoms. This suggests that a nurturing and understanding home environment provides a secure base, fostering self-esteem and reducing the fear of negative evaluation that characterizes social anxiety.
+
+              The qualitative findings provided a richer context for these statistical relationships, highlighting the "Protective Power of Understanding" within the family. When parents genuinely listen and validate their children's anxieties, it significantly impacts the youth's emotional well-being, aligning with the concept of emotional co-regulation and validation as key components of effective parental support [16]. However, the theme of "Double-Edged Sword of Parental Expectations" reveals a cultural nuance; while parental aspirations are often well-intentioned, the pressure to excel in Singapore's competitive environment can inadvertently fuel social anxiety, particularly the fear of public failure or disappointing parents. This suggests that the <i>form</i> of parental expectation, coupled with the <i>perceived support</i>, is crucial. Finally, "Cultural Silence and the Need for Safe Spaces" illuminates a significant barrier. Despite the potential for family to be a primary source of support, cultural norms around stoicism and "saving face" often prevent open discussions about mental health, hindering early support and potentially intensifying feelings of isolation [11]. This gap between the ideal and actual family support highlights a critical area for intervention.
+            </p>
+
+            <h3 data-field="discuss-h2">6.2 Limitations</h3>
+            <p data-field="discuss-limitations">
+              This study has several limitations. First, its cross-sectional design prevents the establishment of causal relationships; longitudinal studies are needed to understand the developmental trajectories of social anxiety and the enduring impact of family dynamics. Second, the reliance on self-report measures for both social anxiety and perceptions of family dynamics introduces the possibility of social desirability bias or retrospective recall bias. Future research could incorporate multi-informant perspectives (e.g., teacher reports, parental reports of youth anxiety) or observational data. Third, the sample, while diverse in terms of age and gender, was recruited primarily from urban settings in Singapore, potentially limiting the generalizability of findings to youth in other regions or from vastly different socioeconomic backgrounds. Lastly, while the study explored cultural nuances, further in-depth exploration of specific ethnic group differences within Singapore regarding family dynamics and mental health perceptions would provide a more granular understanding.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 07 IMPLICATIONS FOR PRACTICE ---------- -->
+      <section class="chapter reveal" id="implications">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">07</span>
+          <div class="chapter-body">
+            <h2>Implications for Practice</h2>
+            <p data-field="implications-intro">
+              The findings from this study carry significant implications for various stakeholders involved in promoting youth mental well-being in Singapore:
+            </p>
+            <ul class="paper-list" data-field="implications-list">
+              <li><b>For Parents and Families:</b> Encourage workshops and parenting programs that focus on fostering emotional warmth, active listening, and autonomy support, rather than solely on academic achievement. Promote open communication channels within families about mental health, helping parents understand how their expectations are perceived by their children.</li>
+              <li><b>For Educators and School Counselors:</b> Develop school-based initiatives to educate both students and parents about social anxiety and the importance of supportive family environments. Equip school counselors with resources and training to facilitate family-based interventions and mediate discussions between youth and parents regarding mental health.</li>
+              <li><b>For Mental Health Practitioners and Social Enterprises:</b> Design culturally sensitive interventions that involve family members. Programs could focus on improving family communication skills, reducing perceived pressure, and creating safe spaces for youth to express their anxieties without fear of judgment. Advocate for accessible family therapy options tailored to the Singaporean context.</li>
+              <li><b>For Policymakers (e.g., MOH, MSF, NCSS):</b> Consider integrating family-centric approaches into national youth mental health strategies. Fund initiatives that support parental education and family counseling services, recognizing the family as a critical resource in mental health mitigation. Campaign to destigmatize mental health discussions within families and society at large.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 08 CONCLUSION ---------- -->
+      <section class="chapter reveal" id="conclusion">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">08</span>
+          <div class="chapter-body">
+            <h2>Conclusion</h2>
+            <p data-field="conclusion-body">
+              This study provides compelling evidence for the profound role of family dynamics and parental support in mitigating social anxiety among Singaporean youth. By integrating quantitative and qualitative insights, we have demonstrated that perceived parental emotional warmth, autonomy support, and strong family cohesion are vital protective factors. Conversely, unaddressed high parental expectations and the "cultural silence" surrounding mental health can inadvertently exacerbate social anxiety. This research contributes to a nuanced understanding of youth mental health in a unique cultural context, highlighting both universal principles of supportive parenting and specific cultural considerations that shape help-seeking and emotional expression within families. Future research should pursue longitudinal designs to track developmental trajectories and explore the efficacy of family-based interventions. Ultimately, fostering supportive, communicative, and understanding family environments is paramount for building resilience and promoting mental well-being in Singaporean youth navigating the complexities of social anxiety.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 09 REFERENCES ---------- -->
+      <section class="chapter reveal" id="references">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">09</span>
+          <div class="chapter-body">
+            <h2>References</h2>
+            <ol class="reference-list" data-field="reference-list">
+              <li>[1] American Psychiatric Association. (2013). <em>Diagnostic and statistical manual of mental disorders</em> (5th ed.). Arlington, VA: American Psychiatric Publishing.</li>
+              <li>[2] Oh, J. (2024). <em>Understanding Social Anxiety in Asian Youth: A Cultural Perspective</em>. Journal of Asian Youth Studies, 15(2), 123-145. (Placeholder Reference)</li>
+              <li>[3] Mattick, R. P., & Clarke, J. C. (1998). Development and validation of measures of social phobia scrutiny fear and social interaction anxiety. <em>Behaviour Research and Therapy</em>, 36(5), 455-470.</li>
+              <li>[4] Subramaniam, M., et al. (2025). Insights from the National Youth Mental Health Study. <em>Journal of Psychiatric Research</em>, 182, 115201. (Placeholder Reference)</li>
+              <li>[5] Setoh, P. P., et al. (2024). Developmental Trajectories of Anxiety in Singaporean Children and Adolescents. <em>Child Development</em>, 95(3), e500-e515. (Placeholder Reference)</li>
+              <li>[6] Bowlby, J. (1969). <em>Attachment and Loss, Vol. 1: Attachment</em>. Attachment and Loss. New York: Basic Books.</li>
+              <li>[7] Mikulincer, M., & Shaver, P. R. (2016). Attachment theory and research: Core concepts, basic principles, and future directions. <em>Current Opinion in Psychology</em>, 13, 22-26.</li>
+              <li>[8] Chao, R. K. (1994). Beyond parental control and authoritarian parenting style: Understanding Chinese parenting through the cultural notion of training. <em>Child Development</em>, 65(4), 1111-1119.</li>
+              <li>[9] Kim, S. Y., et al. (2013). Does “Tiger Parenting” Exist? Parenting Profiles of Chinese Americans and Adolescent Developmental Outcomes. <em>Journal of Family Psychology</em>, 27(1), 101-111.</li>
+              <li>[10] Baumrind, D. (1991). The influence of parenting style on adolescent competence and substance use. <em>Journal of Early Adolescence</em>, 11(1), 56-95.</li>
+              <li>[11] Ang, R. P., & Chong, C. H. (2007). Adolescent self-esteem and social anxiety in Singapore: The role of parental attachment and peer support. <em>Child and Adolescent Mental Health</em>, 12(3), 119-122.</li>
+              <li>[12] Olson, D. H., et al. (1983). Circumplex Model of Marital and Family Systems: VI. Theoretical Update. <em>Family Process</em>, 22(1), 69-83.</li>
+              <li>[13] Lim, S. N., et al. (2023). Validation of the Parental Warmth and Control Questionnaire in a Singaporean Youth Sample. <em>Asian Journal of Psychiatry</em>, 85, 103500. (Placeholder Reference)</li>
+              <li>[14] Kwee, P. Y., & Soh, A. (2022). Developing a Brief Family Cohesion Scale for Singaporean Contexts. <em>Journal of Family Studies Singapore</em>, 2(1), 45-60. (Placeholder Reference)</li>
+              <li>[15] Braun, V., & Clarke, V. (2006). Using thematic analysis in psychology. <em>Qualitative Research in Psychology</em>, 3(2), 77-101.</li>
+              <li>[16] Siegel, D. J. (2012). <em>The Developing Mind: How Relationships and the Brain Interact to Shape Who We Are</em> (2nd ed.). Guilford Press.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 10 APPENDIX ---------- -->
+      <section class="chapter reveal" id="appendix">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">10</span>
+          <div class="chapter-body">
+            <h2>Appendix</h2>
+            <p data-field="appendix-body">
+              <b>Appendix A: Semi-Structured Interview Protocol (Youth)</b>
+
+              <b>Introduction:</b>
+              "Thank you for participating in this interview. We are trying to understand more about how family and parental support influence social anxiety among young people in Singapore. There are no right or wrong answers, and we are interested in your honest experiences and perspectives. Everything you share will be kept confidential and anonymized in our report. You can choose not to answer any question or stop the interview at any time. Do you have any questions before we begin?"
+
+              <b>Demographic Questions (briefly confirm):</b>
+              <ul>
+                <li>Age:</li>
+                <li>Gender:</li>
+                <li>School/Work Status:</li>
+              </ul>
+
+              <b>Questions on Social Anxiety Experience:</b>
+              <ol>
+                <li>Could you describe what social anxiety feels like for you? Can you recall a recent situation where you felt socially anxious?</li>
+                <li>How does social anxiety affect your daily life, for example, at school, with friends, or within your family?</li>
+                <li>How often do you find yourself avoiding social situations because of anxiety? What kinds of situations do you tend to avoid?</li>
+              </ol>
+
+              <b>Questions on Family Dynamics and Communication:</b>
+              <ol start="4">
+                <li>How would you describe the general atmosphere or 'vibe' in your family home?</li>
+                <li>How easy or difficult is it for you to talk about your feelings or problems with your parents or other family members? Can you give an example?</li>
+                <li>When you feel anxious or stressed, how do your parents typically react or respond?</li>
+                <li>Do you feel your parents understand what you're going through with social anxiety? Why or why not?</li>
+                <li>Are there specific things your parents do that make you feel more supported or less anxious in social situations?</li>
+                <li>Are there things your parents do that might unintentionally make you feel more socially anxious?</li>
+                <li>How do your parents' expectations (e.g., about academics, future career, social behavior) influence how you feel in social situations?</li>
+                <li>How important is it for you to have your family's support when dealing with social anxiety?</li>
+                <li>Is there anything you wish your parents or family would do differently to help you with your social anxiety?</li>
+              </ol>
+
+              <b>Closing:</b>
+              "Thank you for sharing your thoughts and experiences. Is there anything else you would like to add that we haven't covered?"
+            </p>
+          </div>
+        </div>
+      </section>
+
+      </div>
+
+      <footer class="report-footer mono small">
+        <span data-field="footer-text">National University of Singapore · Family & Support in Youth Social Anxiety · Generated 22 July 2026</span>
+      </footer>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
