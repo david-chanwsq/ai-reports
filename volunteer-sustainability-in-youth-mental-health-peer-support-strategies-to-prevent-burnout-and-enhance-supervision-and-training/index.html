@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  SOCIAL ENTERPRISE WELLBEING RESEARCH TEMPLATE — "FIELD JOURNAL" STYLE
+  ============================================================================
+  WHAT THIS IS
+  A sidebar-plus-content research report for studies on social anxiety among
+  a population (e.g. youth, young adults) in Singapore, written for the
+  audience most likely to act on it: Singapore's community/mental-health
+  social enterprises, their funders, and policymakers. The population under
+  study is people experiencing social anxiety — not the enterprises' own
+  founders or staff. The sidebar is a printed contents page, not a system
+  console: serif labels, an italic heading, one calm breathing-pulse dot.
+  The content column is an editorial manuscript rather than a stack of
+  dashboard cards — sections read as chapters, each with a large outline
+  numeral in a left margin column beside flowing serif text and an automatic
+  drop cap. Structure follows a standard mixed-methods social science paper:
+  intro, literature review, conceptual framework, methodology, findings,
+  discussion, practice implications, conclusion.
+
+  HOW TO REUSE THIS TEMPLATE (for a human OR for an LLM)
+  1. Every editable piece of text sits inside a tag carrying a
+     data-field="..." attribute. That attribute name tells you WHAT the
+     content is (e.g. data-field="report-title"), not how it looks.
+  2. Placeholder copy is written in [BRACKETS] with a short instruction and
+     an example. Replace the whole bracketed placeholder — keep the
+     surrounding tag and classes untouched.
+  3. Sections follow the numbering convention 00, 01, 02... To add a section:
+     duplicate a <section class="chapter"> block (including its
+     .chapter-frame > .chapter-num + .chapter-body structure), its sidebar
+     <li> entry, and continue the numbering. script.js auto-detects any
+     element matching #tocList li[data-target] and needs no edits.
+  4. Repeating pieces (figures, tables, callouts, references, participant
+     quotes) are small reusable partials — search for "PARTIAL:" comments
+     below to find and duplicate them.
+  5. Do not rename class names (they are the CSS/JS contract). You may
+     freely rewrite the text content inside data-field attributes.
+  6. Color/type/spacing tokens all live in styles.css :root — change the
+     report's whole look by editing values there, not by adding inline styles.
+  7. Use .quote-block for verbatim interview/survey-open-response data —
+     always attribute it (role, and only the demographic detail the study's
+     consent/anonymisation plan allows) via .quote-attribution.
+  8. Every chapter's first paragraph gets an automatic drop cap
+     (styles.css, ::first-letter) — no markup needed, just start each
+     .chapter-body with a <p>.
+  ============================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-field="browser-title">Volunteer Sustainability: Preventing Burnout in Youth Mental Health Peer Support</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500;1,6..72,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ============ TOP PROGRESS BAR (reading/scroll progress) ============ -->
+  <div class="progress-rail" aria-hidden="true">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- ============ MOBILE NAV TOGGLE ============ -->
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle table of contents" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="layout">
+
+    <!-- ==================================================================
+         SIDEBAR — reads as a printed contents page, not a system console.
+         Acts as the table of contents AND a live scrollspy. Each <li> maps
+         to a section by data-target="<section id>". Do not remove
+         data-target — script.js uses it to sync highlight + "done" marker.
+         To add a section: copy one <li>, change data-target + label + code.
+    =================================================================== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-head">
+        <span class="status-dot status-dot--live" aria-hidden="true"></span>
+        <span>Contents</span>
+      </div>
+
+      <nav class="toc" aria-label="Report sections">
+        <ul id="tocList">
+          <li data-target="abstract"><span class="toc-code mono">00</span><span class="toc-label">Abstract</span></li>
+          <li data-target="introduction"><span class="toc-code mono">01</span><span class="toc-label">Introduction</span></li>
+          <li data-target="literature"><span class="toc-code mono">02</span><span class="toc-label">Literature Review</span></li>
+          <li data-target="framework"><span class="toc-code mono">03</span><span class="toc-label">Conceptual Framework</span></li>
+          <li data-target="methodology"><span class="toc-code mono">04</span><span class="toc-label">Methodology</span></li>
+          <li data-target="findings"><span class="toc-code mono">05</span><span class="toc-label">Findings</span></li>
+          <li data-target="discussion"><span class="toc-code mono">06</span><span class="toc-label">Discussion</span></li>
+          <li data-target="implications"><span class="toc-code mono">07</span><span class="toc-label">Implications</span></li>
+          <li data-target="conclusion"><span class="toc-code mono">08</span><span class="toc-label">Conclusion</span></li>
+          <li data-target="references"><span class="toc-code mono">09</span><span class="toc-label">References</span></li>
+          <li data-target="appendix"><span class="toc-code mono">10</span><span class="toc-label">Appendix</span></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-foot small">
+        <div class="foot-row"><span>Logged</span><span id="buildTime">—</span></div>
+        <div class="foot-row"><span>Progress</span><span id="progressPct">0%</span></div>
+      </div>
+    </aside>
+
+    <!-- ==================================================================
+         MAIN — masthead + manuscript. Every section is a
+         <section class="chapter">.
+         - id must match a sidebar data-target
+         - .chapter-num is the big margin numeral; .chapter-body holds the
+           heading + free-form content: paragraphs, figures, tables, quotes
+         - class="reveal" elements fade/slide in on scroll (IntersectionObserver)
+    =================================================================== -->
+    <main class="main">
+
+      <!-- ============ MASTHEAD ============ -->
+      <header class="masthead" id="top">
+        <p class="epigraph" data-typed data-text="In Singapore, staying quiet is often mistaken for being fine."></p>
+
+        <p class="eyebrow" data-field="course-code">Department of Psychology, [University Name] · in partnership with [Youth Mental Health Organization]</p>
+
+        <h1 class="masthead-title" data-field="report-title">
+          Volunteer Sustainability in Youth Mental Health Peer Support: Strategies to Prevent Burnout and Enhance Supervision and Training
+        </h1>
+
+        <p class="masthead-subtitle" data-field="report-subtitle">
+          A mixed-methods study on sustaining the well-being and effectiveness of peer-support volunteers in youth mental health programs through robust supervision and training frameworks.
+        </p>
+
+        <p class="byline">
+          <span data-field="authors">[Author Name(s), Student/Staff ID]</span><span class="byline-sep">·</span><span data-field="institution">[University / School Name, Department]</span><span class="byline-sep">·</span><span data-field="supervisor">[Supervisor / Reviewer Name]</span><span class="byline-sep">·</span><span data-field="report-date">22 July 2026</span>
+        </p>
+
+        <p class="masthead-tags mono small" data-field="keywords">[volunteer burnout] · [peer support] · [youth mental health] · [clinical supervision] · [volunteer training] · [sustainability]</p>
+      </header>
+
+      <div class="manuscript">
+
+      <!-- ---------- 00 ABSTRACT ---------- -->
+      <section class="chapter reveal" id="abstract">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">00</span>
+          <div class="chapter-body">
+            <h2>Abstract</h2>
+            <p data-field="abstract-body">
+              This study investigates critical strategies for preventing burnout among peer-support volunteers in youth mental health programs and ensuring rigorous clinical supervision and training. Peer support is a vital component of youth mental health services, yet volunteers face significant emotional demands, risking burnout and compromising program sustainability. Employing a mixed-methods approach, this research hypothetically combines quantitative surveys on burnout levels with qualitative interviews exploring volunteers' experiences with supervision and training. Preliminary findings suggest that structured supervision incorporating corrective feedback and role-play, alongside comprehensive training in self-care and boundary setting, are crucial in enhancing volunteer resilience and reducing burnout. The study emphasizes the imperative for organizations to invest in robust support systems to maintain a sustainable and effective peer-support workforce, ultimately improving the quality of mental health support for young people.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 01 INTRODUCTION ---------- -->
+      <section class="chapter reveal" id="introduction">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">01</span>
+          <div class="chapter-body">
+            <h2>Introduction</h2>
+
+            <h3 data-field="intro-h1">1.1 Problem Statement</h3>
+            <p data-field="intro-problem">
+              Peer support programs play an increasingly critical role in addressing youth mental health challenges, offering accessible and relatable support that complements formal clinical services. Volunteers within these programs, often with lived experience, provide invaluable empathy and guidance. However, the emotional intensity of this work, coupled with insufficient support structures, exposes peer-support volunteers to a high risk of burnout. This burnout not only impacts the individual well-being of volunteers but also threatens the continuity, quality, and sustainability of vital youth mental health services, leading to volunteer turnover and loss of invaluable experience. The absence of rigorous, consistent clinical supervision and comprehensive, tailored training further exacerbates these risks, making it difficult for volunteers to manage complex situations, set healthy boundaries, and practice adequate self-care.
+            </p>
+
+            <h3 data-field="intro-h2">1.2 Research Questions / Objectives</h3>
+            <ul class="paper-list" data-field="intro-objectives">
+              <li>What are the primary factors contributing to burnout among peer-support volunteers in youth mental health programs?</li>
+              <li>What specific supervision strategies are most effective in mitigating burnout and enhancing volunteer well-being and retention?</li>
+              <li>What training components are crucial for equipping peer-support volunteers with the skills to manage their roles sustainably and effectively in youth mental health contexts?</li>
+            </ul>
+
+            <!-- PARTIAL: CALLOUT — use for a scope note, ethics note, or assumption -->
+            <div class="callout callout--info reveal">
+              <span class="callout-tag mono">Scope &amp; Ethics</span>
+              <p data-field="intro-scope">This study focuses on peer-support volunteer programs specifically tailored for youth mental health. Ethical approval would be obtained from relevant institutional review boards, ensuring informed consent from all participants and adherence to data protection regulations (e.g., PDPA) concerning sensitive mental health disclosures.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 02 LITERATURE REVIEW ---------- -->
+      <section class="chapter reveal" id="literature">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">02</span>
+          <div class="chapter-body">
+            <h2>Literature Review</h2>
+
+            <h3 data-field="lit-h1">2.1 Peer Support, Burnout, &amp; Youth Mental Health</h3>
+            <p data-field="lit-anxiety">
+              Peer support, characterized by shared understanding and mutual empathy, has demonstrated significant benefits for individuals navigating mental health challenges, particularly among youth. It fosters connectedness, reduces stigma, and improves help-seeking behaviors. However, the nature of peer support, involving deep emotional engagement and exposure to potentially distressing narratives, places volunteers at a heightened risk of burnout. Research indicates generally high burnout rates within the mental health field, with peer support workers and volunteers being particularly vulnerable due to factors such as emotional labor, unclear boundaries, and insufficient organizational support. Preventing burnout is crucial for maintaining the quality and continuity of these vital services for young people.
+            </p>
+
+            <h3 data-field="lit-h2">2.2 The Role of Supervision and Training in Volunteer Sustainability</h3>
+            <p data-field="lit-se">
+              Effective supervision and comprehensive training are widely recognized as cornerstones of professional development and well-being in helping professions. For peer-support volunteers, these mechanisms are particularly vital for mitigating burnout and enhancing program sustainability. Supervision provides a structured space for volunteers to process difficult experiences, receive guidance, and develop skills, including corrective feedback, discussing intervention strategies, and role-play as effective methods. Training, on the other hand, equips volunteers with essential competencies in areas such as communication, boundary setting, self-care, and crisis management. The integration of these elements into peer support programs is crucial for fostering a resilient volunteer workforce capable of providing high-quality, long-term support to youth.
+            </p>
+
+            <!-- PARTIAL: FIGURE — image + italic caption -->
+            <figure class="figure reveal">
+              <img data-field="figure-1-src" src="https://placehold.co/900x480/f6f0e4/56704f?text=FIGURE+1+A+Conceptual+Model+for+Volunteer+Sustainability" alt="A diagram showing factors contributing to volunteer burnout (e.g., emotional labor, lack of boundaries) and mitigating factors (e.g., training, supervision, peer support).">
+              <figcaption data-field="figure-1-caption">Figure 1. A conceptual model illustrating factors influencing peer-support volunteer burnout and the mitigating roles of supervision and training. (Placeholder Data)</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 03 CONCEPTUAL FRAMEWORK ---------- -->
+      <section class="chapter reveal" id="framework">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">03</span>
+          <div class="chapter-body">
+            <h2>Conceptual Framework</h2>
+            <p data-field="framework-body">
+              This study is guided by a conceptual framework positing that peer-support volunteer sustainability in youth mental health programs is significantly influenced by the quality and consistency of clinical supervision and targeted training initiatives. We hypothesize that factors such as emotional labor, exposure to distressing narratives, and unclear role boundaries contribute to volunteer burnout. This framework proposes that structured and supportive clinical supervision, which includes reflective practice, corrective feedback, and skill development through methods like role-play, acts as a primary protective factor. Simultaneously, comprehensive training in self-care strategies, effective communication, and boundary setting is hypothesized to empower volunteers, enhancing their coping mechanisms and professional efficacy. Together, these elements are expected to reduce burnout, increase volunteer retention, and ultimately improve the effectiveness and reach of youth mental health peer support programs.
+            </p>
+
+            <ol class="paper-list paper-list--numbered" data-field="framework-hypotheses">
+              <li>Structured training in self-care, boundary setting, and advanced communication skills will significantly reduce reported emotional exhaustion and depersonalization levels among peer-support volunteers.</li>
+              <li>Regular, structured clinical supervision, incorporating corrective feedback, case discussion, and role-play, will lead to increased personal accomplishment, improved resilience, and higher job satisfaction among peer-support volunteers.</li>
+              <li>The combined effect of rigorous training and consistent supervision will result in lower volunteer turnover rates and enhanced perceived program quality within youth mental health peer support initiatives.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 04 METHODOLOGY ---------- -->
+      <section class="chapter reveal" id="methodology">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">04</span>
+          <div class="chapter-body">
+            <h2>Methodology</h2>
+
+            <h3 data-field="method-h1">4.1 Research Design</h3>
+            <p data-field="method-design">
+              A convergent mixed-methods research design was hypothetically employed for this study. This approach involved the simultaneous collection and analysis of both quantitative and qualitative data to provide a comprehensive understanding of volunteer burnout and the impact of supervision and training. Quantitative data would be gathered through validated surveys assessing burnout levels and perceived support, while qualitative data would be collected via semi-structured interviews to explore volunteers' lived experiences, insights into effective support mechanisms, and challenges faced. The integration of these data strands would allow for triangulation of findings and a richer interpretation of the phenomena under investigation.
+            </p>
+
+            <h3 data-field="method-h2">4.2 Participants &amp; Setting</h3>
+            <p data-field="method-participants">
+              Hypothetical participants would include peer-support volunteers actively engaged in youth mental health programs and program coordinators responsible for their oversight. Recruitment would be conducted through partnerships with several youth mental health social enterprises and non-profit organizations. Inclusion criteria for volunteers would be a minimum of six months of service in a peer support role with youth. Program coordinators would be selected based on their direct involvement in volunteer supervision and training. The study would focus on programs operating within [specific region/country, e.g., Singapore] to ensure contextual relevance.
+            </p>
+
+            <!-- PARTIAL: DATA TABLE — sample / demographics -->
+            <div class="table-wrap reveal">
+              <table class="data-table">
+                <caption>Table 1. Hypothetical Participant Demographics (Placeholder Data)</caption>
+                <thead>
+                  <tr>
+                    <th data-field="table-1-col-1">Participant Group</th>
+                    <th data-field="table-1-col-2">n</th>
+                    <th data-field="table-1-col-3">Mean Age (Years)</th>
+                    <th data-field="table-1-col-4">Mean Years of Service</th>
+                  </tr>
+                </thead>
+                <tbody data-field="table-1-rows">
+                  <tr><td>Peer-Support Volunteers</td><td>45</td><td>23.5</td><td>1.8</td></tr>
+                  <tr><td>Program Coordinators</td><td>10</td><td>38.2</td><td>5.1</td></tr>
+                  <tr><td>Combined Total</td><td>55</td><td>26.7</td><td>2.5</td></tr>
+                </tbody>
+              </table>
+              <p class="small"><em>Note: This is placeholder data and not real.</em></p>
+            </div>
+
+            <h3 data-field="method-h3">4.3 Instruments &amp; Procedure</h3>
+            <p data-field="method-instruments">
+              Quantitative data would be collected using an adapted version of the Maslach Burnout Inventory (MBI-GS) for volunteers, assessing emotional exhaustion, depersonalization, and personal accomplishment. A supplementary questionnaire would gauge volunteers' perceptions of the frequency and quality of supervision and training received. Qualitative data would be gathered through semi-structured interviews with both volunteers and coordinators. The interview protocol (see Appendix) would explore experiences with burnout, the perceived impact of supervision and training, desired support mechanisms, and suggestions for program improvement. Data collection would involve online surveys and virtual interviews, ensuring participant anonymity and confidentiality. All procedures would adhere to ethical guidelines, and informed consent would be obtained prior to participation.
+            </p>
+
+            <ol class="paper-list paper-list--numbered" data-field="method-steps">
+              <li>Online distribution of the survey questionnaire to eligible peer-support volunteers via secure platform after informed consent.</li>
+              <li>Scheduling and conducting semi-structured interviews with a subset of volunteers and all identified program coordinators.</li>
+              <li>Quantitative data analysis using descriptive statistics and inferential tests (e.g., t-tests, ANOVA) to examine relationships between variables.</li>
+              <li>Qualitative data analysis using thematic analysis to identify recurring themes and patterns from interview transcripts.</li>
+              <li>Integration of quantitative and qualitative findings to develop comprehensive conclusions and recommendations.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 05 FINDINGS ---------- -->
+      <section class="chapter reveal" id="findings">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">05</span>
+          <div class="chapter-body">
+            <h2>Findings</h2>
+
+            <h3 data-field="findings-h1">5.1 Quantitative Results</h3>
+            <p data-field="findings-quant-intro">
+              Quantitative analysis of the hypothetical survey data revealed significant differences in burnout levels based on the frequency and perceived quality of supervision. Volunteers reporting weekly or bi-weekly structured supervision showed lower scores on emotional exhaustion and higher scores on personal accomplishment compared to those receiving monthly or less frequent supervision. These findings suggest a direct correlation between consistent supervisory support and reduced burnout symptoms.
+            </p>
+
+            <div class="table-wrap reveal">
+              <table class="data-table">
+                <caption>Table 2. Hypothetical Mean Burnout Subscale Scores by Supervision Frequency (Placeholder Data)</caption>
+                <thead>
+                  <tr>
+                    <th data-field="table-2-col-1">Supervision Frequency</th>
+                    <th data-field="table-2-col-2">Emotional Exhaustion (Mean)</th>
+                    <th data-field="table-2-col-3">Depersonalization (Mean)</th>
+                    <th data-field="table-2-col-4">Personal Accomplishment (Mean)</th>
+                  </tr>
+                </thead>
+                <tbody data-field="table-2-rows">
+                  <tr><td>Weekly/Bi-weekly</td><td>2.1</td><td>1.5</td><td>4.2</td></tr>
+                  <tr><td>Monthly/Less Frequent</td><td>3.5</td><td>2.8</td><td>3.1</td></tr>
+                </tbody>
+              </table>
+              <p class="small"><em>Note: This is placeholder data and not real. The scores are on a hypothetical scale (e.g., 1-5, with higher scores indicating more burnout for exhaustion/depersonalization and more accomplishment for personal accomplishment).</em></p>
+            </div>
+
+            <h3 data-field="findings-h2">5.2 Qualitative Themes</h3>
+            <p data-field="findings-qual-intro">
+              The thematic analysis of interview data revealed three prominent themes regarding volunteer sustainability and burnout prevention: 1) The emotional toll and boundary challenges, 2) The protective power of peer connection and informal support, and 3) The indispensable role of structured supervision and continuous professional development. Volunteers frequently expressed the emotional intensity of their work and the difficulty in disengaging, highlighting the need for clearer boundaries.
+            </p>
+
+            <!-- PARTIAL: PARTICIPANT QUOTE — verbatim interview/survey data -->
+            <div class="quote-block reveal">
+              <blockquote data-field="quote-1-body">"Sometimes it feels like you're carrying so much. The supervision sessions, especially the role-plays and getting specific feedback, help me know I'm not alone and how to handle tough situations better without taking it all home with me."</blockquote>
+              <span class="quote-attribution mono" data-field="quote-1-attribution">Peer-Support Volunteer, P07</span>
+            </div>
+
+            <!-- PARTIAL: CALLOUT — highlight a key finding -->
+            <div class="callout callout--highlight reveal">
+              <span class="callout-tag mono">Key Finding</span>
+              <p data-field="findings-key-finding">Consistent, high-quality clinical supervision and targeted training in self-care, boundary setting, and advanced communication skills are perceived by peer-support volunteers as essential for managing emotional demands and preventing burnout, directly contributing to their longevity and effectiveness in youth mental health programs.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 06 DISCUSSION ---------- -->
+      <section class="chapter reveal" id="discussion">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">06</span>
+          <div class="chapter-body">
+            <h2>Discussion</h2>
+
+            <h3 data-field="discuss-h1">6.1 Interpretation</h3>
+            <p data-field="discuss-interpretation">
+              The hypothetical findings of this study strongly support the conceptual framework, underscoring that structured supervision and comprehensive training are critical in mitigating burnout among peer-support volunteers in youth mental health. The quantitative results, though simulated, align with existing literature indicating that consistent professional support reduces emotional exhaustion and enhances feelings of personal accomplishment. Qualitative themes further elaborate on these points, illustrating the emotional demands faced by volunteers and how specific supervisory practices, such as corrective feedback and role-playing, provide concrete tools for managing these challenges. The convergence of these data types highlights that a holistic approach to volunteer support is not merely beneficial but essential for their sustained well-being and the fidelity of peer support interventions.
+            </p>
+
+            <h3 data-field="discuss-h2">6.2 Limitations</h3>
+            <p data-field="discuss-limitations">
+              This study acknowledges several hypothetical limitations. The reliance on a single-region scope within [specific region/country] may limit the generalizability of findings to other cultural or programmatic contexts. The use of self-reported measures for burnout and perceived support could introduce social desirability bias. Furthermore, the hypothetical sample size, while illustrating key trends, may not be sufficiently large to detect subtle relationships or generalize across a broader population of peer-support volunteers. Future research should consider longitudinal designs, larger and more diverse samples, and objective measures where possible.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 07 IMPLICATIONS FOR PRACTICE ---------- -->
+      <section class="chapter reveal" id="implications">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">07</span>
+          <div class="chapter-body">
+            <h2>Implications for Practice</h2>
+            <p data-field="implications-intro">
+              The findings of this study offer clear and actionable implications for enhancing volunteer sustainability within youth mental health peer support programs. Implementing these recommendations can foster a more resilient and effective volunteer workforce.
+            </p>
+            <ul class="paper-list" data-field="implications-list">
+              <li>**For Youth Mental Health Program Leaders:** Implement mandatory, structured clinical supervision frameworks (e.g., weekly or bi-weekly group supervision sessions) that actively incorporate corrective feedback, case discussions, and role-playing exercises to build volunteer skills and provide emotional processing space.</li>
+              <li>**For Funders (e.g., government agencies, philanthropic organizations):** Prioritize and allocate dedicated funding for the development and ongoing delivery of robust training programs for peer-support volunteers. This should include modules on advanced self-care techniques, clear boundary setting, ethical considerations, and specialized communication skills for working with youth.</li>
+              <li>**For Policymakers (e.g., Ministry of Health, Ministry of Social and Family Development):** Develop national guidelines or best practice standards for peer-support volunteer programs in youth mental health. These guidelines should emphasize the importance of systematic supervision, continuous professional development, and create pathways for formalized recognition of peer-support roles.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 08 CONCLUSION ---------- -->
+      <section class="chapter reveal" id="conclusion">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">08</span>
+          <div class="chapter-body">
+            <h2>Conclusion</h2>
+            <p data-field="conclusion-body">
+              This study has highlighted the critical importance of volunteer sustainability in youth mental health peer support, emphasizing the indispensable roles of rigorous clinical supervision and comprehensive training in preventing burnout. The hypothetical findings underscore that investing in these support structures directly contributes to the well-being and longevity of peer-support volunteers, thereby ensuring the continued provision of high-quality mental health services for young people. By adopting systematic approaches to volunteer care, organizations can foster a resilient workforce, mitigate turnover, and maximize the positive impact of peer support. Future research should explore the long-term effectiveness of specific supervision models and training interventions across diverse cultural contexts and investigate the economic benefits of such investments in volunteer sustainability.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 09 REFERENCES ---------- -->
+      <section class="chapter reveal" id="references">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">09</span>
+          <div class="chapter-body">
+            <h2>References</h2>
+            <ol class="reference-list" data-field="reference-list">
+              <li>[1] Smith, J. (Year). <em>Understanding Volunteer Burnout in Mental Health Settings</em>. Journal of Mental Health Volunteering, 10(2), 123-135. (Placeholder Reference)</li>
+              <li>[2] Lee, S. & Chen, L. (Year). <em>The Efficacy of Peer Support in Youth Mental Health: A Systematic Review</em>. Youth Mental Health Journal, 5(1), 45-60. (Placeholder Reference)</li>
+              <li>[3] Davis, M. (Year). <em>Best Practices in Clinical Supervision for Non-Licensed Practitioners</em>. Professional Psychology: Research and Practice, 42(3), 200-208. (Placeholder Reference)</li>
+              <li>[4] National Institute of Mental Health. (Year). <em>Guidelines for Peer Support Training Programs</em>. (Placeholder Reference)</li>
+              <li>[5] Maslach, C., Jackson, S. E., & Leiter, M. P. (Year). <em>Maslach Burnout Inventory Manual</em>. Consulting Psychologists Press. (Placeholder Reference)</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 10 APPENDIX ---------- -->
+      <section class="chapter reveal" id="appendix">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">10</span>
+          <div class="chapter-body">
+            <h2>Appendix</h2>
+            <p data-field="appendix-body">
+              **Appendix A: Sample Interview Protocol for Peer-Support Volunteers**
+              <br>
+              1. Can you describe your experience as a peer-support volunteer in youth mental health?
+              <br>
+              2. What are some of the most rewarding aspects of your role?
+              <br>
+              3. What are some of the most challenging aspects or difficulties you encounter?
+              <br>
+              4. How do you manage the emotional demands of supporting young people with mental health challenges?
+              <br>
+              5. Can you describe the type and frequency of supervision you receive? How helpful do you find it?
+              <br>
+              6. What specific training have you received that you found most beneficial for your role?
+              <br>
+              7. Are there any areas where you feel you need more training or support?
+              <br>
+              8. How do you practice self-care, and what support structures are in place to help you prevent burnout?
+              <br>
+              9. What suggestions do you have for improving volunteer support, supervision, or training in your program?
+              <br><br>
+              **Appendix B: Key Components of Hypothetical Peer-Support Volunteer Training Module**
+              <br>
+              - Module 1: Introduction to Peer Support and Ethical Guidelines
+              - Module 2: Active Listening and Empathetic Communication Skills
+              - Module 3: Understanding Youth Mental Health Conditions
+              - Module 4: Crisis Intervention and Safety Planning
+              - Module 5: Self-Care and Stress Management for Volunteers
+              - Module 6: Setting Healthy Boundaries and Professional Limits
+              - Module 7: Utilizing Supervision Effectively
+              <br>
+              <br>
+              <em>Note: The content in this Appendix is placeholder and not real.</em>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      </div>
+
+      <footer class="report-footer mono small">
+        <span data-field="footer-text">Department of Psychology, [University Name] · Volunteer Sustainability in Youth Mental Health Peer Support · Generated 22 July 2026</span>
+      </footer>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
