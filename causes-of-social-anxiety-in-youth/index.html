@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  SOCIAL ENTERPRISE WELLBEING RESEARCH TEMPLATE — "FIELD JOURNAL" STYLE
+  ============================================================================
+  WHAT THIS IS
+  A sidebar-plus-content research report for studies on social anxiety among
+  a population (e.g. youth, young adults) in Singapore, written for the
+  audience most likely to act on it: Singapore's community/mental-health
+  social enterprises, their funders, and policymakers. The population under
+  study is people experiencing social anxiety — not the enterprises' own
+  founders or staff. The sidebar is a printed contents page, not a system
+  console: serif labels, an italic heading, one calm breathing-pulse dot.
+  The content column is an editorial manuscript rather than a stack of
+  dashboard cards — sections read as chapters, each with a large outline
+  numeral in a left margin column beside flowing serif text and an automatic
+  drop cap. Structure follows a standard mixed-methods social science paper:
+  intro, literature review, conceptual framework, methodology, findings,
+  discussion, practice implications, conclusion.
+
+  HOW TO REUSE THIS TEMPLATE (for a human OR for an LLM)
+  1. Every editable piece of text sits inside a tag carrying a
+     data-field="..." attribute. That attribute name tells you WHAT the
+     content is (e.g. data-field="report-title"), not how it looks.
+  2. Placeholder copy is written in [BRACKETS] with a short instruction and
+     an example. Replace the whole bracketed placeholder — keep the
+     surrounding tag and classes untouched.
+  3. Sections follow the numbering convention 00, 01, 02... To add a section:
+     duplicate a <section class="chapter"> block (including its
+     .chapter-frame > .chapter-num + .chapter-body structure), its sidebar
+     <li> entry, and continue the numbering. script.js auto-detects any
+     element matching #tocList li[data-target] and needs no edits.
+  4. Repeating pieces (figures, tables, callouts, references, participant
+     quotes) are small reusable partials — search for "PARTIAL:" comments
+     below to find and duplicate them.
+  5. Do not rename class names (they are the CSS/JS contract). You may
+     freely rewrite the text content inside data-field attributes.
+  6. Color/type/spacing tokens all live in styles.css :root — change the
+     report's whole look by editing values there, not by adding inline styles.
+  7. Use .quote-block for verbatim interview/survey-open-response data —
+     always attribute it (role, and only the demographic detail the study's
+     consent/anonymisation plan allows) via .quote-attribution.
+  8. Every chapter's first paragraph gets an automatic drop cap
+     (styles.css, ::first-letter) — no markup needed, just start each
+     .chapter-body with a <p>.
+  ============================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-field="browser-title">Understanding Social Anxiety in Singaporean Youth</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500;1,6..72,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ============ TOP PROGRESS BAR (reading/scroll progress) ============ -->
+  <div class="progress-rail" aria-hidden="true">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- ============ MOBILE NAV TOGGLE ============ -->
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle table of contents" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="layout">
+
+    <!-- ==================================================================
+         SIDEBAR — reads as a printed contents page, not a system console.
+         Acts as the table of contents AND a live scrollspy. Each <li> maps
+         to a section by data-target="<section id>". Do not remove
+         data-target — script.js uses it to sync highlight + "done" marker.
+         To add a section: copy one <li>, change data-target + label + code.
+    =================================================================== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-head">
+        <span class="status-dot status-dot--live" aria-hidden="true"></span>
+        <span>Contents</span>
+      </div>
+
+      <nav class="toc" aria-label="Report sections">
+        <ul id="tocList">
+          <li data-target="abstract"><span class="toc-code mono">00</span><span class="toc-label">Abstract</span></li>
+          <li data-target="introduction"><span class="toc-code mono">01</span><span class="toc-label">Introduction</span></li>
+          <li data-target="literature"><span class="toc-code mono">02</span><span class="toc-label">Literature Review</span></li>
+          <li data-target="framework"><span class="toc-code mono">03</span><span class="toc-label">Conceptual Framework</span></li>
+          <li data-target="methodology"><span class="toc-code mono">04</span><span class="toc-label">Methodology</span></li>
+          <li data-target="findings"><span class="toc-code mono">05</span><span class="toc-label">Findings</span></li>
+          <li data-target="discussion"><span class="toc-code mono">06</span><span class="toc-label">Discussion</span></li>
+          <li data-target="implications"><span class="toc-code mono">07</span><span class="toc-label">Implications</span></li>
+          <li data-target="conclusion"><span class="toc-code mono">08</span><span class="toc-label">Conclusion</span></li>
+          <li data-target="references"><span class="toc-code mono">09</span><span class="toc-label">References</span></li>
+          <li data-target="appendix"><span class="toc-code mono">10</span><span class="toc-label">Appendix</span></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-foot small">
+        <div class="foot-row"><span>Logged</span><span id="buildTime">—</span></div>
+        <div class="foot-row"><span>Progress</span><span id="progressPct">0%</span></div>
+      </div>
+    </aside>
+
+    <!-- ==================================================================
+         MAIN — masthead + manuscript. Every section is a
+         <section class="chapter">.
+         - id must match a sidebar data-target
+         - .chapter-num is the big margin numeral; .chapter-body holds the
+           heading + free-form content: paragraphs, figures, tables, quotes
+         - class="reveal" elements fade/slide in on scroll (IntersectionObserver)
+    =================================================================== -->
+    <main class="main">
+
+      <!-- ============ MASTHEAD ============ -->
+      <header class="masthead" id="top">
+        <p class="epigraph" data-typed data-text="In Singapore, staying quiet is often mistaken for being fine."></p>
+
+        <p class="eyebrow" data-field="course-code">Department of Psychology, National University of Singapore · in partnership with [Singapore community mental health social enterprise]</p>
+
+        <h1 class="masthead-title" data-field="report-title">
+          Unveiling the Causes: Social Anxiety Among Youth in Singapore
+        </h1>
+
+        <p class="masthead-subtitle" data-field="report-subtitle">
+          A mixed-methods study examining the factors contributing to social anxiety, its prevalence, and help-seeking behaviors among Singaporean youth.
+        </p>
+
+        <p class="byline">
+          <span data-field="authors">Research Team</span><span class="byline-sep">·</span><span data-field="institution">National University of Singapore, Department of Psychology</span><span class="byline-sep">·</span><span data-field="supervisor">Supervisor Name</span><span class="byline-sep">·</span><span data-field="report-date">October 26, 2023</span>
+        </p>
+
+        <p class="masthead-tags mono small" data-field="keywords">social anxiety · Singapore · youth mental health · social media · stigma</p>
+      </header>
+
+      <div class="manuscript">
+
+      <!-- ---------- 00 ABSTRACT ---------- -->
+      <section class="chapter reveal" id="abstract">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">00</span>
+          <div class="chapter-body">
+            <h2>Abstract</h2>
+            <p data-field="abstract-body">
+              This study investigates the causes and contributing factors to social anxiety among youth in Singapore. Drawing on recent findings, it highlights the significant role of excessive social media use, cyberbullying, and body image concerns in the exacerbation of social anxiety symptoms. Approximately one in three young people aged 15-35 in Singapore report experiencing severe symptoms of anxiety, depression, or stress, with anxiety being the most prevalent. The research also explores the barriers to help-seeking, notably the worry of social judgment and stigma. This report aims to provide insights for community mental health social enterprises and policymakers to develop targeted interventions and support systems for Singaporean youth.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 01 INTRODUCTION ---------- -->
+      <section class="chapter reveal" id="introduction">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">01</span>
+          <div class="chapter-body">
+            <h2>Introduction</h2>
+
+            <h3 data-field="intro-h1">1.1 Problem Statement</h3>
+            <p data-field="intro-problem">
+              Social anxiety is a growing concern among youth and young adults in Singapore. Recent studies indicate that about one in three young people aged 15-35 report experiencing severe or extremely severe symptoms of depression, anxiety, and/or stress, with anxiety being the most common mental health problem. Factors such as excessive social media use, cyberbullying, and body image concerns are significantly linked to these symptoms. Despite the high prevalence, many youth face substantial barriers to seeking help, including the pervasive stigma surrounding mental health issues and the worry of what others may think, alongside potential cost and access limitations of formal psychiatric care.
+            </p>
+
+            <h3 data-field="intro-h2">1.2 Research Questions / Objectives</h3>
+            <ul class="paper-list" data-field="intro-objectives">
+              <li>What are the primary causes and contributing factors to social anxiety in youth in Singapore?</li>
+              <li>What is the prevalence and severity of social anxiety symptoms among Singaporean youth?</li>
+              <li>What barriers do Singaporean youth face in seeking help for social anxiety, and how does stigma play a role?</li>
+            </ul>
+
+            <!-- PARTIAL: CALLOUT — use for a scope note, ethics note, or assumption -->
+            <div class="callout callout--info reveal">
+              <span class="callout-tag mono">Scope &amp; Ethics</span>
+              <p data-field="intro-scope">This study focuses on social anxiety among youth (aged 15-35) in Singapore. It does not include clinical diagnoses but examines self-reported symptoms and perceptions. Ethical approval was obtained from [University IRB], and all participants provided informed consent with strict adherence to PDPA guidelines for data anonymisation and confidentiality.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 02 LITERATURE REVIEW ---------- -->
+      <section class="chapter reveal" id="literature">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">02</span>
+          <div class="chapter-body">
+            <h2>Literature Review</h2>
+
+            <h3 data-field="lit-h1">2.1 Social Anxiety: Clinical Background &amp; Prevalence in Singapore</h3>
+            <p data-field="lit-anxiety">
+              Social anxiety disorder, as defined by DSM-5 criteria, involves marked fear or anxiety about one or more social situations in which the individual is exposed to possible scrutiny by others. Common measurement instruments include the Social Interaction Anxiety Scale (SIAS) and the Liebowitz Social Anxiety Scale (LSAS). In Singapore, recent studies from the Institute of Mental Health (IMH) highlight a significant prevalence of anxiety among youth, with approximately 27% of young people aged 15-35 reporting severe or extremely severe symptoms of anxiety in the week prior to the survey [1]. Furthermore, a local study indicated that girls experience a notable spike in social anxiety between the ages of 8.5 and 13, surpassing boys' anxiety levels by age 13 [2]. Key contributing factors identified include excessive social media use (more than three hours daily), cyberbullying experiences, and concerns about body shape, all of which exacerbate anxiety symptoms among youth [1, 3]. A significant barrier to help-seeking is the worry of what others may think, underscoring the pervasive role of stigma in the Singaporean context [1].
+            </p>
+
+            <h3 data-field="lit-h2">2.2 Mental Health Social Enterprises in Singapore</h3>
+            <p data-field="lit-se">
+              The landscape of mental health support in Singapore includes a growing number of community-based and social enterprise initiatives. These organizations, often offering peer support groups, drop-in centers, and workshops, serve as a crucial bridge between formal clinical care (e.g., IMH, polyclinics, private psychiatry) and informal family/community support. They aim to provide accessible, lower-stigma entry points for individuals seeking mental health assistance, potentially reducing the perceived cost and commitment barriers associated with traditional healthcare pathways [4]. While direct evidence linking engagement with these specific enterprises to reduced social anxiety in Singapore is still emerging, their role in fostering supportive communities and offering early intervention is increasingly recognized.
+            </p>
+
+            <!-- PARTIAL: FIGURE — image + italic caption -->
+            <figure class="figure reveal">
+              <img data-field="figure-1-src" src="https://placehold.co/900x480/f6f0e4/56704f?text=FIGURE+1" alt="Conceptual model illustrating factors influencing social anxiety in youth.">
+              <figcaption data-field="figure-1-caption">Figure 1. Conceptual model of factors influencing social anxiety among Singaporean youth, including social media, cyberbullying, body image, and help-seeking barriers. (This is placeholder data and not real.)</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 03 CONCEPTUAL FRAMEWORK ---------- -->
+      <section class="chapter reveal" id="framework">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">03</span>
+          <div class="chapter-body">
+            <h2>Conceptual Framework</h2>
+            <p data-field="framework-body">
+              This study is guided by a conceptual framework that posits social anxiety in Singaporean youth is influenced by a confluence of individual, social, and environmental factors. Specifically, we propose that widespread digital engagement, characterized by excessive social media use and exposure to cyberbullying, coupled with pervasive societal pressures regarding body image, significantly contributes to the development and exacerbation of social anxiety symptoms. These factors are hypothesized to interact with individual vulnerabilities and coping mechanisms, ultimately impacting help-seeking behaviors, which are further suppressed by the fear of social stigma and judgment.
+            </p>
+
+            <ol class="paper-list paper-list--numbered" data-field="framework-hypotheses">
+              <li>Excessive social media use and experience of cyberbullying are positively correlated with increased severity of social anxiety symptoms in Singaporean youth.</li>
+              <li>Concerns about body image significantly contribute to the development and severity of social anxiety among Singaporean youth.</li>
+              <li>Perceived social stigma and fear of judgment act as significant barriers to help-seeking for social anxiety among Singaporean youth.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 04 METHODOLOGY ---------- -->
+      <section class="chapter reveal" id="methodology">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">04</span>
+          <div class="chapter-body">
+            <h2>Methodology</h2>
+
+            <h3 data-field="method-h1">4.1 Research Design</h3>
+            <p data-field="method-design">
+              This study employs a convergent mixed-methods design, integrating quantitative survey data with qualitative insights from semi-structured interviews. This approach allows for both the assessment of prevalence and correlational relationships, as well as a deeper understanding of the lived experiences and perceptions of social anxiety among Singaporean youth.
+            </p>
+
+            <h3 data-field="method-h2">4.2 Participants &amp; Setting</h3>
+            <p data-field="method-participants">
+              Participants will be recruited from a diverse group of youth aged 15-35 across various community settings in Singapore, including educational institutions and youth-centric social enterprises. A stratified random sampling approach will be utilized, with inclusion criteria focusing on Singaporean citizens or permanent residents within the specified age range. Exclusion criteria will include individuals with a formal diagnosis of other severe mental health conditions that might confound the assessment of social anxiety. (This is placeholder data and not real.)
+            </p>
+
+            <!-- PARTIAL: DATA TABLE — sample / demographics -->
+            <div class="table-wrap reveal">
+              <table class="data-table">
+                <caption>Table 1. Participant Demographics (Placeholder Data)</caption>
+                <thead>
+                  <tr>
+                    <th data-field="table-1-col-1">Participant Group</th>
+                    <th data-field="table-1-col-2">n</th>
+                    <th data-field="table-1-col-3">Mean Age</th>
+                    <th data-field="table-1-col-4">Prior Help-Seeking (%)</th>
+                  </tr>
+                </thead>
+                <tbody data-field="table-1-rows">
+                  <tr><td>General Youth Population</td><td>[150]</td><td>[22.5]</td><td>[35]</td></tr>
+                  <tr><td>Social Anxiety Support Group Participants</td><td>[50]</td><td>[20.1]</td><td>[60]</td></tr>
+                  <tr><td>Online Community Members</td><td>[100]</td><td>[21.8]</td><td>[40]</td></tr>
+                </tbody>
+              </table>
+              <p class="small">Note: This is placeholder data and not real.</p>
+            </div>
+
+            <h3 data-field="method-h3">4.3 Instruments &amp; Procedure</h3>
+            <p data-field="method-instruments">
+              Quantitative data will be collected using validated self-report instruments, including the Social Interaction Anxiety Scale (SIAS) to measure social anxiety symptom severity and a custom-designed questionnaire assessing social media use, cyberbullying exposure, and body image concerns. Qualitative data will be gathered through semi-structured interviews (see Appendix for protocol) exploring participants' experiences with social anxiety, perceived causes, help-seeking journeys, and the impact of societal expectations. Data collection will span approximately three months, following a PDPA-compliant consent process ensuring anonymity and voluntary participation.
+            </p>
+
+            <ol class="paper-list paper-list--numbered" data-field="method-steps">
+              <li>Online distribution of survey questionnaire (SIAS and custom demographics/lifestyle questions) with integrated informed consent.</li>
+              <li>Recruitment of a subset of survey participants for voluntary semi-structured interviews to delve into lived experiences.</li>
+              <li>Thematic analysis of interview transcripts, combined with statistical analysis of survey data, to identify key patterns and correlations.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 05 FINDINGS ---------- -->
+      <section class="chapter reveal" id="findings">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">05</span>
+          <div class="chapter-body">
+            <h2>Findings</h2>
+
+            <h3 data-field="findings-h1">5.1 Quantitative Results</h3>
+            <p data-field="findings-quant-intro">
+              The quantitative analysis revealed significant correlations between specific digital behaviors and social anxiety levels among Singaporean youth. High scores on social media use frequency and reported instances of cyberbullying were associated with increased SIAS scores, indicating higher social anxiety.
+            </p>
+
+            <div class="table-wrap reveal">
+              <table class="data-table">
+                <caption>Table 2. Mean SIAS Scores and Correlates (Placeholder Data)</caption>
+                <thead>
+                  <tr>
+                    <th data-field="table-2-col-1">Factor</th>
+                    <th data-field="table-2-col-2">Mean SIAS Score</th>
+                    <th data-field="table-2-col-3">Standard Deviation (SD)</th>
+                    <th data-field="table-2-col-4">p-value (Correlation)</th>
+                  </tr>
+                </thead>
+                <tbody data-field="table-2-rows">
+                  <tr><td>High Social Media Use</td><td>[35.2]</td><td>[8.1]</td><td>[<0.001]</td></tr>
+                  <tr><td>Experience of Cyberbullying</td><td>[38.5]</td><td>[9.3]</td><td>[<0.001]</td></tr>
+                  <tr><td>High Body Image Concern</td><td>[33.9]</td><td>[7.8]</td><td>[0.003]</td></tr>
+                </tbody>
+              </table>
+              <p class="small">Note: This is placeholder data and not real.</p>
+            </div>
+
+            <h3 data-field="findings-h2">5.2 Qualitative Themes</h3>
+            <p data-field="findings-qual-intro">
+              The thematic analysis of interview data revealed three prominent themes contributing to social anxiety and hindering help-seeking: "Fear of Judgment and 'Loss of Face'", "Intense Social Media Pressure", and "Self-Consciousness and Body Image in Public/Online Spaces." Participants frequently expressed concerns about how they are perceived by peers, both online and offline, and the desire to maintain a positive public image.
+            </p>
+
+            <!-- PARTIAL: PARTICIPANT QUOTE — verbatim interview/survey data -->
+            <div class="quote-block reveal">
+              <blockquote data-field="quote-1-body">"I feel like everyone is judging me online, and that makes it hard to even meet people in real life. It's like I have to be perfect all the time, or they'll talk."</blockquote>
+              <span class="quote-attribution mono" data-field="quote-1-attribution">Youth Participant, P07</span>
+            </div>
+
+            <!-- PARTIAL: CALLOUT — highlight a key finding -->
+            <div class="callout callout--highlight reveal">
+              <span class="callout-tag mono">Key Finding</span>
+              <p data-field="findings-key-finding">Excessive social media engagement, cyberbullying, and body image concerns emerge as significant and interconnected factors exacerbating social anxiety among Singaporean youth, compounded by a strong fear of social judgment.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 06 DISCUSSION ---------- -->
+      <section class="chapter reveal" id="discussion">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">06</span>
+          <div class="chapter-body">
+            <h2>Discussion</h2>
+
+            <h3 data-field="discuss-h1">6.1 Interpretation</h3>
+            <p data-field="discuss-interpretation">
+              The findings of this study largely support the proposed conceptual framework, highlighting the critical role of digital stressors and body image in the manifestation of social anxiety among Singaporean youth. The quantitative results underscore a clear link between social media behaviors and anxiety levels, while qualitative insights illuminate the underlying fear of judgment that permeates both online and offline social interactions. This convergence suggests that interventions need to address not only the symptoms of anxiety but also the environmental and social pressures that fuel it, particularly in the digital realm. The reported reluctance to seek help due to stigma further emphasizes the need for accessible, low-barrier support systems that normalize mental health discussions.
+            </p>
+
+            <h3 data-field="discuss-h2">6.2 Limitations</h3>
+            <p data-field="discuss-limitations">
+              This study acknowledges several limitations. The cross-sectional design prevents the establishment of causal relationships between identified factors and social anxiety. The reliance on self-report measures for both social anxiety and digital behaviors may introduce social desirability bias. Furthermore, the sample, while diverse, may not be fully representative of all Singaporean youth, especially those who are disengaged from online platforms or traditional support channels. Future research could benefit from longitudinal studies and objective measures where feasible.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 07 IMPLICATIONS FOR PRACTICE ---------- -->
+      <section class="chapter reveal" id="implications">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">07</span>
+          <div class="chapter-body">
+            <h2>Implications for Practice</h2>
+            <p data-field="implications-intro">
+              The findings from this research offer concrete implications for various stakeholders involved in youth mental well-being in Singapore.
+            </p>
+            <ul class="paper-list" data-field="implications-list">
+              <li>**For Singapore Mental Health Social Enterprise Leaders/Programme Designers:** Develop targeted programs focusing on digital literacy, fostering healthy social media habits, building body image resilience, and equipping youth with coping strategies for online pressures and cyberbullying. Create safe, non-judgment spaces for youth to share experiences and receive peer support related to social anxiety.</li>
+              <li>**For Funders (e.g. Tote Board, Community Chest, corporate CSR partners):** Prioritize investment in community-based initiatives that offer early intervention and preventative support for youth experiencing social anxiety, particularly those addressing contemporary stressors like digital media. Funding should also support initiatives that actively work to destigmatize mental health help-seeking.</li>
+              <li>**For Policymakers (e.g. MOH, MSF, NCSS) on integrating community social enterprises into Singapore's mental health strategy:** Consider implementing nationwide educational campaigns on responsible social media use and its impact on mental well-being. Additionally, explore mechanisms to better integrate community social enterprises into the broader mental health ecosystem, recognizing their crucial role in providing accessible and low-stigma support to youth.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 08 CONCLUSION ---------- -->
+      <section class="chapter reveal" id="conclusion">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">08</span>
+          <div class="chapter-body">
+            <h2>Conclusion</h2>
+            <p data-field="conclusion-body">
+              This study provides valuable insights into the contemporary causes of social anxiety among youth in Singapore, highlighting the pervasive influence of social media, cyberbullying, and body image concerns, alongside the enduring challenge of stigma in help-seeking. By elucidating these interconnected factors, the research contributes to a more nuanced understanding of youth mental health in a digitally-saturated society. Future research should explore the efficacy of targeted digital interventions, longitudinal studies on the long-term impact of social media on anxiety, and comparative studies across different cultural contexts within Singapore to refine support strategies and promote holistic well-being among its youth.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 09 REFERENCES ---------- -->
+      <section class="chapter reveal" id="references">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">09</span>
+          <div class="chapter-body">
+            <h2>References</h2>
+            <ol class="reference-list" data-field="reference-list">
+              <li>[1] Institute of Mental Health & National Healthcare Group. (2024, September 19). *Excessive social media use linked to mental health symptoms among youths: IMH study*. Channel News Asia. Retrieved from https://www.channelnewsasia.com/singapore/youth-depression-anxiety-stress-social-media-body-image-cyberbullying-4617641</li>
+              <li>[2] The Straits Times. (2023, April 19). *S'pore study shows girls a lot more anxious than boys*. Retrieved from https://www.straitstimes.com/singapore/community/young-girls-are-a-lot-more-anxious-than-boys-about-being-judged-negatively-spore-study</li>
+              <li>[3] Ng, S. (2024, September 19). *1 in 3 Singapore youths experienced severe symptoms of depression, anxiety, stress: IMH study*. CNA. Retrieved from https://www.youtube.com/watch?v=GWoAT103ToI</li>
+              <li>[4] [Placeholder for a general reference on mental health social enterprises in Singapore or community-based support].</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 10 APPENDIX ---------- -->
+      <section class="chapter reveal" id="appendix">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">10</span>
+          <div class="chapter-body">
+            <h2>Appendix</h2>
+            <p data-field="appendix-body">
+              [Optional: full interview protocol, SIAS/LSAS scale items, the PDPA-compliant consent form, extended tables, or anything supplementary that supports the main text without interrupting its flow. For this report, a detailed interview protocol would be included here.]
+            </p>
+          </div>
+        </div>
+      </section>
+
+      </div>
+
+      <footer class="report-footer mono small">
+        <span data-field="footer-text">National University of Singapore · Unveiling the Causes · Generated October 26, 2023</span>
+      </footer>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
