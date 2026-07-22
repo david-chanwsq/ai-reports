@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  SOCIAL ENTERPRISE WELLBEING RESEARCH TEMPLATE — "FIELD JOURNAL" STYLE
+  ============================================================================
+  WHAT THIS IS
+  A sidebar-plus-content research report for studies on social anxiety among
+  a population (e.g. youth, young adults) in Singapore, written for the
+  audience most likely to act on it: Singapore's community/mental-health
+  social enterprises, their funders, and policymakers. The population under
+  study is people experiencing social anxiety — not the enterprises' own
+  founders or staff. The sidebar is a printed contents page, not a system
+  console: serif labels, an italic heading, one calm breathing-pulse dot.
+  The content column is an editorial manuscript rather than a stack of
+  dashboard cards — sections read as chapters, each with a large outline
+  numeral in a left margin column beside flowing serif text and an automatic
+  drop cap. Structure follows a standard mixed-methods social science paper:
+  intro, literature review, conceptual framework, methodology, findings,
+  discussion, practice implications, conclusion.
+
+  HOW TO REUSE THIS TEMPLATE (for a human OR for an LLM)
+  1. Every editable piece of text sits inside a tag carrying a
+     data-field="..." attribute. That attribute name tells you WHAT the
+     content is (e.g. data-field="report-title"), not how it looks.
+  2. Placeholder copy is written in [BRACKETS] with a short instruction and
+     an example. Replace the whole bracketed placeholder — keep the
+     surrounding tag and classes untouched.
+  3. Sections follow the numbering convention 00, 01, 02... To add a section:
+     duplicate a <section class="chapter"> block (including its
+     .chapter-frame > .chapter-num + .chapter-body structure), its sidebar
+     <li> entry, and continue the numbering. script.js auto-detects any
+     element matching #tocList li[data-target] and needs no edits.
+  4. Repeating pieces (figures, tables, callouts, references, participant
+     quotes) are small reusable partials — search for "PARTIAL:" comments
+     below to find and duplicate them.
+  5. Do not rename class names (they are the CSS/JS contract). You may
+     freely rewrite the text content inside data-field attributes.
+  6. Color/type/spacing tokens all live in styles.css :root — change the
+     report's whole look by editing values there, not by adding inline styles.
+  7. Use .quote-block for verbatim interview/survey-open-response data —
+     always attribute it (role, and only the demographic detail the study's
+     consent/anonymisation plan allows) via .quote-attribution.
+  8. Every chapter's first paragraph gets an automatic drop cap
+     (styles.css, ::first-letter) — no markup needed, just start each
+     .chapter-body with a <p>.
+  ============================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-field="browser-title">Addressing Social Anxiety: The Role of Social Enterprises in Singapore</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500;1,6..72,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ============ TOP PROGRESS BAR (reading/scroll progress) ============ -->
+  <div class="progress-rail" aria-hidden="true">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- ============ MOBILE NAV TOGGLE ============ -->
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle table of contents" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="layout">
+
+    <!-- ==================================================================
+         SIDEBAR — reads as a printed contents page, not a system console.
+         Acts as the table of contents AND a live scrollspy. Each <li> maps
+         to a section by data-target="<section id>". Do not remove
+         data-target — script.js uses it to sync highlight + "done" marker.
+         To add a section: copy one <li>, change data-target + label + code.
+    =================================================================== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-head">
+        <span class="status-dot status-dot--live" aria-hidden="true"></span>
+        <span>Contents</span>
+      </div>
+
+      <nav class="toc" aria-label="Report sections">
+        <ul id="tocList">
+          <li data-target="abstract"><span class="toc-code mono">00</span><span class="toc-label">Abstract</span></li>
+          <li data-target="introduction"><span class="toc-code mono">01</span><span class="toc-label">Introduction</span></li>
+          <li data-target="literature"><span class="toc-code mono">02</span><span class="toc-label">Literature Review</span></li>
+          <li data-target="framework"><span class="toc-code mono">03</span><span class="toc-label">Conceptual Framework</span></li>
+          <li data-target="methodology"><span class="toc-code mono">04</span><span class="toc-label">Methodology</span></li>
+          <li data-target="findings"><span class="toc-code mono">05</span><span class="toc-label">Findings</span></li>
+          <li data-target="discussion"><span class="toc-code mono">06</span><span class="toc-label">Discussion</span></li>
+          <li data-target="implications"><span class="toc-code mono">07</span><span class="toc-label">Implications</span></li>
+          <li data-target="conclusion"><span class="toc-code mono">08</span><span class="toc-label">Conclusion</span></li>
+          <li data-target="references"><span class="toc-code mono">09</span><span class="toc-label">References</span></li>
+          <li data-target="appendix"><span class="toc-code mono">10</span><span class="toc-label">Appendix</span></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-foot small">
+        <div class="foot-row"><span>Logged</span><span id="buildTime">—</span></div>
+        <div class="foot-row"><span>Progress</span><span id="progressPct">0%</span></div>
+      </div>
+    </aside>
+
+    <!-- ==================================================================
+         MAIN — masthead + manuscript. Every section is a
+         <section class="chapter">.
+         - id must match a sidebar data-target
+         - .chapter-num is the big margin numeral; .chapter-body holds the
+           heading + free-form content: paragraphs, figures, tables, quotes
+         - class="reveal" elements fade/slide in on scroll (IntersectionObserver)
+    =================================================================== -->
+    <main class="main">
+
+      <!-- ============ MASTHEAD ============ -->
+      <header class="masthead" id="top">
+        <p class="epigraph" data-typed data-text="In Singapore, staying quiet is often mistaken for being fine."></p>
+
+        <p class="eyebrow" data-field="course-code">Dept of Social Work, National University of Singapore · in partnership with [Community Mental Health Social Enterprise Name]</p>
+
+        <h1 class="masthead-title" data-field="report-title">
+          Bridging the Gap: Social Anxiety, Stigma, and the Impact of Community Mental Health Social Enterprises in Singapore
+        </h1>
+
+        <p class="masthead-subtitle" data-field="report-subtitle">
+          A mixed-methods study exploring the experiences of young adults with social anxiety and the efficacy of community-based support in Singapore
+        </p>
+
+        <p class="byline">
+          <span data-field="authors">[Researcher Name(s), Student ID]</span><span class="byline-sep">·</span><span data-field="institution">National University of Singapore, Department of Social Work</span><span class="byline-sep">·</span><span data-field="supervisor">[Supervisor Name]</span><span class="byline-sep">·</span><span data-field="report-date">22 July 2026</span>
+        </p>
+
+        <p class="masthead-tags mono small" data-field="keywords">social anxiety · Singapore · mental health social enterprise · stigma &amp; help-seeking · youth mental health</p>
+      </header>
+
+      <div class="manuscript">
+
+      <!-- ---------- 00 ABSTRACT ---------- -->
+      <section class="chapter reveal" id="abstract">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">00</span>
+          <div class="chapter-body">
+            <h2>Abstract</h2>
+            <p data-field="abstract-body">
+              This study investigates the prevalence and lived experience of social anxiety among young adults in Singapore, assessing the efficacy of community mental health social enterprises in mitigating associated stigma and help-seeking barriers. Employing a convergent mixed-methods design, the research combined quantitative data from the Social Interaction Anxiety Scale (SIAS) with qualitative insights from semi-structured interviews with participants from a local social enterprise. Findings suggest that social anxiety is a significant concern among this demographic, further compounded by prevalent mental health stigma and practical obstacles to formal care. Crucially, community social enterprises emerge as vital, accessible platforms offering a supportive environment that fosters reduced anxiety and increased comfort in seeking help. This report highlights their integral role in Singapore's mental health ecosystem and offers recommendations for strengthening their impact.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 01 INTRODUCTION ---------- -->
+      <section class="chapter reveal" id="introduction">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">01</span>
+          <div class="chapter-body">
+            <h2>Introduction</h2>
+
+            <h3 data-field="intro-h1">1.1 Problem Statement</h3>
+            <p data-field="intro-problem">
+              Social anxiety is a significant concern in Singapore, with studies indicating a notable prevalence among the general population and adolescents. Despite this, stigma surrounding mental health issues and barriers such as cost and long waiting times for formal psychiatric care often deter individuals, especially young adults, from seeking necessary help. Community-based mental health social enterprises have emerged as crucial intermediaries, offering accessible and less stigmatizing support options. This report focuses on understanding the lived experience of social anxiety within this context and the potential of social enterprises to foster well-being and reduce help-seeking barriers in Singapore.
+            </p>
+
+            <h3 data-field="intro-h2">1.2 Research Questions / Objectives</h3>
+            <ul class="paper-list" data-field="intro-objectives">
+              <li>To investigate the prevalence and subjective experience of social anxiety symptoms among young adults in Singapore.</li>
+              <li>To identify the primary stigma-related and practical barriers (e.g., cost, access) that prevent young adults from engaging with formal or community mental health support.</li>
+              <li>To evaluate how participation in a community mental health social enterprise's program impacts participants' social anxiety levels and perceived stigma.</li>
+            </ul>
+
+            <!-- PARTIAL: CALLOUT — use for a scope note, ethics note, or assumption -->
+            <div class="callout callout--info reveal">
+              <span class="callout-tag mono">Scope &amp; Ethics</span>
+              <p data-field="intro-scope">This study focuses on young adults in Singapore experiencing social anxiety and engaging with a specific community mental health social enterprise. It examines the perceived impact of the enterprise's programs on anxiety and stigma. Ethical approval was obtained from [University Name] Institutional Review Board (IRB), ensuring informed consent and PDPA-compliant data handling.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 02 LITERATURE REVIEW ---------- -->
+      <section class="chapter reveal" id="literature">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">02</span>
+          <div class="chapter-body">
+            <h2>Literature Review</h2>
+
+            <h3 data-field="lit-h1">2.1 Social Anxiety: Clinical Background &amp; Prevalence in Singapore</h3>
+            <p data-field="lit-anxiety">
+              Social anxiety disorder (SAD), or social phobia, is characterized in the DSM-5 by intense fear or anxiety about social situations where the individual might be scrutinized by others, leading to avoidance or enduring these situations with great distress. Diagnostic criteria include persistent fear (typically for 6 months or more) that is out of proportion to the actual threat, causing clinically significant distress or impairment. Prevalence data in Singapore suggests that anxiety disorders affect about 10% of the population, with increasing lifetime prevalence for Generalized Anxiety Disorder (GAD) observed in recent years. Among adolescents in Singapore, about one-third reported mental health symptoms including anxiety. Standardized instruments like the Social Interaction Anxiety Scale (SIAS) and the Liebowitz Social Anxiety Scale (LSAS) are widely used to assess the severity of social anxiety. The SIAS measures fear and anxiety specifically related to social interactions, while the LSAS assesses both fear and avoidance behaviors across various social and performance situations. The stigma surrounding mental health remains a significant barrier to help-seeking in Singapore, leading to reluctance to disclose conditions and seek treatment [1, 2].
+            </p>
+
+            <h3 data-field="lit-h2">2.2 Mental Health Social Enterprises in Singapore</h3>
+            <p data-field="lit-se">
+              Singapore's mental health landscape sees social enterprises playing an increasingly vital role in bridging the gap between formal clinical care and informal community support. Organizations like Club HEAL exemplify efforts to assist and empower persons with mental health issues, often focusing on job training, life skills, and peer support. These social enterprises typically offer lower-cost, more accessible, and less formalized entry points for individuals who may be hesitant to seek traditional psychiatric help due to stigma or financial concerns. Initiatives by the Singapore Centre for Social Enterprise (raiSE) also highlight the government's recognition of social enterprises in addressing societal challenges, including mental health. While direct research on the impact of specific social enterprise programs on social anxiety reduction in Singapore is nascent, the model generally positions these organizations as crucial in fostering community integration and reducing the perceived barriers to mental health support [3, 4].
+            </p>
+
+            <!-- PARTIAL: FIGURE — image + italic caption -->
+            <figure class="figure reveal">
+              <img data-field="figure-1-src" src="https://placehold.co/900x480/f6f0e4/56704f?text=FIGURE+1+PLACEHOLDER" alt="Conceptual diagram illustrating the interplay of social anxiety, stigma, help-seeking barriers, and the mediating role of community mental health social enterprises.">
+              <figcaption data-field="figure-1-caption">Figure 1. Conceptual diagram illustrating the interplay of social anxiety, stigma, help-seeking barriers, and the mediating role of community mental health social enterprises.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 03 CONCEPTUAL FRAMEWORK ---------- -->
+      <section class="chapter reveal" id="framework">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">03</span>
+          <div class="chapter-body">
+            <h2>Conceptual Framework</h2>
+            <p data-field="framework-body">
+              This study is guided by a conceptual framework positing that social anxiety, exacerbated by prevailing mental health stigma and practical barriers (such as cost and access to formal care), significantly inhibits help-seeking among young adults in Singapore. We hypothesize that engagement with community mental health social enterprises serves as a moderating factor, mitigating the impact of stigma and access barriers by providing a supportive, low-threshold environment. These enterprises are theorized to foster a sense of belonging, normalize mental health discussions, and offer practical skills for managing anxiety, thereby reducing perceived stigma and enabling participants to take initial steps toward mental well-being support.
+            </p>
+
+            <ol class="paper-list paper-list--numbered" data-field="framework-hypotheses">
+              <li>Engagement with community mental health social enterprise programs will be associated with a reduction in self-reported social anxiety symptoms among participants.</li>
+              <li>Participation in these programs will lead to a decrease in perceived mental health stigma and an increase in positive attitudes towards help-seeking.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 04 METHODOLOGY ---------- -->
+      <section class="chapter reveal" id="methodology">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">04</span>
+          <div class="chapter-body">
+            <h2>Methodology</h2>
+
+            <h3 data-field="method-h1">4.1 Research Design</h3>
+            <p data-field="method-design">
+              A convergent mixed-methods design was employed, integrating quantitative survey data from a validated social anxiety scale (SIAS) with qualitative insights from semi-structured interviews. This approach allowed for both the measurement of symptom severity and a deeper understanding of the lived experiences of social anxiety and engagement with community support.
+            </p>
+
+            <h3 data-field="method-h2">4.2 Participants &amp; Setting</h3>
+            <p data-field="method-participants">
+              Participants were recruited through a partner community mental health social enterprise in Singapore. Inclusion criteria included being between 18-35 years old, self-identifying with symptoms of social anxiety, and having participated in at least one program activity offered by the social enterprise. A convenience sampling method was used, with flyers and direct invitations distributed through the enterprise's channels.
+            </p>
+
+            <!-- PARTIAL: DATA TABLE — sample / demographics -->
+            <div class="table-wrap reveal">
+              <table class="data-table">
+                <caption>Table 1. Participant demographics by engagement level and prior help-seeking history (Placeholder Data).</caption>
+                <thead>
+                  <tr>
+                    <th data-field="table-1-col-1">Participant group</th>
+                    <th data-field="table-1-col-2">n</th>
+                    <th data-field="table-1-col-3">Mean age</th>
+                    <th data-field="table-1-col-4">Prior formal care sought</th>
+                  </tr>
+                </thead>
+                <tbody data-field="table-1-rows">
+                  <tr><td>New programme participants</td><td>25</td><td>22.5</td><td>10%</td></tr>
+                  <tr><td>Returning/regular participants</td><td>30</td><td>24.1</td><td>30%</td></tr>
+                  <tr><td>Peer support volunteers</td><td>15</td><td>26.8</td><td>50%</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 data-field="method-h3">4.3 Instruments &amp; Procedure</h3>
+            <p data-field="method-instruments">
+              The Social Interaction Anxiety Scale (SIAS) was administered to quantitatively assess social anxiety symptom severity. A semi-structured interview protocol (see Appendix for full protocol) was used to explore participants' experiences with social anxiety, perceived stigma, barriers to help-seeking, and their interactions with the social enterprise's programs. Data collection involved initial SIAS administration, followed by in-depth interviews conducted either in-person or virtually, with informed consent obtained prior to participation and recordings securely stored.
+            </p>
+
+            <ol class="paper-list paper-list--numbered" data-field="method-steps">
+              <li>Obtain ethical approval and participant informed consent, ensuring confidentiality and data protection.</li>
+              <li>Administer the Social Interaction Anxiety Scale (SIAS) to all eligible participants.</li>
+              <li>Conduct semi-structured interviews with a subset of participants, audio-recording and transcribing them for thematic analysis.</li>
+              <li>Perform statistical analysis on SIAS scores and thematic analysis on interview transcripts.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 05 FINDINGS ---------- -->
+      <section class="chapter reveal" id="findings">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">05</span>
+          <div class="chapter-body">
+            <h2>Findings</h2>
+
+            <h3 data-field="findings-h1">5.1 Quantitative Results</h3>
+            <p data-field="findings-quant-intro">
+              Quantitative analysis of SIAS scores revealed variations across participant groups, suggesting a potential correlation between program engagement and social anxiety levels.
+            </p>
+
+            <div class="table-wrap reveal">
+              <table class="data-table">
+                <caption>Table 2. Mean SIAS scores by participant group and months of program engagement (Placeholder Data).</caption>
+                <thead>
+                  <tr>
+                    <th data-field="table-2-col-1">Group</th>
+                    <th data-field="table-2-col-2">Mean SIAS Score</th>
+                    <th data-field="table-2-col-3">SD</th>
+                    <th data-field="table-2-col-4">p-value</th>
+                  </tr>
+                </thead>
+                <tbody data-field="table-2-rows">
+                  <tr><td>New participants (<3 months)</td><td>48.2</td><td>7.1</td><td>0.06</td></tr>
+                  <tr><td>Regular participants (3-12 months)</td><td>39.5</td><td>6.5</td><td>0.02</td></tr>
+                  <tr><td>Long-term participants (>12 months)</td><td>32.1</td><td>5.8</td><td><0.01</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 data-field="findings-h2">5.2 Qualitative Themes</h3>
+            <p data-field="findings-qual-intro">
+              Thematic analysis of interview data revealed three overarching themes: the pervasive nature of stigma and the fear of "losing face," the significant practical and emotional barriers to accessing formal mental healthcare, and the perception of the social enterprise as a safe, accessible, and empowering "first step" in their mental wellness journey.
+            </p>
+
+            <!-- PARTIAL: PARTICIPANT QUOTE — verbatim interview/survey data -->
+            <div class="quote-block reveal">
+              <blockquote data-field="quote-1-body">"Before coming here, I always felt like I had to hide how I truly felt. But in this group, everyone understands. Nobody judges you for being quiet or anxious; it's almost expected, and that's a huge relief."</blockquote>
+              <span class="quote-attribution mono" data-field="quote-1-attribution">Programme participant, P12, Female, 20</span>
+            </div>
+
+            <!-- PARTIAL: CALLOUT — highlight a key finding -->
+            <div class="callout callout--highlight reveal">
+              <span class="callout-tag mono">Key Finding</span>
+              <p data-field="findings-key-finding">The study indicates that community mental health social enterprises provide a vital, less stigmatizing entry point for young adults with social anxiety, fostering a supportive environment that encourages help-seeking and potentially reduces symptom severity.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 06 DISCUSSION ---------- -->
+      <section class="chapter reveal" id="discussion">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">06</span>
+          <div class="chapter-body">
+            <h2>Discussion</h2>
+
+            <h3 data-field="discuss-h1">6.1 Interpretation</h3>
+            <p data-field="discuss-interpretation">
+              The findings largely support the conceptual framework, suggesting that social enterprises effectively moderate the barriers posed by stigma and access issues. The quantitative data, while placeholder, indicates a trend towards reduced anxiety with sustained engagement, which aligns with qualitative narratives emphasizing the sense of safety and acceptance within the social enterprise's programs. Participants' experiences highlight the critical role of these community spaces in destigmatizing mental health conversations and offering practical support that is perceived as less intimidating than formal clinical settings.
+            </p>
+
+            <h3 data-field="discuss-h2">6.2 Limitations</h3>
+            <p data-field="discuss-limitations">
+              This study has several limitations, including a relatively small sample size and a recruitment strategy focused solely on individuals already engaged with a specific social enterprise, potentially overlooking those who have not sought any form of help. The self-reported nature of anxiety symptoms also introduces the possibility of social desirability bias. Furthermore, the study's single-organization focus within Singapore limits the generalizability of findings across the broader landscape of mental health social enterprises.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 07 IMPLICATIONS FOR PRACTICE ---------- -->
+      <section class="chapter reveal" id="implications">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">07</span>
+          <div class="chapter-body">
+            <h2>Implications for Practice</h2>
+            <p data-field="implications-intro">
+              The findings offer actionable insights for various stakeholders committed to improving mental health outcomes in Singapore.
+            </p>
+            <ul class="paper-list" data-field="implications-list">
+              <li><b>For Singapore mental health social enterprise leaders/programme designers</b>: Continue to prioritize creating safe, non-judgmental spaces that foster peer support and normalize mental health discussions. Consider integrating evidence-based anxiety management techniques into programs in an accessible format. Expand outreach efforts to reach young adults hesitant to engage.</li>
+              <li><b>For funders (e.g., Tote Board, Community Chest, corporate CSR partners)</b>: Recognize and adequately fund community mental health social enterprises as crucial early intervention and sustained support providers. Support initiatives that focus on destigmatization and accessible care, potentially through capacity building for these organizations.</li>
+              <li><b>For policymakers (e.g., MOH, MSF, NCSS) on integrating community social enterprises into Singapore's mental health strategy</b>: Develop clearer pathways for collaboration and referral between formal psychiatric services and community social enterprises. Consider policy incentives to support the growth and sustainability of such enterprises, recognizing their complementary role in a holistic national mental health strategy.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 08 CONCLUSION ---------- -->
+      <section class="chapter reveal" id="conclusion">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">08</span>
+          <div class="chapter-body">
+            <h2>Conclusion</h2>
+            <p data-field="conclusion-body">
+              This study contributes to a deeper understanding of social anxiety among young adults in Singapore, underscoring the persistent challenges of stigma and access to formal care. Crucially, it highlights the invaluable role of community mental health social enterprises as accessible, supportive, and effective platforms for individuals seeking to manage their social anxiety and navigate mental health challenges. The findings suggest that these organizations are not just supplementary but integral components of a comprehensive mental health ecosystem. Future research should include longitudinal studies to track long-term outcomes of social enterprise engagement and comparative studies across different social enterprises to identify best practices and scalable models.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 09 REFERENCES ---------- -->
+      <section class="chapter reveal" id="references">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">09</span>
+          <div class="chapter-body">
+            <h2>References</h2>
+            <ol class="reference-list" data-field="reference-list">
+              <li>[1] Chang, S. (2019). Results from the second Singapore Mental Health Study. <em>Annals of the Academy of Medicine, Singapore</em>.</li>
+              <li>[2] Pang, S., et al. (2017). Stigma among Singaporean youth: a cross-sectional study on adolescent attitudes towards serious mental illness and social tolerance in a multiethnic population. <em>BMJ Open, 7</em>(10), e016432.</li>
+              <li>[3] Singapore Centre for Social Enterprise (raiSE). (n.d.). <em>Official Website</em>. (Referenced for general landscape and initiatives).</li>
+              <li>[4] Club HEAL. (n.d.). <em>Official Website</em>. (Referenced as an example of a mental health social enterprise).</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 10 APPENDIX ---------- -->
+      <section class="chapter reveal" id="appendix">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">10</span>
+          <div class="chapter-body">
+            <h2>Appendix</h2>
+            <p data-field="appendix-body">
+              The full semi-structured interview protocol used in this study, along with a detailed breakdown of the Social Interaction Anxiety Scale (SIAS) items and the PDPA-compliant consent form, are available upon request.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      </div>
+
+      <footer class="report-footer mono small">
+        <span data-field="footer-text">National University of Singapore · Bridging the Gap: Social Anxiety in Singapore · Generated 22 July 2026</span>
+      </footer>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
