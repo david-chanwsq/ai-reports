@@ -1,0 +1,322 @@
+/* ============================================================================
+   SOCIAL ENTERPRISE WELLBEING RESEARCH TEMPLATE — STYLE SYSTEM
+   ============================================================================
+   Sidebar-plus-content, like a docs layout — but the sidebar reads as a
+   printed contents page (serif labels, an italic heading, a calm breathing
+   dot) rather than a system console, and the content column is an editorial
+   manuscript: no elevated cards, chapters carry a large outline numeral in a
+   left margin column, and body copy gets an automatic drop cap.
+
+   TOKEN SYSTEM (edit these to reskin the entire report)
+   - Page tones (always light and warm — no dark console) : --cream-* / --paper*
+   - The one dark accent — the sidebar and margin numerals lean on this : --moss-*
+   - Signal colors (links, highlights, active state, quote rule) : --sage / --clay
+   - Type roles : --font-display / --font-body / --font-mono
+     (display and body share one serif family here on purpose — headings are
+     just a larger/heavier cut of the same face, the way a printed journal
+     article reads, rather than a sans/serif split.)
+   ========================================================================= */
+
+:root {
+  /* -- page tones -- */
+  --cream-100: #f6f0e4;
+  --cream-200: #efe6d3;
+  --paper: #fffdf7;
+  --paper-line: #e4d9c0;
+  --ink-900: #2b271f;
+  --ink-muted: #7a7263;
+
+  /* -- the one dark accent (sidebar + margin numerals lean on this) -- */
+  --moss-900: #1e2a20;
+  --moss-line: #3a4d3e;
+  --moss-text: #eef2ea;
+  --moss-muted: #93a894;
+
+  /* -- signal colors -- */
+  --sage: #7c9473;
+  --sage-dim: #56704f;
+  --clay: #c97b4a;
+  --clay-dim: #a35f34;
+
+  /* -- type: one serif family carries both display and body -- */
+  --font-display: 'Newsreader', Georgia, serif;
+  --font-body: 'Newsreader', Georgia, serif;
+  --font-mono: 'Space Mono', 'SFMono-Regular', Consolas, monospace;
+
+  /* -- layout -- */
+  --sidebar-w: 260px;
+  --margin-col: 76px;
+  --content-max: 640px;
+}
+
+/* ---------------------------------- reset --------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--cream-100);
+  color: var(--ink-900);
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  background-image:
+    radial-gradient(ellipse 900px 500px at 10% -10%, rgba(124,148,115,0.10), transparent),
+    radial-gradient(ellipse 700px 500px at 95% 15%, rgba(201,123,74,0.07), transparent);
+}
+img { max-width: 100%; display: block; }
+.mono { font-family: var(--font-mono); }
+.small { font-size: 0.78rem; letter-spacing: 0.02em; }
+
+/* --------------------------- top progress rail ---------------------------- */
+.progress-rail {
+  position: fixed; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--cream-200); z-index: 95;
+}
+.progress-fill {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--sage), var(--clay));
+  box-shadow: 0 0 10px rgba(124,148,115,0.5);
+  transition: width 0.1s linear;
+}
+
+/* a slow, calm breathing pulse — used sparingly, once, as a "reading live" cue */
+.status-dot {
+  display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--sage); margin-right: 8px; vertical-align: middle;
+}
+.status-dot--live { animation: breathe 3.6s ease-in-out infinite; }
+@keyframes breathe {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(124,148,115,0.55); transform: scale(1); }
+  50% { box-shadow: 0 0 0 6px rgba(124,148,115,0); transform: scale(1.15); }
+}
+
+/* --------------------------------- layout --------------------------------- */
+.layout {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+/* --------------------------------- sidebar --------------------------------- */
+.sidebar {
+  position: sticky; top: 0; height: 100vh;
+  border-right: 1px solid var(--moss-line);
+  background: var(--moss-900);
+  padding: 30px 22px;
+  display: flex; flex-direction: column;
+  z-index: 80; color: var(--moss-text);
+}
+.sidebar-head {
+  display: flex; align-items: center; gap: 4px;
+  font-family: var(--font-display); font-style: italic; font-size: 1.05rem;
+  color: var(--moss-text);
+  padding-bottom: 20px; margin-bottom: 16px;
+  border-bottom: 1px solid var(--moss-line);
+}
+
+.toc { flex: 1; overflow-y: auto; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc li {
+  display: grid; grid-template-columns: 26px 1fr; align-items: baseline;
+  gap: 10px; padding: 9px 6px; border-radius: 4px;
+  cursor: pointer; color: var(--moss-muted);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.toc li:hover { background: var(--moss-line); color: var(--moss-text); }
+.toc-code { font-family: var(--font-mono); font-size: 0.7rem; color: var(--moss-muted); }
+.toc-label { font-family: var(--font-display); font-style: italic; font-size: 0.95rem; }
+.toc li.active {
+  background: var(--moss-line); color: var(--moss-text);
+  box-shadow: inset 2px 0 0 var(--sage);
+}
+.toc li.active .toc-code { color: var(--sage); }
+.toc li.done .toc-code { color: var(--clay); }
+
+.sidebar-foot {
+  border-top: 1px solid var(--moss-line);
+  padding-top: 14px; margin-top: 14px; color: var(--moss-muted);
+  font-family: var(--font-mono);
+}
+.foot-row { display: flex; justify-content: space-between; padding: 3px 0; }
+#progressPct { color: var(--sage); }
+
+/* mobile nav toggle (hidden on desktop) */
+.nav-toggle {
+  display: none; position: fixed; top: 14px; right: 14px; z-index: 100;
+  width: 42px; height: 42px; border-radius: 8px;
+  background: var(--moss-900); border: 1px solid var(--moss-line);
+  flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  cursor: pointer;
+}
+.nav-toggle span { width: 20px; height: 2px; background: var(--sage); }
+
+/* ------------------------------------ main ------------------------------------ */
+.main { min-width: 0; }
+
+/* ------------------------------------ masthead ------------------------------------ */
+.masthead {
+  max-width: var(--content-max); margin: 0 auto;
+  padding: 72px 24px 48px;
+}
+.epigraph {
+  font-family: var(--font-display); font-style: italic; font-weight: 400;
+  font-size: 1.2rem; color: var(--sage-dim); max-width: 46ch;
+  margin: 0 0 34px; min-height: 1.6em;
+}
+.epigraph::before { content: open-quote; }
+.epigraph::after { content: close-quote; }
+
+.eyebrow {
+  font-family: var(--font-mono); font-size: 0.78rem; color: var(--clay-dim);
+  text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 14px;
+}
+.masthead-title {
+  font-family: var(--font-display); font-weight: 500; font-style: normal;
+  font-size: clamp(2.1rem, 5vw, 3.4rem); line-height: 1.14;
+  margin: 0 0 18px; color: var(--ink-900);
+}
+.masthead-subtitle {
+  font-family: var(--font-display); font-style: italic; font-weight: 400;
+  font-size: 1.25rem; color: var(--ink-muted); max-width: 58ch;
+  margin: 0 0 30px;
+}
+.byline {
+  font-family: var(--font-mono); font-size: 0.82rem; color: var(--ink-muted);
+  letter-spacing: 0.02em; margin: 0 0 20px;
+  padding-top: 20px; border-top: 1px solid var(--paper-line);
+}
+.byline-sep { opacity: 0.5; margin: 0 10px; }
+.masthead-tags {
+  color: var(--ink-muted);
+}
+
+/* --------------------------------- manuscript --------------------------------- */
+.manuscript {
+  max-width: var(--content-max); margin: 0 auto;
+  padding: 8px 24px 40px;
+}
+
+.chapter { padding-top: 60px; border-top: 1px solid var(--paper-line); }
+.chapter:first-child { border-top: none; }
+
+.chapter-frame {
+  display: grid;
+  grid-template-columns: var(--margin-col) minmax(0, 1fr);
+  gap: 24px;
+}
+.chapter-num {
+  font-family: var(--font-display); font-weight: 300; font-size: 3rem;
+  color: var(--sage); opacity: 0.4; line-height: 1;
+}
+.chapter-body h2 {
+  font-family: var(--font-display); font-weight: 500; font-size: 1.65rem;
+  margin: 6px 0 22px; color: var(--ink-900);
+}
+.chapter-body h3 {
+  font-family: var(--font-display); font-weight: 600; font-size: 1.08rem;
+  font-style: italic; margin: 28px 0 10px; color: var(--ink-900);
+}
+.chapter-body h3:first-of-type { margin-top: 0; }
+.chapter-body p { margin: 0 0 16px; }
+
+/* editorial drop cap on the first paragraph of every chapter — no extra markup */
+.chapter-body > p:first-of-type::first-letter {
+  font-family: var(--font-display); font-weight: 600; font-style: italic;
+  font-size: 3.1rem; line-height: 0.75; color: var(--clay-dim);
+  float: left; padding: 6px 8px 0 0;
+}
+
+.paper-list { margin: 0 0 16px; padding-left: 22px; }
+.paper-list li { margin-bottom: 8px; }
+
+/* ------------------------------------ callouts ------------------------------------ */
+/* A ruled note, not a rounded/tinted UI card — sits between two hairlines. */
+.callout {
+  border-top: 1px solid var(--paper-line); border-bottom: 1px solid var(--paper-line);
+  padding: 16px 0; margin: 26px 0;
+}
+.callout-tag {
+  display: block; font-family: var(--font-mono); font-size: 0.72rem;
+  color: var(--sage-dim); text-transform: uppercase; letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+.callout--highlight .callout-tag { color: var(--clay-dim); }
+.callout p { margin: 0; font-style: italic; }
+
+/* -------------------------------------- figure -------------------------------------- */
+.figure { margin: 28px 0; }
+.figure img { border-radius: 4px; }
+figcaption {
+  margin-top: 10px; color: var(--ink-muted); font-style: italic; font-size: 0.9rem;
+}
+
+/* --------------------------------- participant quote --------------------------------- */
+/* An indented editorial pull-quote for verbatim interview/field data — the
+   qualitative-research analogue of a code block in a tech report. */
+.quote-block {
+  margin: 28px 0; padding-left: 26px; border-left: 3px solid var(--clay);
+}
+.quote-block blockquote {
+  margin: 0; font-family: var(--font-display); font-style: italic;
+  font-size: 1.18rem; line-height: 1.55; color: var(--ink-900);
+}
+.quote-attribution {
+  display: block; margin-top: 10px; font-family: var(--font-mono);
+  font-size: 0.76rem; color: var(--ink-muted); text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.quote-attribution::before { content: "— "; }
+
+/* ------------------------------------- table ------------------------------------- */
+.table-wrap { overflow-x: auto; margin: 24px 0; }
+.data-table { width: 100%; border-collapse: collapse; font-size: 0.94rem; }
+.data-table caption {
+  text-align: left; font-style: italic; color: var(--ink-muted); margin-bottom: 10px;
+}
+.data-table th, .data-table td {
+  text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--paper-line);
+}
+.data-table th {
+  font-family: var(--font-mono); font-size: 0.74rem; text-transform: uppercase;
+  color: var(--ink-muted); border-bottom: 2px solid var(--moss-900);
+}
+.data-table tbody tr:hover { background: rgba(124,148,115,0.07); }
+
+/* --------------------------------- reference list --------------------------------- */
+.reference-list { padding-left: 20px; margin: 0; }
+.reference-list li { margin-bottom: 10px; padding-left: 4px; }
+
+/* ------------------------------------ footer ------------------------------------ */
+.report-footer {
+  max-width: var(--content-max); margin: 60px auto 0; padding: 24px 24px 0;
+  border-top: 1px solid var(--paper-line); color: var(--ink-muted); text-align: center;
+}
+
+/* --------------------------------- scroll reveal --------------------------------- */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .status-dot--live { animation: none; }
+}
+
+/* ------------------------------------ responsive ------------------------------------ */
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar {
+    position: fixed; left: 0; top: 0; width: 260px;
+    transform: translateX(-100%); transition: transform 0.25s ease;
+    box-shadow: 20px 0 40px rgba(0,0,0,0.25);
+  }
+  .sidebar.open { transform: translateX(0); }
+  .nav-toggle { display: flex; }
+}
+
+@media (max-width: 640px) {
+  .chapter-frame { grid-template-columns: 1fr; gap: 6px; }
+  .chapter-num { font-size: 1.6rem; opacity: 0.55; }
+  .masthead { padding: 56px 18px 36px; }
+  .manuscript { padding: 8px 18px 32px; }
+}
