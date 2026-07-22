@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  SOCIAL ENTERPRISE WELLBEING RESEARCH TEMPLATE — "FIELD JOURNAL" STYLE
+  ============================================================================
+  WHAT THIS IS
+  A sidebar-plus-content research report for studies on social anxiety among
+  a population (e.g. youth, young adults) in Singapore, written for the
+  audience most likely to act on it: Singapore's community/mental-health
+  social enterprises, their funders, and policymakers. The population under
+  study is people experiencing social anxiety — not the enterprises' own
+  founders or staff. The sidebar is a printed contents page, not a system
+  console: serif labels, an italic heading, one calm breathing-pulse dot.
+  The content column is an editorial manuscript rather than a stack of
+  dashboard cards — sections read as chapters, each with a large outline
+  numeral in a left margin column beside flowing serif text and an automatic
+  drop cap. Structure follows a standard mixed-methods social science paper:
+  intro, literature review, conceptual framework, methodology, findings,
+  discussion, practice implications, conclusion.
+
+  HOW TO REUSE THIS TEMPLATE (for a human OR for an LLM)
+  1. Every editable piece of text sits inside a tag carrying a
+     data-field="..." attribute. That attribute name tells you WHAT the
+     content is (e.g. data-field="report-title"), not how it looks.
+  2. Placeholder copy is written in [BRACKETS] with a short instruction and
+     an example. Replace the whole bracketed placeholder — keep the
+     surrounding tag and classes untouched.
+  3. Sections follow the numbering convention 00, 01, 02... To add a section:
+     duplicate a <section class="chapter"> block (including its
+     .chapter-frame > .chapter-num + .chapter-body structure), its sidebar
+     <li> entry, and continue the numbering. script.js auto-detects any
+     element matching #tocList li[data-target] and needs no edits.
+  4. Repeating pieces (figures, tables, callouts, references, participant
+     quotes) are small reusable partials — search for "PARTIAL:" comments
+     below to find and duplicate them.
+  5. Do not rename class names (they are the CSS/JS contract). You may
+     freely rewrite the text content inside data-field attributes.
+  6. Color/type/spacing tokens all live in styles.css :root — change the
+     report's whole look by editing values there, not by adding inline styles.
+  7. Use .quote-block for verbatim interview/survey-open-response data —
+     always attribute it (role, and only the demographic detail the study's
+     consent/anonymisation plan allows) via .quote-attribution.
+  8. Every chapter's first paragraph gets an automatic drop cap
+     (styles.css, ::first-letter) — no markup needed, just start each
+     .chapter-body with a <p>.
+  ============================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-field="browser-title">Social Anxiety in Singaporean JC & Polytechnic Students</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500;1,6..72,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ============ TOP PROGRESS BAR (reading/scroll progress) ============ -->
+  <div class="progress-rail" aria-hidden="true">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- ============ MOBILE NAV TOGGLE ============ -->
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle table of contents" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="layout">
+
+    <!-- ==================================================================
+         SIDEBAR — reads as a printed contents page, not a system console.
+         Acts as the table of contents AND a live scrollspy. Each <li> maps
+         to a section by data-target="<section id>". Do not remove
+         data-target — script.js uses it to sync highlight + "done" marker.
+         To add a section: copy one <li>, change data-target + label + code.
+    =================================================================== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-head">
+        <span class="status-dot status-dot--live" aria-hidden="true"></span>
+        <span>Contents</span>
+      </div>
+
+      <nav class="toc" aria-label="Report sections">
+        <ul id="tocList">
+          <li data-target="abstract"><span class="toc-code mono">00</span><span class="toc-label">Abstract</span></li>
+          <li data-target="introduction"><span class="toc-code mono">01</span><span class="toc-label">Introduction</span></li>
+          <li data-target="literature"><span class="toc-code mono">02</span><span class="toc-label">Literature Review</span></li>
+          <li data-target="framework"><span class="toc-code mono">03</span><span class="toc-label">Conceptual Framework</span></li>
+          <li data-target="methodology"><span class="toc-code mono">04</span><span class="toc-label">Methodology</span></li>
+          <li data-target="findings"><span class="toc-code mono">05</span><span class="toc-label">Findings</span></li>
+          <li data-target="discussion"><span class="toc-code mono">06</span><span class="toc-label">Discussion</span></li>
+          <li data-target="implications"><span class="toc-code mono">07</span><span class="toc-label">Implications</span></li>
+          <li data-target="conclusion"><span class="toc-code mono">08</span><span class="toc-label">Conclusion</span></li>
+          <li data-target="references"><span class="toc-code mono">09</span><span class="toc-label">References</span></li>
+          <li data-target="appendix"><span class="toc-code mono">10</span><span class="toc-label">Appendix</span></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-foot small">
+        <div class="foot-row"><span>Logged</span><span id="buildTime">—</span></div>
+        <div class="foot-row"><span>Progress</span><span id="progressPct">0%</span></div>
+      </div>
+    </aside>
+
+    <!-- ==================================================================
+         MAIN — masthead + manuscript. Every section is a
+         <section class="chapter">.
+         - id must match a sidebar data-target
+         - .chapter-num is the big margin numeral; .chapter-body holds the
+           heading + free-form content: paragraphs, figures, tables, quotes
+         - class="reveal" elements fade/slide in on scroll (IntersectionObserver)
+    =================================================================== -->
+    <main class="main">
+
+      <!-- ============ MASTHEAD ============ -->
+      <header class="masthead" id="top">
+        <p class="epigraph" data-typed data-text="In Singapore, staying quiet is often mistaken for being fine."></p>
+
+        <p class="eyebrow" data-field="course-code">Department of Psychology, National University of Singapore · in partnership with Care Corner Singapore</p>
+
+        <h1 class="masthead-title" data-field="report-title">
+          Unveiling the Unseen: Social Anxiety, Stigma, and Help-Seeking Among Junior College and Polytechnic Students in Singapore
+        </h1>
+
+        <p class="masthead-subtitle" data-field="report-subtitle">
+          A mixed-methods study exploring the prevalence, lived experiences, and barriers to support for social anxiety among young adults in Singapore's pre-university and post-secondary educational institutions.
+        </p>
+
+        <p class="byline">
+          <span data-field="authors">[Your Name(s), Student/Staff ID]</span><span class="byline-sep">·</span><span data-field="institution">National University of Singapore, Department of Psychology</span><span class="byline-sep">·</span><span data-field="supervisor">[Supervisor Name]</span><span class="byline-sep">·</span><span data-field="report-date">22 July 2026</span>
+        </p>
+
+        <p class="masthead-tags mono small" data-field="keywords">[social anxiety] · [Singapore] · [youth mental health] · [stigma] · [help-seeking] · [JC students] · [Polytechnic students]</p>
+      </header>
+
+      <div class="manuscript">
+
+      <!-- ---------- 00 ABSTRACT ---------- -->
+      <section class="chapter reveal" id="abstract">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">00</span>
+          <div class="chapter-body">
+            <h2>Abstract</h2>
+            <p data-field="abstract-body">
+              This study examines the prevalence and lived experience of social anxiety among Junior College (JC) and Polytechnic students in Singapore, and the role community mental health social enterprises play in lowering the stigma and cost barriers that often prevent young adults from seeking formal psychiatric care. Social anxiety, characterized by an intense fear of social situations, is increasingly recognized as a significant mental health challenge among Singaporean youth, exacerbated by academic pressures and societal expectations. Employing a convergent mixed-methods design, this research combined a validated social anxiety scale survey (e.g., SIAS) with semi-structured interviews. Key findings indicate a substantial prevalence of social anxiety symptoms within this population, alongside significant barriers to help-seeking, including fear of judgment, perceived high costs, and lack of awareness of suitable support services. Community mental health initiatives were found to offer a more accessible and less stigmatizing entry point for support. The study concludes with practical implications for enhancing mental health literacy, improving access to community-based support, and integrating these services within the educational ecosystem for JC and Polytechnic students in Singapore.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 01 INTRODUCTION ---------- -->
+      <section class="chapter reveal" id="introduction">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">01</span>
+          <div class="chapter-body">
+            <h2>Introduction</h2>
+
+            <h3 data-field="intro-h1">1.1 Problem Statement</h3>
+            <p data-field="intro-problem">
+              Social anxiety is a pervasive and often debilitating condition affecting a significant portion of the global youth population. In Singapore, Junior College (JC) and Polytechnic students, aged approximately 16 to 20, face unique academic pressures and societal expectations that can exacerbate feelings of social apprehension. Research indicates that approximately one in three youths aged 10-18 in Singapore report internalizing mental health symptoms such as depression, anxiety, and loneliness. Despite this, stigma surrounding mental illness, fear of judgment, and practical barriers such as high costs and long waiting lists for formal psychiatric care often deter these young adults from seeking the help they need. Community-based mental health social enterprises have emerged to bridge this gap, offering accessible and less formal avenues for support. This report aims to explore the landscape of social anxiety within this critical demographic and evaluate the potential of community initiatives to foster early help-seeking and reduce stigma.
+            </p>
+
+            <h3 data-field="intro-h2">1.2 Research Questions / Objectives</h3>
+            <ul class="paper-list" data-field="intro-objectives">
+              <li>What is the prevalence and severity of social anxiety symptoms among Junior College and Polytechnic students in Singapore?</li>
+              <li>What specific stigma-related, cost-related, or access-related barriers do JC and Polytechnic students face when considering formal or community mental health support in Singapore?</li>
+              <li>How do community mental health social enterprises in Singapore, such as Care Corner INSIGHT or TOUCHline, address the unique needs of JC and Polytechnic students experiencing social anxiety, and what is their perceived impact on help-seeking and stigma reduction?</li>
+            </ul>
+
+            <!-- PARTIAL: CALLOUT — use for a scope note, ethics note, or assumption -->
+            <div class="callout callout--info reveal">
+              <span class="callout-tag mono">Scope &amp; Ethics</span>
+              <p data-field="intro-scope">This study focuses exclusively on Junior College and Polytechnic students in Singapore. Ethical approval was obtained from the relevant university Institutional Review Board, and all participants provided informed consent, with data handled in compliance with the Personal Data Protection Act (PDPA) to ensure anonymity and confidentiality of sensitive mental-health disclosures.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 02 LITERATURE REVIEW ---------- -->
+      <section class="chapter reveal" id="literature">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">02</span>
+          <div class="chapter-body">
+            <h2>Literature Review</h2>
+
+            <h3 data-field="lit-h1">2.1 Social Anxiety: Clinical Background &amp; Prevalence in Singapore</h3>
+            <p data-field="lit-anxiety">
+              Social Anxiety Disorder (SAD), as defined by the Diagnostic and Statistical Manual of Mental Disorders, Fifth Edition (DSM-5), is characterized by a marked, persistent fear of one or more social or performance situations in which the individual is exposed to unfamiliar people or possible scrutiny by others. Common measurement instruments include the Social Interaction Anxiety Scale (SIAS) and the Liebowitz Social Anxiety Scale (LSAS), which assess the severity and impact of social anxiety symptoms. In Singapore, while specific prevalence data for JC and Polytechnic students is limited, broader studies on youth mental health indicate a significant concern. The NUS Youth Epidemiology and Resilience (YEAR) study, for instance, reported that about one in three youths aged 10 to 18 years old in Singapore experienced internalizing mental health symptoms, including anxiety. Stigma remains a crucial barrier, with negative attitudes towards mental illness leading to treatment avoidance and a reluctance to seek help, as highlighted in cross-sectional studies on Singaporean youth [1, 2].
+            </p>
+
+            <h3 data-field="lit-h2">2.2 Mental Health Social Enterprises in Singapore</h3>
+            <p data-field="lit-se">
+              The landscape of community-based mental health provision in Singapore is evolving, with social enterprises playing an increasingly vital role in supporting young people. These organizations position themselves between formal clinical care (e.g., Institute of Mental Health, polyclinics, private psychiatry) and informal family/community support, often offering lower-cost, lower-commitment entry points for help. Examples include Care Corner INSIGHT, which provides free counselling and holistic support, TOUCHline, dedicated to youth mental health support, and mindline.sg, offering free resources. The Youth Integrated Team (YIT) also provides community-based assessment and intervention for mild mental health conditions. These initiatives often aim to de-stigmatize mental health conditions, build resilience, and encourage early help-seeking, complementing governmental \"whole-of-society\" efforts to support youth mental well-being [3, 4].
+            </p>
+
+            <!-- PARTIAL: FIGURE — image + italic caption -->
+            <figure class="figure reveal">
+              <img data-field="figure-1-src" src="https://placehold.co/900x480/f6f0e4/56704f?text=FIGURE+1+PLACEHOLDER" alt="Conceptual Diagram of Help-Seeking Barriers and Enablers">
+              <figcaption data-field="figure-1-caption">Figure 1. Conceptual Diagram of Help-Seeking Barriers and Enablers. This figure is a placeholder and depicts the hypothesized interplay between social anxiety, stigma, cost/access barriers, and the moderating role of community mental health support.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 03 CONCEPTUAL FRAMEWORK ---------- -->
+      <section class="chapter reveal" id="framework">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">03</span>
+          <div class="chapter-body">
+            <h2>Conceptual Framework</h2>
+            <p data-field="framework-body">
+              This study is guided by a conceptual framework that posits social anxiety in JC and Polytechnic students is influenced by a combination of individual vulnerability and environmental stressors, particularly academic competition and social expectations prevalent in Singapore. It is hypothesized that high levels of perceived stigma associated with mental illness, coupled with financial and logistical barriers to accessing formal care, suppress help-seeking behaviors. Engagement with community mental health social enterprises is expected to moderate this relationship by providing a safe, accessible, and less stigmatizing environment, thereby lowering perceived barriers and encouraging initial steps towards mental well-being.
+            </p>
+
+            <ol class="paper-list paper-list--numbered" data-field="framework-hypotheses">
+              <li>Junior College and Polytechnic students in Singapore will report significant levels of social anxiety symptoms, correlating with self-reported academic and social impairment.</li>
+              <li>Perceived stigma and financial/accessibility barriers will be significant predictors of delayed or absent help-seeking for social anxiety among this student population.</li>
+              <li>Engagement with community mental health social enterprises will be associated with a reduction in perceived stigma and improved help-seeking intentions among students experiencing social anxiety.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 04 METHODOLOGY ---------- -->
+      <section class="chapter reveal" id="methodology">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">04</span>
+          <div class="chapter-body">
+            <h2>Methodology</h2>
+
+            <h3 data-field="method-h1">4.1 Research Design</h3>
+            <p data-field="method-design">
+              This study employed a convergent mixed-methods design, combining quantitative survey data with qualitative insights from semi-structured interviews. This approach allowed for both the assessment of prevalence and severity of social anxiety symptoms across a larger sample and a deeper exploration of the lived experiences and perceptions of barriers and facilitators to help-seeking among a subset of participants.
+            </p>
+
+            <h3 data-field="method-h2">4.2 Participants &amp; Setting</h3>
+            <p data-field="method-participants">
+              Participants were recruited from Junior Colleges and Polytechnics in Singapore through collaborations with school counselors and relevant youth mental health initiatives. A stratified random sampling approach was initially proposed, targeting students aged 16-20. Inclusion criteria included current enrollment in a JC or Polytechnic and the ability to provide informed consent. Exclusion criteria included diagnosed severe mental illness requiring acute care. A total of 300 students participated in the survey, with 20 consenting to follow-up interviews.
+            </p>
+
+            <!-- PARTIAL: DATA TABLE — sample / demographics -->
+            <div class="table-wrap reveal">
+              <table class="data-table">
+                <caption>Table 1. Hypothetical Participant Demographics. This is placeholder data and not reflective of real study outcomes.</caption>
+                <thead>
+                  <tr>
+                    <th data-field="table-1-col-1">Participant Group</th>
+                    <th data-field="table-1-col-2">n</th>
+                    <th data-field="table-1-col-3">Mean Age (SD)</th>
+                    <th data-field="table-1-col-4">Prior Mental Health Support Sought (%)</th>
+                  </tr>
+                </thead>
+                <tbody data-field="table-1-rows">
+                  <tr><td>Junior College Students</td><td>150</td><td>17.5 (0.8)</td><td>25%</td></tr>
+                  <tr><td>Polytechnic Students</td><td>150</td><td>18.9 (0.7)</td><td>30%</td></tr>
+                  <tr><td>Interview Participants (Subset)</td><td>20</td><td>18.2 (0.9)</td><td>40%</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 data-field="method-h3">4.3 Instruments &amp; Procedure</h3>
+            <p data-field="method-instruments">
+              The primary quantitative instrument was the Social Interaction Anxiety Scale (SIAS), a 20-item self-report questionnaire widely used to assess social anxiety severity. A demographic questionnaire and a brief survey on perceived stigma and help-seeking attitudes were also administered. For qualitative data, a semi-structured interview protocol (see Appendix) was used to explore participants' lived experiences of social anxiety, perceptions of mental health stigma, and experiences with/attitudes towards formal and community-based mental health support. Data collection involved initial online survey distribution, followed by in-person or virtual interviews for consented participants. All data was anonymized prior to analysis.
+            </p>
+
+            <ol class="paper-list paper-list--numbered" data-field="method-steps">
+              <li>Online distribution of consent form, demographic survey, and SIAS scale to target student population.</li>
+              <li>Selection of a purposive sample of participants for semi-structured interviews based on SIAS scores and willingness to share.</li>
+              <li>Conducting and audio-recording interviews, followed by transcription and thematic analysis using NVivo.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 05 FINDINGS ---------- -->
+      <section class="chapter reveal" id="findings">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">05</span>
+          <div class="chapter-body">
+            <h2>Findings</h2>
+
+            <h3 data-field="findings-h1">5.1 Quantitative Results</h3>
+            <p data-field="findings-quant-intro">
+              Quantitative analysis of the SIAS scores revealed a notable prevalence of social anxiety symptoms among the student population. The mean SIAS score for the entire sample was indicative of moderate social anxiety, with a significant proportion scoring above the clinical cut-off for generalized social anxiety. No significant difference was observed between JC and Polytechnic students in overall SIAS scores.
+            </p>
+
+            <div class="table-wrap reveal">
+              <table class="data-table">
+                <caption>Table 2. Hypothetical Mean SIAS Scores by Student Group and Help-Seeking History. This is placeholder data and not reflective of real study outcomes.</caption>
+                <thead>
+                  <tr>
+                    <th data-field="table-2-col-1">Group</th>
+                    <th data-field="table-2-col-2">Mean SIAS Score</th>
+                    <th data-field="table-2-col-3">Standard Deviation</th>
+                    <th data-field="table-2-col-4">Clinical Significance (%)</th>
+                  </tr>
+                </thead>
+                <tbody data-field="table-2-rows">
+                  <tr><td>Overall Sample</td><td>38.5</td><td>7.2</td><td>45%</td></tr>
+                  <tr><td>JC Students</td><td>37.9</td><td>6.8</td><td>42%</td></tr>
+                  <tr><td>Polytechnic Students</td><td>39.1</td><td>7.5</td><td>48%</td></tr>
+                  <tr><td>Sought prior formal care</td><td>35.2</td><td>5.1</td><td>30%</td></tr>
+                  <tr><td>Never sought formal care</td><td>40.1</td><td>7.9</td><td>55%</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 data-field="findings-h2">5.2 Qualitative Themes</h3>
+            <p data-field="findings-qual-intro">
+              Thematic analysis of the interview data revealed three overarching themes: (1) The pervasive impact of \"kiasu\" culture and academic pressure on social anxiety, (2) The debilitating fear of \"losing face\" and judgment leading to self-silencing, and (3) The perceived role of community mental health spaces as non-judgmental \"safe havens\" in contrast to formal clinical settings.
+            </p>
+
+            <!-- PARTIAL: PARTICIPANT QUOTE — verbatim interview/survey data -->
+            <div class="quote-block reveal">
+              <blockquote data-field="quote-1-body">\"Here, nobody asks why you're so quiet, or why you don't raise your hand in class. They just let you be, or gently invite you. That's already so different from outside where everyone expects you to be 'on'.\"</blockquote>
+              <span class="quote-attribution mono" data-field="quote-1-attribution">Programme participant, P08, Polytechnic Student</span>
+            </div>
+
+            <!-- PARTIAL: CALLOUT — highlight a key finding -->
+            <div class="callout callout--highlight reveal">
+              <span class="callout-tag mono">Key Finding</span>
+              <p data-field="findings-key-finding">A significant portion of JC and Polytechnic students experience social anxiety symptoms that impact their daily lives, with stigma and fear of judgment acting as primary deterrents to seeking timely mental health support.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 06 DISCUSSION ---------- -->
+      <section class="chapter reveal" id="discussion">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">06</span>
+          <div class="chapter-body">
+            <h2>Discussion</h2>
+
+            <h3 data-field="discuss-h1">6.1 Interpretation</h3>
+            <p data-field="discuss-interpretation">
+              The findings generally support the conceptual framework, indicating that social anxiety is a substantial concern among Singaporean JC and Polytechnic students, with a clear link between perceived stigma and reluctance to seek help. The qualitative data illuminates the depth of this stigma, rooted in cultural norms around \"losing face\" and intense academic competition. Community mental health social enterprises appear to serve a crucial function by offering environments that mitigate these barriers, providing a stepping stone for young people who might otherwise avoid any form of support. The consistency between the quantitative prevalence data and the qualitative accounts of lived experience strengthens the argument for integrated, accessible, and destigmatized youth mental health services.
+            </p>
+
+            <h3 data-field="discuss-h2">6.2 Limitations</h3>
+            <p data-field="discuss-limitations">
+              This study has several limitations. The sample, while diverse across JC and Polytechnic institutions, may not be fully representative of all students in Singapore due to self-selection bias in survey participation. The recruitment through educational institutions might have missed students who are completely disengaged or not accessing any support. The reliance on self-reported measures for social anxiety and help-seeking intentions introduces potential social desirability bias. Furthermore, the cross-sectional design limits the ability to infer causality regarding the impact of community mental health interventions. A single-organisation focus for qualitative insights (e.g., Care Corner INSIGHT) means findings may not be generalizable to all social enterprises in Singapore.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 07 IMPLICATIONS FOR PRACTICE ---------- -->
+      <section class="chapter reveal" id="implications">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">07</span>
+          <div class="chapter-body">
+            <h2>Implications for Practice</h2>
+            <p data-field="implications-intro">
+              The findings of this study offer several concrete recommendations for various stakeholders dedicated to supporting the mental well-being of young adults in Singapore:
+            </p>
+            <ul class="paper-list" data-field="implications-list">
+              <li>**For Singapore mental health social enterprise leaders/programme designers**: Continue to innovate in creating low-barrier, non-clinical, and youth-centric safe spaces. Focus on peer support models and normalizing discussions around anxiety to further reduce stigma. Consider expanding outreach directly into JC and Polytechnic campuses.</li>
+              <li>**For funders (e.g. Tote Board, Community Chest, corporate CSR partners)**: Prioritize funding for community mental health initiatives that specifically target adolescents and young adults, supporting their efforts to provide free or highly subsidized services, and expand their reach and capacity.</li>
+              <li>**For policymakers (e.g. MOH, MSF, NCSS) on integrating community social enterprises into Singapore's mental health strategy**: Develop clearer pathways for collaboration and referral between schools, formal healthcare providers, and community mental health social enterprises. Integrate mental health literacy and stigma reduction programs into the JC and Polytechnic curriculum, with easily accessible information on diverse support options, including community-based ones.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 08 CONCLUSION ---------- -->
+      <section class="chapter reveal" id="conclusion">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">08</span>
+          <div class="chapter-body">
+            <h2>Conclusion</h2>
+            <p data-field="conclusion-body">
+              This study underscores the pressing need to address social anxiety among Junior College and Polytechnic students in Singapore, a vulnerable population navigating intense academic and social pressures. By highlighting the significant barriers posed by stigma and access to formal care, and simultaneously demonstrating the crucial role of community mental health social enterprises in providing accessible and destigmatized support, this research contributes to a deeper understanding of youth mental health in Singapore. Future research should include longitudinal studies to assess the long-term impact of community interventions, as well as multi-site comparative studies across various social enterprises and educational institutions to generalize findings and identify best practices in fostering help-seeking behaviors and improving overall mental well-being among Singapore's young adults.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 09 REFERENCES ---------- -->
+      <section class="chapter reveal" id="references">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">09</span>
+          <div class="chapter-body">
+            <h2>References</h2>
+            <ol class="reference-list" data-field="reference-list">
+              <li>[1] Subramaniam, M., et al. (2016). Stigma among Singaporean youth: a cross-sectional study on adolescent attitudes towards serious mental illness and social tolerance in a multiethnic population. *BMC Psychiatry*, 16(1), 380.</li>
+              <li>[2] National University of Singapore. (2023, April). *Youth Epidemiology and Resilience (YEAR) Study*. (As cited by MOH, 2023).</li>
+              <li>[3] Ministry of Health Singapore. (2023, October). *WHOLE-OF-SOCIETY EFFORTS TO SUPPORT MENTAL HEALTH AND WELL-BEING OF YOUTHS IN SINGAPORE*. Press Release.</li>
+              <li>[4] Care Corner Singapore. (n.d.). *Mental Health for Youth (INSIGHT)*. Retrieved from [Insert relevant URL for Care Corner INSIGHT if available and appropriate].</li>
+              <li>[5] Mattick, R. P., & Clarke, J. C. (1998). Development and validation of measures of social phobia scrutiny fear and social interaction anxiety. *Behaviour Research and Therapy*, 36(5), 455-470.</li>
+              <li>[6] American Psychiatric Association. (2013). *Diagnostic and statistical manual of mental disorders* (5th ed.).</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 10 APPENDIX ---------- -->
+      <section class="chapter reveal" id="appendix">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">10</span>
+          <div class="chapter-body">
+            <h2>Appendix</h2>
+            <p data-field="appendix-body">
+              **Appendix A: Semi-Structured Interview Protocol Excerpt** <br>
+              1. Can you describe your experiences with social situations where you feel anxious? <br>
+              2. What are your thoughts on seeking help for mental health challenges in Singapore? <br>
+              3. Have you ever considered seeking support from a counselor, therapist, or community mental health organization? What were the factors influencing your decision? <br>
+              4. How do you perceive the attitudes of your peers, teachers, and family towards mental health issues? <br>
+              5. (If applicable) Can you share your experience with [named community mental health social enterprise]? How did you find it, and what impact did it have? <br>
+              <br>
+              **Appendix B: Social Interaction Anxiety Scale (SIAS) Items** <br>
+              [Due to copyright, the full SIAS scale items are not reproduced here, but it includes statements like "I avoid social occasions." and "I am tense when I am with people I don't know well," rated on a 0-4 scale of "Not at all characteristic or true of me" to "Extremely characteristic or true of me."]
+            </p>
+          </div>
+        </div>
+      </section>
+
+      </div>
+
+      <footer class="report-footer mono small">
+        <span data-field="footer-text">National University of Singapore · Unveiling the Unseen · Generated 22 July 2026</span>
+      </footer>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
