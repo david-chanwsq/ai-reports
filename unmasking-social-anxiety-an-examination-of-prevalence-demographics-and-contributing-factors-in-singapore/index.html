@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  SOCIAL ENTERPRISE WELLBEING RESEARCH TEMPLATE — "FIELD JOURNAL" STYLE
+  ============================================================================
+  WHAT THIS IS
+  A sidebar-plus-content research report for studies on social anxiety among
+  a population (e.g. youth, young adults) in Singapore, written for the
+  audience most likely to act on it: Singapore's community/mental-health
+  social enterprises, their funders, and policymakers. The population under
+  study is people experiencing social anxiety — not the enterprises' own
+  founders or staff. The sidebar is a printed contents page, not a system
+  console: serif labels, an italic heading, one calm breathing-pulse dot.
+  The content column is an editorial manuscript rather than a stack of
+  dashboard cards — sections read as chapters, each with a large outline
+  numeral in a left margin column beside flowing serif text and an automatic
+  drop cap. Structure follows a standard mixed-methods social science paper:
+  intro, literature review, conceptual framework, methodology, findings,
+  discussion, practice implications, conclusion.
+
+  HOW TO REUSE THIS TEMPLATE (for a human OR for an LLM)
+  1. Every editable piece of text sits inside a tag carrying a
+     data-field="..." attribute. That attribute name tells you WHAT the
+     content is (e.g. data-field="report-title"), not how it looks.
+  2. Placeholder copy is written in [BRACKETS] with a short instruction and
+     an example. Replace the whole bracketed placeholder — keep the
+     surrounding tag and classes untouched.
+  3. Sections follow the numbering convention 00, 01, 02... To add a section:
+     duplicate a <section class="chapter"> block (including its
+     .chapter-frame > .chapter-num + .chapter-body structure), its sidebar
+     <li> entry, and continue the numbering. script.js auto-detects any
+     element matching #tocList li[data-target] and needs no edits.
+  4. Repeating pieces (figures, tables, callouts, references, participant
+     quotes) are small reusable partials — search for "PARTIAL:" comments
+     below to find and duplicate them.
+  5. Do not rename class names (they are the CSS/JS contract). You may
+     freely rewrite the text content inside data-field attributes.
+  6. Color/type/spacing tokens all live in styles.css :root — change the
+     report's whole look by editing values there, not by adding inline styles.
+  7. Use .quote-block for verbatim interview/survey-open-response data —
+     always attribute it (role, and only the demographic detail the study's
+     consent/anonymisation plan allows) via .quote-attribution.
+  8. Every chapter's first paragraph gets an automatic drop cap
+     (styles.css, ::first-letter) — no markup needed, just start each
+     .chapter-body with a <p>.
+  ============================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-field="browser-title">Social Anxiety in Singapore: Prevalence, Demographics, and Causes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500;1,6..72,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ============ TOP PROGRESS BAR (reading/scroll progress) ============ -->
+  <div class="progress-rail" aria-hidden="true">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- ============ MOBILE NAV TOGGLE ============ -->
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle table of contents" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="layout">
+
+    <!-- ==================================================================
+         SIDEBAR — reads as a printed contents page, not a system console.
+         Acts as the table of contents AND a live scrollspy. Each <li> maps
+         to a section by data-target="<section id>". Do not remove
+         data-target — script.js uses it to sync highlight + "done" marker.
+         To add a section: copy one <li>, change data-target + label + code.
+    =================================================================== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-head">
+        <span class="status-dot status-dot--live" aria-hidden="true"></span>
+        <span>Contents</span>
+      </div>
+
+      <nav class="toc" aria-label="Report sections">
+        <ul id="tocList">
+          <li data-target="abstract"><span class="toc-code mono">00</span><span class="toc-label">Abstract</span></li>
+          <li data-target="introduction"><span class="toc-code mono">01</span><span class="toc-label">Introduction</span></li>
+          <li data-target="literature"><span class="toc-code mono">02</span><span class="toc-label">Literature Review</span></li>
+          <li data-target="framework"><span class="toc-code mono">03</span><span class="toc-label">Conceptual Framework</span></li>
+          <li data-target="methodology"><span class="toc-code mono">04</span><span class="toc-label">Methodology</span></li>
+          <li data-target="findings"><span class="toc-code mono">05</span><span class="toc-label">Findings</span></li>
+          <li data-target="discussion"><span class="toc-code mono">06</span><span class="toc-label">Discussion</span></li>
+          <li data-target="implications"><span class="toc-code mono">07</span><span class="toc-label">Implications</span></li>
+          <li data-target="conclusion"><span class="toc-code mono">08</span><span class="toc-label">Conclusion</span></li>
+          <li data-target="references"><span class="toc-code mono">09</span><span class="toc-label">References</span></li>
+          <li data-target="appendix"><span class="toc-code mono">10</span><span class="toc-label">Appendix</span></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-foot small">
+        <div class="foot-row"><span>Logged</span><span id="buildTime">—</span></div>
+        <div class="foot-row"><span>Progress</span><span id="progressPct">0%</span></div>
+      </div>
+    </aside>
+
+    <!-- ==================================================================
+         MAIN — masthead + manuscript. Every section is a
+         <section class="chapter">.
+         - id must match a sidebar data-target
+         - .chapter-num is the big margin numeral; .chapter-body holds the
+           heading + free-form content: paragraphs, figures, tables, quotes
+         - class="reveal" elements fade/slide in on scroll (IntersectionObserver)
+    =================================================================== -->
+    <main class="main">
+
+      <!-- ============ MASTHEAD ============ -->
+      <header class="masthead" id="top">
+        <p class="epigraph" data-typed data-text="In Singapore, staying quiet is often mistaken for being fine."></p>
+
+        <p class="eyebrow" data-field="course-code">Mental Health Research Unit, Singapore</p>
+
+        <h1 class="masthead-title" data-field="report-title">
+          Unmasking Social Anxiety: An Examination of Prevalence, Demographics, and Contributing Factors in Singapore
+        </h1>
+
+        <p class="masthead-subtitle" data-field="report-subtitle">
+          A review of current statistics, at-risk populations, and underlying causes of social anxiety disorder in Singapore, with implications for public awareness and support strategies.
+        </p>
+
+        <p class="byline">
+          <span data-field="authors">Research Team</span><span class="byline-sep">·</span><span data-field="institution">Gemini Research</span><span class="byline-sep">·</span><span data-field="supervisor">Research Supervisor</span><span class="byline-sep">·</span><span data-field="report-date">23 July 2026</span>
+        </p>
+
+        <p class="masthead-tags mono small" data-field="keywords">social anxiety · Singapore · mental health · youth mental health · causes of anxiety</p>
+      </header>
+
+      <div class="manuscript">
+
+      <!-- ---------- 00 ABSTRACT ---------- -->
+      <section class="chapter reveal" id="abstract">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">00</span>
+          <div class="chapter-body">
+            <h2>Abstract</h2>
+            <p data-field="abstract-body">
+              This report synthesizes available research on social anxiety in Singapore, focusing on its prevalence, the demographics most affected, and underlying causes. Findings indicate that anxiety is a significant mental health concern, particularly among young people aged 15 to 35, with about one in four reporting severe or extremely severe anxiety symptoms. While specific social phobia prevalence data for the entire adult population is limited, social anxiety is recognized as a prevalent yet often overlooked condition. Key demographics at higher risk include youth, females, and potentially those from lower socio-economic strata and the Malay ethnic group. The causes are multifaceted, encompassing biological predispositions, environmental factors (e.g., critical parenting, bullying), cultural pressures (e.g., emphasis on achievement and conformity), intense academic competition, and the pervasive influence of digital media and cyberbullying. The report underscores the need for increased awareness and targeted support strategies to address social anxiety in Singapore.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 01 INTRODUCTION ---------- -->
+      <section class="chapter reveal" id="introduction">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">01</span>
+          <div class="chapter-body">
+            <h2>Introduction</h2>
+
+            <h3 data-field="intro-h1">1.1 Problem Statement</h3>
+            <p data-field="intro-problem">
+              Social anxiety, often underestimated or misconstrued as mere shyness, represents a significant mental health challenge within Singapore. This condition, characterized by an intense and persistent fear of social situations and judgment, can profoundly disrupt an individual's daily life, impacting education, career progression, and relationships [2, 3]. Despite its prevalence, stigma, perceived high costs, and lengthy wait times for formal psychiatric care often deter individuals from seeking the necessary help. Understanding the scope of social anxiety, identifying at-risk populations, and dissecting its multifaceted causes are crucial steps toward developing effective support mechanisms and fostering a more inclusive and mentally healthy society.
+            </p>
+
+            <h3 data-field="intro-h2">1.2 Research Questions / Objectives</h3>
+            <ul class="paper-list" data-field="intro-objectives">
+              <li>What is the current prevalence of social anxiety and anxiety disorders in Singapore?</li>
+              <li>Which demographic groups in Singapore are particularly susceptible to experiencing social anxiety?</li>
+              <li>What are the primary biological, environmental, cultural, and digital factors contributing to social anxiety in Singapore?</li>
+            </ul>
+
+            <!-- PARTIAL: CALLOUT — use for a scope note, ethics note, or assumption -->
+            <div class="callout callout--info reveal">
+              <span class="callout-tag mono">Scope &amp; Ethics</span>
+              <p data-field="intro-scope">This report synthesizes information from pre-gathered public sources and does not involve primary data collection from human participants. Therefore, direct ethical approval, informed consent, and PDPA compliance considerations for primary research are not applicable. The scope is limited to a comprehensive review and interpretation of the provided research materials.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 02 LITERATURE REVIEW ---------- -->
+      <section class="chapter reveal" id="literature">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">02</span>
+          <div class="chapter-body">
+            <h2>Literature Review</h2>
+
+            <h3 data-field="lit-h1">2.1 Social Anxiety: Clinical Background &amp; Prevalence in Singapore</h3>
+            <p data-field="lit-anxiety">
+              Social Anxiety Disorder (SAD), also known as social phobia, is clinically defined as an intense, persistent fear of being judged, humiliated, or rejected in social or performance situations [2, 1]. It extends far beyond typical shyness, leading to profound avoidance behaviors and interfering with daily functioning [3]. Individuals with SAD may experience physical symptoms such as sweating, trembling, nausea, and blushing, alongside excessive worry about embarrassing themselves and replaying social interactions [1, 2]. Globally, SAD is one of the most common anxiety disorders, with onset typically occurring early, by age 11 in about half of those affected, and approximately 80% reporting onset by age 18 [2, 3].
+
+              In Singapore, anxiety disorders are a notable concern. The Singapore Mental Health Survey (2010) reported that around 100,000 Singapore residents (aged 18 and above) had experienced anxiety disorders at some point in their lives, with an average delay of 6 to 9 years before seeking help [5]. More recently, the National Youth Mental Health Study (conducted between October 2022 and June 2023) revealed that approximately one in four young people aged 15 to 35 reported severe or extremely severe symptoms of anxiety in the week prior to the survey, identifying anxiety as the most common mental health problem within this demographic [4]. While there is a recognized lack of recent, specific prevalence studies for social phobia across the entire adult population in Singapore [3], various sources indicate its widespread nature and significant impact on individuals, particularly youth [2, 3].
+            </p>
+
+            <h3 data-field="lit-h2">2.2 Mental Health Support Landscape in Singapore</h3>
+            <p data-field="lit-se">
+              The mental health landscape in Singapore comprises formal clinical care (e.g., Institute of Mental Health, polyclinics, private psychiatry) and a growing ecosystem of community-based support. While the provided sources do not detail the specific roles of mental health social enterprises, they highlight the broader need for accessible and effective treatment options and support systems [3, 4]. Organisations like Samaritans of Singapore (SOS) provide crucial helplines and text services, noting a significant increase in young people reaching out via text, indicating a preference for less direct forms of communication [6]. The government has launched a National Mental Health and Well-Being Strategy to address youth mental health issues, integrating preventive measures into schools and youth services [4]. These efforts suggest a recognition of the gaps between formal care and the needs of the population, which community initiatives, including social enterprises, likely play a role in bridging by offering alternative, lower-stakes entry points to support.
+            </p>
+
+            <!-- PARTIAL: FIGURE — image + italic caption -->
+            <figure class="figure reveal">
+              <img data-field="figure-1-src" src="https://placehold.co/900x480/f6f0e4/56704f?text=ILLUSTRATIVE+FIGURE%3A+FACTORS+INFLUENCING+SOCIAL+ANXIETY" alt="Figure depicting a cycle of factors influencing social anxiety, including cultural pressures, academic stress, social media, and internal vulnerabilities.">
+              <figcaption data-field="figure-1-caption">Figure 1. An illustrative mapping of key factors contributing to and exacerbating social anxiety, drawing from the reviewed literature.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 03 CONCEPTUAL FRAMEWORK ---------- -->
+      <section class="chapter reveal" id="framework">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">03</span>
+          <div class="chapter-body">
+            <h2>Conceptual Framework</h2>
+            <p data-field="framework-body">
+              This study is guided by a multi-causal framework, positing that social anxiety in Singapore results from an intricate interplay of biological, environmental, cultural, and modern digital influences. It is hypothesized that inherent biological predispositions, coupled with formative environmental experiences, lay the groundwork for vulnerability. This vulnerability is then exacerbated by the unique cultural emphasis on achievement and conformity prevalent in Singaporean society, which can intensify fears of social failure and judgment. Furthermore, the pervasive and often idealized representations within digital and social media environments are theorized to magnify feelings of inadequacy and contribute to a decline in real-world social skills, thereby reinforcing anxious behaviors and thought patterns. The framework also considers how academic pressure, a significant aspect of youth experience in Singapore, acts as a specific environmental stressor, potentially triggering or intensifying social anxiety.
+            </p>
+
+            <ol class="paper-list paper-list--numbered" data-field="framework-hypotheses">
+              <li>Social anxiety and generalized anxiety symptoms are significantly prevalent among youth and young adults in Singapore, with certain demographic groups demonstrating higher susceptibility.</li>
+              <li>Cultural expectations, academic pressure, and extensive social media use are key contributing factors to the development and exacerbation of social anxiety among Singaporeans.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 04 METHODOLOGY ---------- -->
+      <section class="chapter reveal" id="methodology">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">04</span>
+          <div class="chapter-body">
+            <h2>Methodology</h2>
+
+            <h3 data-field="method-h1">4.1 Research Design</h3>
+            <p data-field="method-design">
+              This report utilizes a comprehensive literature review and synthesis approach. The research design involved systematically analyzing pre-gathered research sources, including articles from health portals, news commentaries, and official study reports, to identify patterns, consensus, and points of divergence regarding social anxiety in Singapore. The methodology focuses on extracting and cross-referencing statistical data, demographic risk factors, and identified causes of social anxiety and related anxiety disorders.
+            </p>
+
+            <h3 data-field="method-h2">4.2 Participants &amp; Setting</h3>
+            <p data-field="method-participants">
+              This report does not involve direct participants. The "setting" for this research is the existing body of publicly available literature and studies conducted within Singapore concerning mental health, anxiety, and social anxiety. Information regarding participant demographics in the cited studies is extracted and presented as findings from their respective research.
+            </p>
+
+            <!-- PARTIAL: DATA TABLE — sample / demographics -->
+            <div class="table-wrap reveal">
+              <table class="data-table">
+                <caption>Table 1. Illustrative Demographics of Anxiety Symptom Reporting in Singapore Youth (based on IMH Study)</caption>
+                <thead>
+                  <tr>
+                    <th data-field="table-1-col-1">Demographic Group</th>
+                    <th data-field="table-1-col-2">Age Range</th>
+                    <th data-field="table-1-col-3">Anxiety Symptom Prevalence (Severe/Extremely Severe)</th>
+                    <th data-field="table-1-col-4">Notes</th>
+                  </tr>
+                </thead>
+                <tbody data-field="table-1-rows">
+                  <tr><td>Youth (Overall)</td><td>15-35 years</td><td>~25%</td><td>Anxiety was the most common mental health problem [4]</td></tr>
+                  <tr><td>Younger Youth</td><td>15-24 years</td><td>Higher prevalence</td><td>Compared to 25-35 age group [4]</td></tr>
+                  <tr><td>Malay Ethnic Group</td><td>15-35 years</td><td>Higher prevalence</td><td>Compared to other ethnic groups [4]</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 data-field="method-h3">4.3 Instruments &amp; Procedure</h3>
+            <p data-field="method-instruments">
+              The "instruments" for this synthesis were the provided research sources themselves. Data extraction involved carefully reading each source to identify explicit mentions of social anxiety, general anxiety statistics, demographic breakdowns, and stated causes. The "procedure" involved a systematic review process:
+            </p>
+
+            <ol class="paper-list paper-list--numbered" data-field="method-steps">
+              <li>Identification of relevant data points related to prevalence, demographics, and causes from each source.</li>
+              <li>Cross-referencing and corroboration of factual claims, statistics, and figures across multiple independent sources.</li>
+              <li>Synthesis of corroborated information, noting any disagreements or single-sourced claims with appropriate confidence levels.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 05 FINDINGS ---------- -->
+      <section class="chapter reveal" id="findings">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">05</span>
+          <div class="chapter-body">
+            <h2>Findings</h2>
+
+            <h3 data-field="findings-h1">5.1 Quantitative Results</h3>
+            <p data-field="findings-quant-intro">
+              Quantitative data from various studies highlights the significant presence of anxiety disorders and symptoms in Singapore, particularly among its youth. While specific recent prevalence rates solely for Social Anxiety Disorder across the entire adult population are not readily available [3], general anxiety statistics provide a crucial context.
+            </p>
+
+            <div class="table-wrap reveal">
+              <table class="data-table">
+                <caption>Table 2. Overview of Anxiety Prevalence in Singapore</caption>
+                <thead>
+                  <tr>
+                    <th data-field="table-2-col-1">Study/Source</th>
+                    <th data-field="table-2-col-2">Population Group</th>
+                    <th data-field="table-2-col-3">Key Statistic</th>
+                    <th data-field="table-2-col-4">Notes</th>
+                  </tr>
+                </thead>
+                <tbody data-field="table-2-rows">
+                  <tr><td>HealthXchange [1]</td><td>General Population</td><td>~10% with anxiety & depressive disorders</td><td>0.9% GAD, 3% OCD. Anxiety less prevalent than US (13% phobias).</td></tr>
+                  <tr><td>Singapore Mental Health Survey (2010) [5]</td><td>Residents (18+)</td><td>~100,000 had anxiety disorders (lifetime)</td><td>Average 6-9 years to seek help from onset.</td></tr>
+                  <tr><td>National Youth Mental Health Study (2022-2023) [4]</td><td>Youth (15-35 years)</td><td>~25% severe/extremely severe anxiety symptoms</td><td>Anxiety was the most common mental health problem for this group.</td></tr>
+                  <tr><td>CNA Commentary [3]</td><td>Global (various studies)</td><td>2-12% social phobia prevalence</td><td>36% met threshold in one 7-country study (2020); onset ~80% by age 18.</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 data-field="findings-h2">5.2 Qualitative Themes</h3>
+            <p data-field="findings-qual-intro">
+              Thematic analysis of the provided sources reveals several recurring themes related to the experience and underlying causes of social anxiety in Singapore. These include: the intense fear of judgment and scrutiny, the impact of societal and academic pressures, the role of cultural norms, and the exacerbating effects of digital media. Barriers to help-seeking, such as stigma and mislabeling anxiety as mere shyness, are also prominent.
+            </p>
+
+            <!-- PARTIAL: PARTICIPANT QUOTE — verbatim interview/survey data -->
+            <div class="quote-block reveal">
+              <blockquote data-field="quote-1-body">"In Singapore, where group discussions, presentations, and networking are common across school and work life, individuals with SAD may silently suffer. They may hesitate to seek help due to stigma, or mislabel their experience as 'just being shy.'"</blockquote>
+              <span class="quote-attribution mono" data-field="quote-1-attribution">The Psychologist [2]</span>
+            </div>
+
+            <!-- PARTIAL: CALLOUT — highlight a key finding -->
+            <div class="callout callout--highlight reveal">
+              <span class="callout-tag mono">Key Finding</span>
+              <p data-field="findings-key-finding">Social anxiety is a significant and prevalent issue among Singaporeans, particularly youth, driven by a complex interplay of cultural expectations, academic pressures, and modern digital influences.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 06 DISCUSSION ---------- -->
+      <section class="chapter reveal" id="discussion">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">06</span>
+          <div class="chapter-body">
+            <h2>Discussion</h2>
+
+            <h3 data-field="discuss-h1">6.1 Interpretation</h3>
+            <p data-field="discuss-interpretation">
+              The findings strongly suggest that Singaporeans, especially the younger demographic, are indeed struggling with social anxiety and broader anxiety symptoms. The National Youth Mental Health Study's revelation that one in four youth experiences severe anxiety symptoms [4] underscores the urgency of this issue. Social anxiety disorder, as described, is clearly distinct from shyness, representing a debilitating condition that can severely impair daily functioning [3]. The observed higher prevalence among youth (15-24) and females [3, 4] aligns with global trends for anxiety disorders.
+
+              The multifaceted causes identified converge to paint a picture of significant environmental and cultural stressors. The "collectivist culture" that "prizes excellence and conformity" [2] likely magnifies the fear of social failure, a core component of social anxiety. This is further intensified by the "front-loaded academic pressure" [6] from an early age, which cultivates self-imposed perfectionism and constant comparison. The pervasive influence of social media is a critical modern factor, contributing to feelings of inadequacy, cyberbullying, and a reduction in vital face-to-face social skills [3, 4, 6]. These factors collectively create an environment where individuals, particularly those with biological predispositions, are highly susceptible to developing and struggling with social anxiety.
+            </p>
+
+            <h3 data-field="discuss-h2">6.2 Limitations</h3>
+            <p data-field="discuss-limitations">
+              This report's primary limitation lies in its reliance on synthesizing pre-gathered sources, which vary in their publication dates, methodologies, and specific focus. While general anxiety statistics for Singapore are recent and robust (e.g., National Youth Mental Health Study), recent, dedicated studies on the specific prevalence of *social phobia* across the entire adult population are noted to be less available [3]. Some demographic risk factors are single-sourced for social anxiety specifically (e.g., higher prevalence in females [3]), while others are derived from broader anxiety or mental health studies (e.g., Malay ethnic group and low socio-economic strata for general anxiety [1, 4]). Therefore, while conclusions are drawn based on the best available evidence, specific social anxiety prevalence for certain groups may carry a medium confidence level due to the aggregation of broader anxiety data.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 07 IMPLICATIONS FOR PRACTICE ---------- -->
+      <section class="chapter reveal" id="implications">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">07</span>
+          <div class="chapter-body">
+            <h2>Implications for Practice</h2>
+            <p data-field="implications-intro">
+              The findings from this review carry several concrete implications for stakeholders involved in mental health support and policy in Singapore:
+            </p>
+            <ul class="paper-list" data-field="implications-list">
+              <li>**For Mental Health Social Enterprise Leaders/Programme Designers:** Develop and promote programs specifically targeting social skills development, coping mechanisms for performance anxiety, and safe spaces for social interaction, particularly for youth. Emphasize peer support and non-judgmental environments to counteract cultural pressures and social media influences.</li>
+              <li>**For Funders (e.g., Tote Board, Community Chest, corporate CSR partners):** Prioritize funding for community-based mental health initiatives focused on early intervention and destigmatization, especially for youth and vulnerable demographic groups identified (e.g., females, Malay ethnic group). Support research into specific social anxiety prevalence and effective interventions in the local context.</li>
+              <li>**For Policymakers (e.g., MOH, MSF, NCSS) on integrating community social enterprises into Singapore's mental health strategy:** Enhance mental health literacy in schools and across society to differentiate social anxiety from shyness and reduce stigma. Implement comprehensive guidelines for healthy technology and social media use. Integrate community mental health services more closely with formal care to provide accessible, low-barrier support, recognizing the preference for less direct help-seeking among youth.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 08 CONCLUSION ---------- -->
+      <section class="chapter reveal" id="conclusion">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">08</span>
+          <div class="chapter-body">
+            <h2>Conclusion</h2>
+            <p data-field="conclusion-body">
+              This report confirms that social anxiety, as part of a broader anxiety challenge, is a significant concern for Singaporeans, particularly among youth. The confluence of biological vulnerabilities, cultural norms prioritizing achievement, intense academic competition, and the omnipresent influence of social media creates a fertile ground for its development and exacerbation. Understanding these intertwined factors is crucial for designing effective interventions. Future research should focus on dedicated, up-to-date prevalence studies specifically on social anxiety disorder across diverse adult populations in Singapore and evaluate the long-term effectiveness of community-based mental health programs in mitigating its impact.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 09 REFERENCES ---------- -->
+      <section class="chapter reveal" id="references">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">09</span>
+          <div class="chapter-body">
+            <h2>References</h2>
+            <ol class="reference-list" data-field="reference-list">
+              <li>[1] HealthXchange. (n.d.). <em>Anxiety in Singapore: Stats, Types and Who's at Risk</em>. Retrieved from https://www.healthxchange.sg/how-to-manage/generalised-anxiety-disorder/anxiety-singapore-stats-types-risk</li>
+              <li>[2] thepsychologist. (n.d.). <em>Facing the Crowd: Understanding Social Anxiety in Singapore</em>. The Psychologist. Retrieved from https://www.thepsychologist.com.sg/psychology-explained/academics-lxd2f</li>
+              <li>[3] Ng, J. (2024, May 17). <em>Commentary: ‘Dropping out of school, refusing to leave home’ - social anxiety can be crippling</em>. Channel News Asia. Retrieved from https://www.channelnewsasia.com/commentary/singapore-mental-health-social-anxiety-disorder-daily-functioning-4340576</li>
+              <li>[4] Teo, J. (2025, September 6). <em>Depression, anxiety, stress: 1 in 3 youth in S’pore had had very poor mental health, says IMH survey</em>. The Straits Times. Retrieved from https://www.straitstimes.com/singapore/health/depression-anxiety-stress-1-in-3-youth-in-s-pore-had-had-very-poor-mental-health-says-imh-survey</li>
+              <li>[5] Singapore Association for Mental Health. (n.d.). <em>Anxiety Disorders</em>. Retrieved from https://www.samhealth.org.sg/understanding-mental-health/what-is-mental-illness/anxiety-disorders</li>
+              <li>[6] CNA. (2025, July 28). <em>Age of Anxiety: What's driving the youth mental health crisis in Singapore? (Part 1)</em> [Video]. YouTube. Retrieved from https://www.youtube.com/watch?v=l91nKZqE7xs</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 10 APPENDIX ---------- -->
+      <section class="chapter reveal" id="appendix">
+        <div class="chapter-frame">
+          <span class="chapter-num mono" aria-hidden="true">10</span>
+          <div class="chapter-body">
+            <h2>Appendix</h2>
+            <p data-field="appendix-body">
+              No supplementary materials are included in this synthesis report.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      </div>
+
+      <footer class="report-footer mono small">
+        <span data-field="footer-text">Gemini Research · Unmasking Social Anxiety · Generated 23 July 2026</span>
+      </footer>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
